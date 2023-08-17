@@ -1,0 +1,39 @@
+{
+  "id": "f4f88889-d059-499b-a249-35038a3df58e",
+  "name": "al",
+  "publisher": "github.com/continia-dach",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "Proof of concept app how to handle custom per diem rate requirements",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [
+    {
+      "id": "8d4eab29-8c7f-4b6c-be9a-b7fdfb9da196",
+      "name": "Continia Expense Management",
+      "publisher": "Continia Software",
+      "version": "8.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "22.0.0.0",
+  "idRanges": [
+    {
+      "from": 62080,
+      "to": 62089
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "11.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
