@@ -1,4 +1,4 @@
-page 62080 "EMADV Cust. PD Rate Details"
+page 62081 "EMADV Cust. PD Rate Details"
 {
     ApplicationArea = All;
     Caption = 'EMADV Cust. PD Rate Details';
@@ -6,6 +6,7 @@ page 62080 "EMADV Cust. PD Rate Details"
     SourceTable = "EMADV Cust PerDiem Rate Detail";
     UsageCategory = Lists;
     DelayedInsert = true;
+    AutoSplitKey = true;
 
     layout
     {

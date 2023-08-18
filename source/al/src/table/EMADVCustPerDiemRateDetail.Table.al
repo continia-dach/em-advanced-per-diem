@@ -46,13 +46,17 @@ table 62081 "EMADV Cust PerDiem Rate Detail"
             OptionCaption = 'Breakfast,Breakfast+Lunch,Breakfast+Lunch+Dinner,Lunch,Lunch+Dinner,Dinner,Others';
             OptionMembers = Breakfast,BreakfastLunch,BreakfastLunchDinner,Lunch,LunchDinner,Dinner,Others;
         }
+        field(7; "Line No."; Integer)
+        {
+            Caption = 'Line No.';
+        }
         field(10; "Deduction Amount"; Decimal)
         {
             Caption = 'Deduction Amount';
             DataClassification = CustomerContent;
         }
 
-        field(11; "Deduction Description"; Decimal)
+        field(11; "Deduction Description"; Text[50])
         {
             Caption = 'Deduction Description';
             DataClassification = CustomerContent;
@@ -60,7 +64,7 @@ table 62081 "EMADV Cust PerDiem Rate Detail"
     }
     keys
     {
-        key(PK; "Per Diem Group Code", "Destination Country/Region", "Start Date", "Accommodation Allowance Code", "Calculation Method")
+        key(PK; "Per Diem Group Code", "Destination Country/Region", "Start Date", "Accommodation Allowance Code", "Calculation Method", "Deduction Type", "Line No.")
         {
             Clustered = true;
         }

@@ -1,4 +1,4 @@
-page 62081 "EMADV Cust PD Rates"
+page 62080 "EMADV Cust PD Rates"
 {
     ApplicationArea = All;
     Caption = 'EMADV Cust PD Rates';
@@ -43,14 +43,20 @@ page 62081 "EMADV Cust PD Rates"
                 field("Breakfast deduction"; Rec."Breakfast deduction")
                 {
                     ToolTip = 'Specifies the value of the Breakfast deduction field.';
+                    DrillDown = true;
+                    DrillDownPageId = "EMADV Cust. PD Rate Details";
                 }
                 field("Breakfast-Lunch Amt."; Rec."Breakfast-Lunch Amt.")
                 {
                     ToolTip = 'Specifies the value of the Breakfast-Lunch Amt. field.';
+                    DrillDown = true;
+                    DrillDownPageId = "EMADV Cust. PD Rate Details";
                 }
                 field("Breakfast-Lunch-Dinner Amt."; Rec."Breakfast-Lunch-Dinner Amt.")
                 {
                     ToolTip = 'Specifies the value of the Breakfast-Lunch-Dinner Amt. field.';
+                    DrillDown = true;
+                    DrillDownPageId = "EMADV Cust. PD Rate Details";
                 }
             }
         }

@@ -3,6 +3,7 @@ table 62080 "EMADV Cust PerDiem Rate"
     Caption = 'EMADV Custom Per Diem Rate';
     DataClassification = CustomerContent;
     LookupPageId = "EMADV Cust PD Rates";
+    DrillDownPageId = "EMADV Cust PD Rates";
 
     fields
     {
@@ -51,6 +52,7 @@ table 62080 "EMADV Cust PerDiem Rate"
         }
         field(20; "Breakfast deduction"; Decimal)
         {
+            Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("EMADV Cust PerDiem Rate Detail"."Deduction Amount" where("Per Diem Group Code" = field("Per Diem Group Code"),
                                                                                          "Destination Country/Region" = field("Destination Country/Region"),
@@ -62,6 +64,7 @@ table 62080 "EMADV Cust PerDiem Rate"
         }
         field(21; "Breakfast-Lunch Amt."; Decimal)
         {
+            Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("EMADV Cust PerDiem Rate Detail"."Deduction Amount" where("Per Diem Group Code" = field("Per Diem Group Code"),
                                                                                          "Destination Country/Region" = field("Destination Country/Region"),
@@ -73,13 +76,14 @@ table 62080 "EMADV Cust PerDiem Rate"
         }
         field(22; "Breakfast-Lunch-Dinner Amt."; Decimal)
         {
+            Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("EMADV Cust PerDiem Rate Detail"."Deduction Amount" where("Per Diem Group Code" = field("Per Diem Group Code"),
                                                                                          "Destination Country/Region" = field("Destination Country/Region"),
                                                                                          "Start Date" = field("Start Date"),
                                                                                          "Accommodation Allowance Code" = field("Accommodation Allowance Code"),
                                                                                          "Calculation Method" = field("Calculation Method"),
-                                                                                         "Deduction Type" = const(BreakfastLunch)
+                                                                                         "Deduction Type" = const(BreakfastLunchDinner)
                                                                                          ));
         }
     }
