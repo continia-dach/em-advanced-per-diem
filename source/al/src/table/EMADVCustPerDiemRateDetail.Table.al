@@ -31,22 +31,25 @@ table 62081 "EMADV Cust PerDiem Rate Detail"
             DataClassification = CustomerContent;
             TableRelation = "CEM Allowance" WHERE(Type = FILTER(' ' | Accommodation));
         }
-        field(5; "Calculation Method"; Option)
+        field(5; "Calculation Method"; enum "EMADV Per Diem Calc. Method")
         {
             Caption = 'Calculation method';
             DataClassification = CustomerContent;
-            OptionCaption = 'Full Day,First/Last Day';
-            OptionMembers = FullDay,FirstLastDay;
 
         }
-        field(6; "Deduction Type"; Option)
+        field(6; "From Hour"; Integer)
+        {
+            Caption = 'From Hour';
+            MinValue = 0;
+            MaxValue = 23;
+            DataClassification = CustomerContent;
+        }
+        field(7; "Deduction Type"; enum "EMADV Per Diem Deduction Type")
         {
             Caption = 'Deduction Type';
             DataClassification = CustomerContent;
-            OptionCaption = 'Breakfast,Breakfast+Lunch,Breakfast+Lunch+Dinner,Lunch,Lunch+Dinner,Dinner,Others';
-            OptionMembers = Breakfast,BreakfastLunch,BreakfastLunchDinner,Lunch,LunchDinner,Dinner,Others;
         }
-        field(7; "Line No."; Integer)
+        field(8; "Line No."; Integer)
         {
             Caption = 'Line No.';
         }
@@ -64,7 +67,7 @@ table 62081 "EMADV Cust PerDiem Rate Detail"
     }
     keys
     {
-        key(PK; "Per Diem Group Code", "Destination Country/Region", "Start Date", "Accommodation Allowance Code", "Calculation Method", "Deduction Type", "Line No.")
+        key(PK; "Per Diem Group Code", "Destination Country/Region", "Start Date", "Accommodation Allowance Code", "Calculation Method", "From Hour", "Deduction Type", "Line No.")
         {
             Clustered = true;
         }

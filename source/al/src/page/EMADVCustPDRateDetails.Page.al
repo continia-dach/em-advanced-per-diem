@@ -1,7 +1,7 @@
 page 62081 "EMADV Cust. PD Rate Details"
 {
     ApplicationArea = All;
-    Caption = 'EMADV Cust. PD Rate Details';
+    Caption = 'Custom Per Diem Rate Details';
     PageType = List;
     SourceTable = "EMADV Cust PerDiem Rate Detail";
     UsageCategory = Lists;

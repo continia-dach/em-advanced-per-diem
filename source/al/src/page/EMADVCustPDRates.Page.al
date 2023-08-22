@@ -1,7 +1,7 @@
 page 62080 "EMADV Cust PD Rates"
 {
     ApplicationArea = All;
-    Caption = 'EMADV Cust PD Rates';
+    Caption = 'Custom Per Diem Rates';
     PageType = List;
     SourceTable = "EMADV Cust PerDiem Rate";
     UsageCategory = Lists;
@@ -32,6 +32,10 @@ page 62080 "EMADV Cust PD Rates"
                 {
                     ToolTip = 'Specifies the value of the Calculation method field.';
                 }
+                field("From Hour"; Rec."From Hour")
+                {
+                    ToolTip = 'Specifies the value of the from-hour field.';
+                }
                 field("Daily Accommodation Allowance"; Rec."Daily Accommodation Allowance")
                 {
                     ToolTip = 'Specifies the value of the Tax-Free Accommodation Allowance field.';
@@ -46,17 +50,77 @@ page 62080 "EMADV Cust PD Rates"
                     DrillDown = true;
                     DrillDownPageId = "EMADV Cust. PD Rate Details";
                 }
-                field("Breakfast-Lunch Amt."; Rec."Breakfast-Lunch Amt.")
+                field("Breakfast-Lunch Ded."; Rec."Breakfast-Lunch Ded.")
                 {
-                    ToolTip = 'Specifies the value of the Breakfast-Lunch Amt. field.';
+                    ToolTip = 'Specifies the value of the Breakfast-Lunch deduction field.';
                     DrillDown = true;
                     DrillDownPageId = "EMADV Cust. PD Rate Details";
                 }
-                field("Breakfast-Lunch-Dinner Amt."; Rec."Breakfast-Lunch-Dinner Amt.")
+                field("Breakfast-Lunch-Dinner Ded."; Rec."Breakfast-Lunch-Dinner Ded.")
                 {
-                    ToolTip = 'Specifies the value of the Breakfast-Lunch-Dinner Amt. field.';
+                    ToolTip = 'Specifies the value of the Breakfast-Lunch-Dinner deduction field.';
                     DrillDown = true;
                     DrillDownPageId = "EMADV Cust. PD Rate Details";
+                }
+                field("Lunch Ded."; Rec."Lunch Ded.")
+                {
+                    ToolTip = 'Specifies the value of the Lunch deduction field.';
+                    DrillDown = true;
+                    DrillDownPageId = "EMADV Cust. PD Rate Details";
+                }
+                field("Lunch-Dinner Ded."; Rec."Lunch-Dinner Ded.")
+                {
+                    ToolTip = 'Specifies the value of the Lunch-Dinner deduction field.';
+                    DrillDown = true;
+                    DrillDownPageId = "EMADV Cust. PD Rate Details";
+                }
+                field("Dinner Ded."; Rec."Dinner Ded.")
+                {
+                    ToolTip = 'Specifies the value of the Dinner deduction field.';
+                    DrillDown = true;
+                    DrillDownPageId = "EMADV Cust. PD Rate Details";
+                }
+            }
+        }
+    }
+    actions
+    {
+        area(Processing)
+        {
+            group(Setup)
+            {
+                Caption = 'E&xpense';
+                action(SplitByGermanRules)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Apply German rules';
+                    Image = Split;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    ToolTip = 'Apply German rules to current line';
+
+                    trigger OnAction()
+                    var
+                        CustPerDiemRuleMgt: Codeunit "EMADV Cust. Per Diem Rule Mgt.";
+                    begin
+                        CustPerDiemRuleMgt.SetupGermanRuleDetailsForCustPerDiemRate(Rec);
+                    end;
+                }
+                action(SetupAustrianRules)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Apply Austrian rules';
+                    Image = Split;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    ToolTip = 'Apply Austrian rules to current line';
+
+                    trigger OnAction()
+                    var
+                        CustPerDiemRuleMgt: Codeunit "EMADV Cust. Per Diem Rule Mgt.";
+                    begin
+                        CustPerDiemRuleMgt.SetupAustrianRuleDetailsForCustPerDiemRate(Rec);
+                    end;
                 }
             }
         }
