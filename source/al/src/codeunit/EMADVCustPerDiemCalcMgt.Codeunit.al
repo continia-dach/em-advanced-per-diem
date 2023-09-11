@@ -14,6 +14,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         PerDiem: Record "CEM Per Diem";
         PerDiemGroup: Record "CEM Per Diem Group";
         CustPerDiemRate: Record "EMADV Cust PerDiem Rate";
+        Currency: Record Currency;
         PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
     begin
         if not EMSetup.Get() then
@@ -29,8 +30,39 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
             exit;
 
+        // Copied from Standard >>>
+        /* TODO add field Currency Code to cust per diem rates
+        "Currency Code" := PerDiemRate."Currency Code";
+        IF "Currency Code" <> '' THEN BEGIN
+            CurrencyFactor := CurrExchRate.ExchangeRate(PostingDate, "Currency Code");
+            Currency.GET("Currency Code");
+            Currency.CheckAmountRoundingPrecision;
+        END ELSE
+            Currency.InitRoundingPrecision;
+
+        IF Localization.Localization = 'NO' THEN
+            Currency."Amount Rounding Precision" := 1;
+        */
+        PerDiemDetail."Accommodation Allowance Amount" := 0;
+        PerDiemDetail."Meal Allowance Amount" := 0;
+        PerDiemDetail."Transport Allowance Amount" := 0;
+        PerDiemDetail."Entertainment Allowance Amount" := 0;
+        PerDiemDetail."Drinks Allowance Amount" := 0;
+
+        PerDiemDetail."Taxable Acc. Allowance Amount" := 0;
+        PerDiemDetail."Taxable Meal Allowance Amount" := 0;
+        PerDiemDetail."Taxable Amount" := 0;
+        PerDiemDetail."Taxable Amount (LCY)" := 0;
+        // <<< Copied from Standard
+
         PerDiemRuleSetProvider := PerDiemGroup."Calculation rule set";
-        CalculationResult := PerDiemRuleSetProvider.CalcPerDiemRate(PerDiem, PerDiemDetail);
+        PerDiemRuleSetProvider.CalcPerDiemRate(PerDiem, PerDiemDetail);
+        PerDiemDetail.Amount := ROUND(PerDiemDetail."Accommodation Allowance Amount" + PerDiemDetail."Meal Allowance Amount" + PerDiemDetail."Transport Allowance Amount" +
+              PerDiemDetail."Entertainment Allowance Amount" + PerDiemDetail."Drinks Allowance Amount", Currency."Amount Rounding Precision");
+        PerDiemDetail."Amount (LCY)" := PerDiemDetail.Amount; // TODO: Set up LCY calculation
+        PerDiemDetail.Modify();
+
+        exit(true);
     end;
 
     internal procedure GetValidCustPerDiemRate(var CustPerDiemRate: Record "EMADV Cust PerDiem Rate"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; CalcMethod: Enum "EMADV Per Diem Calc. Method"): Boolean
