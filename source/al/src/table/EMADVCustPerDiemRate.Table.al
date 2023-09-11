@@ -197,6 +197,7 @@ table 62080 "EMADV Cust PerDiem Rate"
         CustPerDiemRateDetail.SetRange("Accommodation Allowance Code", Rec."Accommodation Allowance Code");
         CustPerDiemRateDetail.SetRange("Calculation Method", Rec."Calculation Method"::FirstDay);
         CustPerDiemRateDetail.SetRange("From Hour", Rec."From Hour");
-        CustPerDiemRateDetail.Delete(true);
+        if not CustPerDiemRateDetail.IsEmpty() then
+            CustPerDiemRateDetail.DeleteAll(true);
     end;
 }

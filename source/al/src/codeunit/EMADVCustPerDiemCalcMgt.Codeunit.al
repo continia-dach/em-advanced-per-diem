@@ -8,11 +8,13 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         IsHandled := CalcCustPerDiemRate(PerDiemDetails);
     end;
 
-    internal procedure CalcCustPerDiemRate(var PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
+    internal procedure CalcCustPerDiemRate(var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
         PerDiem: Record "CEM Per Diem";
+        PerDiemGroup: Record "CEM Per Diem Group";
         CustPerDiemRate: Record "EMADV Cust PerDiem Rate";
+        PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
     begin
         if not EMSetup.Get() then
             exit;
@@ -24,37 +26,14 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         else
             PerDiem.Get(PerDiemDetail."Per Diem Entry No.");
 
-        // TODO Create setup option "Use cust. per diem rate engine"
-        if DT2DATE(PerDiem."Departure Date/Time") = PerDiemDetail.Date then begin
-            //First Day
-            if not GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, CustPerDiemRate."Calculation Method"::FirstDay) then
-                exit;
+        if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+            exit;
 
-            if CustPerDiemRate.GetDeductionAmount(PerDiemDetail) then
-                exit(PerDiemDetail.Modify);
-        end else begin
-            if (DT2DATE(PerDiem."Return Date/Time") = PerDiemDetail.Date) and
-               (DT2DATE(PerDiem."Departure Date/Time") <> PerDiemDetail.Date) then begin
-                // Last Day
-                if not GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, CustPerDiemRate."Calculation Method"::LastDay) then
-                    exit;
-
-                if CustPerDiemRate.GetDeductionAmount(PerDiemDetail) then
-                    exit(PerDiemDetail.Modify);
-            end else begin
-                // Full DAy
-                if not GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, CustPerDiemRate."Calculation Method"::FullDay) then
-                    exit;
-
-                if CustPerDiemRate.GetDeductionAmount(PerDiemDetail) then
-                    exit(PerDiemDetail.Modify);
-            end;
-
-        end;
-
+        PerDiemRuleSetProvider := PerDiemGroup."Calculation rule set";
+        CalculationResult := PerDiemRuleSetProvider.CalcPerDiemRate(PerDiem, PerDiemDetail);
     end;
 
-    local procedure GetValidCustPerDiemRate(var CustPerDiemRate: Record "EMADV Cust PerDiem Rate"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; CalcMethod: Enum "EMADV Per Diem Calc. Method"): Boolean
+    internal procedure GetValidCustPerDiemRate(var CustPerDiemRate: Record "EMADV Cust PerDiem Rate"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; CalcMethod: Enum "EMADV Per Diem Calc. Method"): Boolean
     var
 
     begin
