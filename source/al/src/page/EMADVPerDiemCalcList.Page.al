@@ -15,19 +15,23 @@ page 62085 "EMADV Per Diem Calc. List"
                 {
                     ToolTip = 'Specifies the value of the Per Diem Entry No. field.';
                 }
-                field("Date"; Rec."Date")
+                field("Per Diem Det. Entry No."; Rec."Per Diem Det. Entry No.")
                 {
-                    ToolTip = 'Specifies the value of the Date field.';
+                    ToolTip = 'Specifies the value of the Per Diem Detail Entry No. field.';
                 }
-                field("From Time"; Rec."From Time")
+                field("Entry No."; Rec."Entry No.")
+                {
+                    ToolTip = 'Specifies the value of the Entry No. field.';
+                }
+                field("From Time"; Rec."From DateTime")
                 {
                     ToolTip = 'Specifies the value of the From Time field.';
                 }
-                field("To Time"; Rec."To Time")
+                field("To Time"; Rec."To DateTime")
                 {
                     ToolTip = 'Specifies the value of the To Time field.';
                 }
-                field("Destination Country/Region"; Rec."Destination Country/Region")
+                field("Destination Country/Region"; Rec."Country/Region")
                 {
                     ToolTip = 'Specifies the value of the Destination Country/Region field.';
                 }
@@ -38,10 +42,6 @@ page 62085 "EMADV Per Diem Calc. List"
                 field("Duration Integer"; Rec."Day Duration")
                 {
                     ToolTip = 'Specifies the value of the Duration Integer field.';
-                }
-                field("Per Diem Det. Entry No."; Rec."Per Diem Det. Entry No.")
-                {
-                    ToolTip = 'Specifies the value of the Per Diem Detail Entry No. field.';
                 }
             }
         }
