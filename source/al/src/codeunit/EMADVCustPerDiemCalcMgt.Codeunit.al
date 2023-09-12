@@ -43,20 +43,22 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         IF Localization.Localization = 'NO' THEN
             Currency."Amount Rounding Precision" := 1;
         */
-        PerDiemDetail."Accommodation Allowance Amount" := 0;
-        PerDiemDetail."Meal Allowance Amount" := 0;
-        PerDiemDetail."Transport Allowance Amount" := 0;
-        PerDiemDetail."Entertainment Allowance Amount" := 0;
-        PerDiemDetail."Drinks Allowance Amount" := 0;
+        //Clear old values
+        Clear(PerDiemDetail."Accommodation Allowance Amount");
+        Clear(PerDiemDetail."Meal Allowance Amount");
+        Clear(PerDiemDetail."Transport Allowance Amount");
+        Clear(PerDiemDetail."Entertainment Allowance Amount");
+        Clear(PerDiemDetail."Drinks Allowance Amount");
 
-        PerDiemDetail."Taxable Acc. Allowance Amount" := 0;
-        PerDiemDetail."Taxable Meal Allowance Amount" := 0;
-        PerDiemDetail."Taxable Amount" := 0;
-        PerDiemDetail."Taxable Amount (LCY)" := 0;
+        Clear(PerDiemDetail."Taxable Acc. Allowance Amount");
+        Clear(PerDiemDetail."Taxable Meal Allowance Amount");
+        Clear(PerDiemDetail."Taxable Amount");
+        Clear(PerDiemDetail."Taxable Amount (LCY)");
         // <<< Copied from Standard
 
         PerDiemRuleSetProvider := PerDiemGroup."Calculation rule set";
         PerDiemRuleSetProvider.CalcPerDiemRate(PerDiem, PerDiemDetail);
+
         PerDiemDetail.Amount := ROUND(PerDiemDetail."Accommodation Allowance Amount" + PerDiemDetail."Meal Allowance Amount" + PerDiemDetail."Transport Allowance Amount" +
               PerDiemDetail."Entertainment Allowance Amount" + PerDiemDetail."Drinks Allowance Amount", Currency."Amount Rounding Precision");
         PerDiemDetail."Amount (LCY)" := PerDiemDetail.Amount; // TODO: Set up LCY calculation
