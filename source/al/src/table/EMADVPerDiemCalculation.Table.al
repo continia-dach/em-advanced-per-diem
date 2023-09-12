@@ -2,6 +2,8 @@ table 62082 "EMADV Per Diem Calculation"
 {
     Caption = 'EMADV Per Diem Calculation';
     DataClassification = CustomerContent;
+    LookupPageId = "EMADV Per Diem Calc. List";
+    DrillDownPageId = "EMADV Per Diem Calc. List";
 
     fields
     {
@@ -46,7 +48,7 @@ table 62082 "EMADV Per Diem Calculation"
             Editable = false;
             FieldClass = FlowField;
         }
-        field(20; "Duration Integer"; Integer)
+        field(20; "Day Duration"; Duration)
         {
             DataClassification = CustomerContent;
         }

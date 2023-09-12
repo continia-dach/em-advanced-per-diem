@@ -35,7 +35,7 @@ page 62085 "EMADV Per Diem Calc. List"
                 {
                     ToolTip = 'Specifies the value of the Destination Name field.';
                 }
-                field("Duration Integer"; Rec."Duration Integer")
+                field("Duration Integer"; Rec."Day Duration")
                 {
                     ToolTip = 'Specifies the value of the Duration Integer field.';
                 }
