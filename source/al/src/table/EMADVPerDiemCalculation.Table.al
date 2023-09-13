@@ -5,6 +5,7 @@ table 62082 "EMADV Per Diem Calculation"
     LookupPageId = "EMADV Per Diem Calc. List";
     DrillDownPageId = "EMADV Per Diem Calc. List";
 
+
     fields
     {
         field(1; "Per Diem Entry No."; Integer)
@@ -26,6 +27,7 @@ table 62082 "EMADV Per Diem Calculation"
             Caption = 'Entry No.';
             DataClassification = CustomerContent;
             Editable = false;
+            AutoIncrement = true;
         }
         /*field(5; "Date"; Date)
         {
@@ -61,7 +63,7 @@ table 62082 "EMADV Per Diem Calculation"
     }
     keys
     {
-        key(Key1; "Per Diem Entry No.", "Per Diem Det. Entry No.", "Entry No.", "From DateTime")
+        key(Key1; "Per Diem Entry No.", "Per Diem Det. Entry No.", "Entry No.")
         {
             Clustered = true;
         }
