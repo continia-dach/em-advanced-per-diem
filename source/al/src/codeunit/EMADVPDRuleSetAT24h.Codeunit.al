@@ -58,6 +58,8 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
                     end;
                 end;
             until PerDiemDetail.Next() = 0;
+
+        CalculateATPerDiemTwelth(PerDiem, PerDiemDetail);
     end;
 
     local procedure AddPerDiemDestToCalc(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalculation: Record "EMADV Per Diem Calculation"; var NextDayDateTime: DateTime; var CurrCountry: Code[10]): Boolean
@@ -84,7 +86,17 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
                 InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrCountry, true);
             end;
 
+            // track begin of foreign country
+            if (PerDiemDetailDest."Destination Country/Region" <> PerDiem."Departure Country/Region") and
+                (CurrCountry = PerDiem."Departure Country/Region") then begin
+
+                NextDayDateTime := CreateDateTime(PerDiemDetail.Date + 1, PerDiemDetailDest."Arrival Time");
+            end;
+            if NextDayDateTime > PerDiem."Return Date/Time" then
+                NextDayDateTime := PerDiem."Return Date/Time";
+
             CurrCountry := PerDiemDetailDest."Destination Country/Region";
+            //CurrCountry := PerDiemDetailDest."Destination Country/Region";
             InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time"), NextDayDateTime, CurrCountry, true)
         until PerDiemDetailDest.Next() = 0;
         exit(true);

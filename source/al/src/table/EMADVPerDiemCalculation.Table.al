@@ -41,6 +41,10 @@ table 62082 "EMADV Per Diem Calculation"
         field(11; "To DateTime"; DateTime)
         {
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                "Day Duration" := Rec."To DateTime" - Rec."From DateTime";
+            end;
         }
 
         field(15; "Country/Region"; Code[10])
@@ -57,6 +61,10 @@ table 62082 "EMADV Per Diem Calculation"
             FieldClass = FlowField;
         }
         field(20; "Day Duration"; Duration)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(30; "AT Per Diem Twelfth"; Integer)
         {
             DataClassification = CustomerContent;
         }

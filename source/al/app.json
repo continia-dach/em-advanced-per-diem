@@ -2,7 +2,7 @@
   "id": "f4f88889-d059-499b-a249-35038a3df58e",
   "name": "EM Custom per diem rates",
   "publisher": "github.com/continia-dach",
-  "version": "1.0.0.0",
+  "version": "1.0.0.1",
   "brief": "",
   "description": "Proof of concept app how to handle custom per diem rate requirements. No guarantee and support.",
   "privacyStatement": "",
