@@ -62,6 +62,58 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
         CalculateATPerDiemTwelth(PerDiem, PerDiemDetail);
     end;
 
+    local procedure CalculateATPerDiemTwelth(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail")
+    var
+        PerDiemCalculation: Record "EMADV Per Diem Calculation";
+        CurrDayTwelfth: Integer;
+        TwelfthConvDuration: Integer;
+        CurrePerDiemDetEntry: Integer;
+        Hours: Integer;
+        NextDayDateTime: DateTime;
+        LastCountry: Code[10];
+    begin
+        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        if PerDiem."Departure Country/Region" <> '' then
+            PerDiemCalculation.SetFilter("Country/Region", '<>%1&<>%2', PerDiem."Departure Country/Region", PerDiem."Destination Country/Region");
+
+        if PerDiemCalculation.IsEmpty then
+            exit;
+
+        CurrePerDiemDetEntry := PerDiemDetail."Entry No.";
+
+        PerDiemCalculation.FindSet();
+        NextDayDateTime := AddDayToDT(PerDiemCalculation."From DateTime");
+        repeat
+            if PerDiemCalculation."From DateTime" = NextDayDateTime then begin
+                //if CurrePerDiemDetEntry <> PerDiemCalculation."Per Diem Det. Entry No." then begin
+                CurrePerDiemDetEntry := PerDiemCalculation."Per Diem Det. Entry No.";
+                CurrDayTwelfth := 0;
+                NextDayDateTime := AddDayToDT(NextDayDateTime);
+            end;
+
+            if LastCountry <> PerDiemCalculation."Country/Region" then
+                CurrDayTwelfth := 0;
+
+            Hours := Round(PerDiemCalculation."Day Duration" / (1000 * 60 * 60), 1, '>');
+            if (Hours >= 12) then
+                PerDiemCalculation."AT Per Diem Twelfth" := 12 - CurrDayTwelfth
+            else
+                PerDiemCalculation."AT Per Diem Twelfth" := Hours - CurrDayTwelfth;
+
+            CurrDayTwelfth += PerDiemCalculation."AT Per Diem Twelfth";
+            PerDiemCalculation.Modify();
+
+            LastCountry := PerDiemCalculation."Country/Region";
+        until PerDiemCalculation.Next() = 0;
+    end;
+
+    local procedure GetTwelfth(FromDateTime: DateTime; ToDateTime: DateTime): Integer
+    var
+        myInt: Integer;
+    begin
+        myInt := (ToDateTime - FromDateTime) / (1000 * 60 * 60);
+    end;
+
     local procedure AddPerDiemDestToCalc(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalculation: Record "EMADV Per Diem Calculation"; var NextDayDateTime: DateTime; var CurrCountry: Code[10]): Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
@@ -101,6 +153,7 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
         until PerDiemDetailDest.Next() = 0;
         exit(true);
     end;
+
 
     local procedure UpdateCalcWithToDT(var PerDiemCalculation: Record "EMADV Per Diem Calculation"; ToDateTime: DateTime)
     begin

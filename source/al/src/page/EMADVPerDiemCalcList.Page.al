@@ -41,7 +41,11 @@ page 62085 "EMADV Per Diem Calc. List"
                 }
                 field("Duration Integer"; Rec."Day Duration")
                 {
-                    ToolTip = 'Specifies the value of the Duration Integer field.';
+                    ToolTip = 'Specifies the value of the Duration field.';
+                }
+                field("AT Per Diem Twelfth"; Rec."AT Per Diem Twelfth")
+                {
+                    ToolTip = 'Specifies the value of the AT Per Diem Twelfth field.';
                 }
             }
         }
