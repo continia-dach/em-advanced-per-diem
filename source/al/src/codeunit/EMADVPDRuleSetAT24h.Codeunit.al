@@ -10,6 +10,7 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
         SetupPerDiemCalculationTable(PerDiem, PerDiemDetail);
     end;
 
+
     local procedure SetupPerDiemCalculationTable(var PerDiem: Record "CEM Per Diem"; var CurrPerDiemDetail: Record "CEM Per Diem Detail"): Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
@@ -70,6 +71,7 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
         CurrePerDiemDetEntry: Integer;
         Hours: Integer;
         NextDayDateTime: DateTime;
+        TotalTripDuration: Duration;
         LastCountry: Code[10];
     begin
         PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
@@ -105,9 +107,12 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
 
             LastCountry := PerDiemCalculation."Country/Region";
         until PerDiemCalculation.Next() = 0;
+
+
+
     end;
 
-    local procedure GetTwelfth(FromDateTime: DateTime; ToDateTime: DateTime): Integer
+    internal procedure GetTwelfth(FromDateTime: DateTime; ToDateTime: DateTime): Integer
     var
         myInt: Integer;
     begin
@@ -148,7 +153,7 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
                 NextDayDateTime := PerDiem."Return Date/Time";
 
             CurrCountry := PerDiemDetailDest."Destination Country/Region";
-            //CurrCountry := PerDiemDetailDest."Destination Country/Region";
+
             InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time"), NextDayDateTime, CurrCountry, true)
         until PerDiemDetailDest.Next() = 0;
         exit(true);

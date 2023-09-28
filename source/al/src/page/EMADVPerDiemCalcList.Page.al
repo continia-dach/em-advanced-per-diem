@@ -2,7 +2,7 @@ page 62085 "EMADV Per Diem Calc. List"
 {
     ApplicationArea = All;
     Caption = 'EMADV Per Diem Calc. List';
-    PageType = List;
+    PageType = CardPart;
     SourceTable = "EMADV Per Diem Calculation";
 
     layout

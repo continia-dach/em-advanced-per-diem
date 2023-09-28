@@ -32,7 +32,7 @@ page 62083 "EMADV Per Diem Det. Dest FB"
     end;
 
     var
-        [InDataSet]
+        //[InDataSet]
         DestinationNameCode: Text[200];
 
 }
