@@ -1,8 +1,8 @@
-pageextension 62084 "EMADV Per Diem Card Ext." extends "CEM Per Diem Card"
+pageextension 62083 "EMADV Per Diems Ext." extends "CEM Per Diems"
 {
     actions
     {
-        addafter("Post Batch")
+        addafter(Dimensions)
         {
             action(ShowCalculation)
             {

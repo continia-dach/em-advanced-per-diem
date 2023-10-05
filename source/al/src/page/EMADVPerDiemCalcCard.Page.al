@@ -61,6 +61,16 @@ page 62084 "EMADV Per Diem Calc. Card"
         }
 
     }
+    trigger OnAfterGetRecord()
+    var
+        PerDiemDetail: Record "CEM Per Diem Detail";
+        CustPerDiemCalcMgt: codeunit "EMADV Cust. Per Diem Calc.Mgt.";
+    begin
+        PerDiemDetail.SetRange("Per Diem Entry No.", Rec."Entry No.");
+        if PerDiemDetail.FindFirst() then
+            CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
+    end;
+
     var
         CalculationMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
 }

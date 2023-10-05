@@ -79,7 +79,9 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
             PerDiemCalculation.SetFilter("Country/Region", '<>%1&<>%2', PerDiem."Departure Country/Region", PerDiem."Destination Country/Region");
 
         if PerDiemCalculation.IsEmpty then
-            exit;
+            //sra 2030929 exit;
+            PerDiemCalculation.SetRange("Country/Region");
+
 
         CurrePerDiemDetEntry := PerDiemDetail."Entry No.";
 

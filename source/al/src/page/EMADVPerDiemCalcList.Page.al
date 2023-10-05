@@ -14,14 +14,17 @@ page 62085 "EMADV Per Diem Calc. List"
                 field("Per Diem Entry No."; Rec."Per Diem Entry No.")
                 {
                     ToolTip = 'Specifies the value of the Per Diem Entry No. field.';
+                    Visible = false;
                 }
                 field("Per Diem Det. Entry No."; Rec."Per Diem Det. Entry No.")
                 {
                     ToolTip = 'Specifies the value of the Per Diem Detail Entry No. field.';
+                    Visible = false;
                 }
                 field("Entry No."; Rec."Entry No.")
                 {
                     ToolTip = 'Specifies the value of the Entry No. field.';
+                    Visible = false;
                 }
                 field("From Time"; Rec."From DateTime")
                 {
@@ -50,13 +53,9 @@ page 62085 "EMADV Per Diem Calc. List"
             }
         }
     }
-    trigger OnOpenPage()
-    var
-        PerDiemDetail: Record "CEM Per Diem Detail";
-        CustPerDiemCalcMgt: codeunit "EMADV Cust. Per Diem Calc.Mgt.";
-    begin
-        PerDiemDetail.SetFilter("Per Diem Entry No.", Rec.GetFilter("Per Diem Entry No."));
-        if PerDiemDetail.FindFirst() then
-            CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
-    end;
+
+
+    //trigger OnOpenPage()
+
+
 }
