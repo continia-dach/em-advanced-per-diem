@@ -37,6 +37,7 @@ page 62085 "EMADV Per Diem Calc. List"
                 field("Destination Country/Region"; Rec."Country/Region")
                 {
                     ToolTip = 'Specifies the value of the Destination Country/Region field.';
+                    Visible = false;
                 }
                 field("Destination Name"; Rec."Destination Name")
                 {
@@ -53,6 +54,7 @@ page 62085 "EMADV Per Diem Calc. List"
                 field("Meal Allowance"; rec."Daily Meal Allowance")
                 {
                     ToolTip = 'Specifies the value of the meal allowance';
+                    Visible = false;
                 }
                 field("Accommodation Reimb. Amount"; Rec."Accommodation Reimb. Amount")
                 {
@@ -61,16 +63,33 @@ page 62085 "EMADV Per Diem Calc. List"
                 field("Accommodation Allowance"; rec."Daily Accommodation Allowance")
                 {
                     ToolTip = 'Specifies the value of the accommodation Allowance.';
+                    Visible = false;
                 }
                 field("AT Per Diem Reimbursed Twelfth"; Rec."AT Per Diem Reimbursed Twelfth")
                 {
                     ToolTip = 'Specifies the number of twelth used to calculate the reimbursed amount.';
+                    Visible = CalculateAustrianPerDiem;
                 }
                 field("AT Per Diem Twelfth"; Rec."AT Per Diem Twelfth")
                 {
                     ToolTip = 'Specifies the value of the AT Per Diem Twelfth field.';
+                    Visible = false;
                 }
             }
         }
     }
+
+    trigger OnAfterGetRecord()
+    var
+        PerDiem: Record "CEM Per Diem";
+        PerDiemGroup: Record "CEM Per Diem Group";
+    begin
+        if PerDiem.Get(Rec."Per Diem Entry No.") then
+            if PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+                CalculateAustrianPerDiem := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay])
+    end;
+
+    var
+        [InDataSet]
+        CalculateAustrianPerDiem: Boolean;
 }

@@ -11,7 +11,7 @@ page 62084 "EMADV Per Diem Calc. Card"
         {
             group(General)
             {
-                Caption = 'General';
+                Caption = 'Travel details';
 
                 field("Departure Date/Time"; Rec."Departure Date/Time")
                 {
@@ -25,6 +25,28 @@ page 62084 "EMADV Per Diem Calc. Card"
                 {
                     ToolTip = 'Specifies the date and time of the return.';
                 }
+                field("Destination Country/Region"; Rec."Destination Country/Region")
+                {
+                    ToolTip = 'Specifies the destination country or region.';
+                }
+                field(Description; Rec.Description)
+                {
+                    ToolTip = 'Specifies the description of the per diem.';
+                    Visible = false;
+                }
+            }
+
+            part("Per Diem Calc. Subpage"; "EMADV Per Diem Calc. List")
+            {
+                ApplicationArea = All;
+                Editable = false;
+                SubPageLink = "Per Diem Entry No." = field("Entry No.");
+            }
+            group(Calculation)
+            {
+                Caption = 'Calculation';
+
+
                 field(TripDurationInHours; CalculationMgt.GetTripDurationInHours(Rec))
                 {
                     ToolTip = 'Specifies the duration of the trip';
@@ -33,30 +55,19 @@ page 62084 "EMADV Per Diem Calc. Card"
                 {
                     ToolTip = 'Specifies the duration in Austrian twelth';
                 }
-                field("Destination Country/Region";
-                Rec."Destination Country/Region")
+                field(TripMealReimbursementAmount; CalculationMgt.GetTripReimbursementAmount(Rec))
                 {
-                    ToolTip = 'Specifies the destination country or region.';
+                    ToolTip = 'Specifies the reimbursement amount of the current per diem';
                 }
-                field(Amount; Rec.Amount)
+                field("EM Standard Amount"; Rec.Amount)
                 {
                     ToolTip = 'Specifies the amount.';
                 }
-                field("Amount (LCY)"; Rec."Amount (LCY)")
+                field("EM Standard Amount (LCY)"; Rec."Amount (LCY)")
                 {
                     ToolTip = 'Specifies the amount in local currency calculated based on the mileage rates.';
                 }
-                field(Description; Rec.Description)
-                {
-                    ToolTip = 'Specifies the description of the per diem.';
-                }
 
-            }
-            part("Per Diem Calc. Subpage"; "EMADV Per Diem Calc. List")
-            {
-                ApplicationArea = All;
-                Editable = false;
-                SubPageLink = "Per Diem Entry No." = field("Entry No.");
             }
         }
 
@@ -79,16 +90,20 @@ page 62084 "EMADV Per Diem Calc. Card"
         }
 
     }
-    trigger OnAfterGetRecord()
+    trigger OnAfterGetCurrRecord()
     var
         PerDiemDetail: Record "CEM Per Diem Detail";
+        PerDiemGroup: Record "CEM Per Diem Group";
         CustPerDiemCalcMgt: codeunit "EMADV Cust. Per Diem Calc.Mgt.";
     begin
         PerDiemDetail.SetRange("Per Diem Entry No.", Rec."Entry No.");
         if PerDiemDetail.FindFirst() then
             CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
+        //if PerDiemGroup.Get(Rec."Per Diem Group Code") then
+        //    CalculateAustrianPerDiem := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay])
     end;
 
     var
         CalculationMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
+        CalculateAustrianPerDiem: Boolean;
 }

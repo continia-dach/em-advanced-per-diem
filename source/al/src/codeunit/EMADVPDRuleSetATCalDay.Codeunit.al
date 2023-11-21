@@ -7,6 +7,7 @@ codeunit 62085 "EMADV PD Rule Set AT CalDay" implements "EMADV IPerDiemRuleSetPr
         if not EMSetup.Get() then
             exit;
 
+        // Fill per diem calculation table
         SetupPerDiemCalculationTable(PerDiem, PerDiemDetail);
 
         // Calculate the Austrian twelth
@@ -38,9 +39,6 @@ codeunit 62085 "EMADV PD Rule Set AT CalDay" implements "EMADV IPerDiemRuleSetPr
         ResetPerDiemCalculation(PerDiem);
 
         //Create 1st day >>>
-        //24h rule 
-        //NextDayDateTime := AddDayToDT(PerDiem."Departure Date/Time");
-        //By Day rule 
         if not PerDiemDetail.Get(CurrPerDiemDetail."Per Diem Entry No.", CurrPerDiemDetail."Entry No.", CurrPerDiemDetail.Date) then
             exit;
 
@@ -300,23 +298,19 @@ codeunit 62085 "EMADV PD Rule Set AT CalDay" implements "EMADV IPerDiemRuleSetPr
                     until PerDiemCalculation.Next() = 0;
             until PerDiemDetail.Next() = 0;
 
-            //PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) -TotalReimbursedTwelth;
+
 
             RemainingDomesticTwelth := PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) - TotalReimbursedTwelth;
-
-            //Calculate remaining twelth and reimbursement amount for domestic time
-            PerDiemCalculation.Reset();
-            PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-            if PerDiemCalculation.FindLast() then begin
-                PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * (RemainingDomesticTwelth);
-                PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := RemainingDomesticTwelth;
-                PerDiemCalculation.Modify();
+            if RemainingDomesticTwelth > 0 then begin
+                //Calculate remaining twelth and reimbursement amount for domestic time
+                PerDiemCalculation.Reset();
+                PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+                if PerDiemCalculation.FindLast() then begin
+                    PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * (RemainingDomesticTwelth);
+                    PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := RemainingDomesticTwelth;
+                    PerDiemCalculation.Modify();
+                end;
             end;
         end;
-
-        //PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-        //PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
-
-
     end;
 }
