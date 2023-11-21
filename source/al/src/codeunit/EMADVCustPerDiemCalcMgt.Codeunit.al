@@ -68,12 +68,12 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         exit(true);
     end;
 
-    internal procedure GetValidCustPerDiemRate(var CustPerDiemRate: Record "EMADV Cust PerDiem Rate"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; CalcMethod: Enum "EMADV Per Diem Calc. Method"): Boolean
+    internal procedure GetValidCustPerDiemRate(var CustPerDiemRate: Record "EMADV Cust PerDiem Rate"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; DestinationCountry: Code[10]; CalcMethod: Enum "EMADV Per Diem Calc. Method"): Boolean
     var
 
     begin
         CustPerDiemRate.SetRange("Per Diem Group Code", PerDiem."Per Diem Group Code");
-        CustPerDiemRate.SetRange("Destination Country/Region", PerDiem."Destination Country/Region");
+        CustPerDiemRate.SetRange("Destination Country/Region", DestinationCountry);
         CustPerDiemRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
         //CustPerDiemRate.SetRange("Accommodation Allowance Code", PerDiem.);
         CustPerDiemRate.SetRange("Calculation Method", CalcMethod);
@@ -81,19 +81,55 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         exit(CustPerDiemRate.FindLast());
     end;
 
-    internal procedure GetTripDurationInHours(PerDiem: Record "CEM Per Diem"): Text
+    internal procedure GetTripDurationInHours(PerDiem: Record "CEM Per Diem"): Decimal
     begin
-        exit(Format(Round((PerDiem."Return Date/Time" - PerDiem."Departure Date/Time") / (1000 * 60 * 60), 1, '>')));
+        exit(Round((PerDiem."Return Date/Time" - PerDiem."Departure Date/Time") / (1000 * 60 * 60), 1, '>'));
     end;
 
-    internal procedure GetTripDurationInTwelth(PerDiem: Record "CEM Per Diem"): Text
+    internal procedure GetTripDurationInTwelth(PerDiem: Record "CEM Per Diem") TripTwelth: Integer
+    var
+        TripDurationInHours: Decimal;
+        PerDiemCalculation: Record "EMADV Per Diem Calculation";
+    begin
+        /*PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        if not PerDiemCalculation.IsEmpty then
+            if PerDiemCalculation.FindSet() then
+                repeat
+                    TripTwelth += PerDiemCalculation."AT Per Diem Twelfth";
+                until PerDiemCalculation.Next() = 0;
+        */
+        TripDurationInHours := GetTripDurationInHours(PerDiem);
+        TripTwelth := (TripDurationInHours div 24) * 12;
+        if TripDurationInHours mod 24 >= 12 then
+            TripTwelth += 12
+        else
+            TripTwelth += TripDurationInHours mod 24;
+        exit(TripTwelth);
+    end;
+    /*internal procedure GetTripDurationInTwelthBAK(PerDiem: Record "CEM Per Diem"): Text
     var
         TripHours: Integer;
         TripFullyDays: Integer;
         TripFullDayRest: Integer;
         TripFullDayRestTwelth: Integer;
+        EMSetup: Record "CEM Expense Management Setup";
+        PerDiemGroup: Record "CEM Per Diem Group";
+        PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
     begin
-        //exit(Format(
+        if not EMSetup.Get() then
+            exit;
+        if not EMSetup."Use Custom Per Diem Engine" then
+            exit;
+
+        if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+            exit;
+
+
+
+        PerDiemRuleSetProvider := PerDiemGroup."Calculation rule set";
+        exit(format(PerDiemRuleSetProvider.GetTripDurationInTwelth(PerDiem)));
+        ////----
+
         TripHours := Round((PerDiem."Return Date/Time" - PerDiem."Departure Date/Time") / (1000 * 60 * 60), 1, '>');
         TripFullyDays := TripHours div 24;
         TripFullDayRest := TripHours mod 24;
@@ -104,4 +140,5 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 
         exit(format(TripFullyDays * 12 + TripFullDayRestTwelth));
     end;
+    */
 }

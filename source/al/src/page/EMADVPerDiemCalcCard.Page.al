@@ -31,7 +31,7 @@ page 62084 "EMADV Per Diem Calc. Card"
                 }
                 field(TripDurationInTwelth; CalculationMgt.GetTripDurationInTwelth(Rec))
                 {
-                    ToolTip = 'Specifies the duration of the trip';
+                    ToolTip = 'Specifies the duration in Austrian twelth';
                 }
                 field("Destination Country/Region";
                 Rec."Destination Country/Region")
@@ -57,6 +57,24 @@ page 62084 "EMADV Per Diem Calc. Card"
                 ApplicationArea = All;
                 Editable = false;
                 SubPageLink = "Per Diem Entry No." = field("Entry No.");
+            }
+        }
+
+    }
+    actions
+    {
+        area(Navigation)
+        {
+            action(PerDiemGroup)
+            {
+                ApplicationArea = All;
+                RunObject = Page "CEM Per Diem Group Card";
+                RunPageLink = Code = field("Per Diem Group Code");
+                RunPageMode = View;
+                Image = Card;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
             }
         }
 

@@ -46,6 +46,26 @@ page 62085 "EMADV Per Diem Calc. List"
                 {
                     ToolTip = 'Specifies the value of the Duration field.';
                 }
+                field("Meal Reimb. Amount"; Rec."Meal Reimb. Amount")
+                {
+                    ToolTip = 'Specifies the reimbursed meal amount';
+                }
+                field("Meal Allowance"; rec."Daily Meal Allowance")
+                {
+                    ToolTip = 'Specifies the value of the meal allowance';
+                }
+                field("Accommodation Reimb. Amount"; Rec."Accommodation Reimb. Amount")
+                {
+                    ToolTip = 'Specifies the reimbursed accommodation amount';
+                }
+                field("Accommodation Allowance"; rec."Daily Accommodation Allowance")
+                {
+                    ToolTip = 'Specifies the value of the accommodation Allowance.';
+                }
+                field("AT Per Diem Reimbursed Twelfth"; Rec."AT Per Diem Reimbursed Twelfth")
+                {
+                    ToolTip = 'Specifies the number of twelth used to calculate the reimbursed amount.';
+                }
                 field("AT Per Diem Twelfth"; Rec."AT Per Diem Twelfth")
                 {
                     ToolTip = 'Specifies the value of the AT Per Diem Twelfth field.';
@@ -53,9 +73,4 @@ page 62085 "EMADV Per Diem Calc. List"
             }
         }
     }
-
-
-    //trigger OnOpenPage()
-
-
 }

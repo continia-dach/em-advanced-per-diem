@@ -8,6 +8,10 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
             {
                 ApplicationArea = All;
             }
+            field("Preferred rate"; Rec."Preferred rate")
+            {
+                ApplicationArea = All;
+            }
         }
     }
 }

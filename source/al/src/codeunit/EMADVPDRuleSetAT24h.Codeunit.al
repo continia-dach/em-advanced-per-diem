@@ -8,6 +8,8 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
             exit;
 
         SetupPerDiemCalculationTable(PerDiem, PerDiemDetail);
+
+        CalculateATPerDiemTwelth(PerDiem, PerDiemDetail);
     end;
 
 
@@ -60,7 +62,7 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
                 end;
             until PerDiemDetail.Next() = 0;
 
-        CalculateATPerDiemTwelth(PerDiem, PerDiemDetail);
+
     end;
 
     local procedure CalculateATPerDiemTwelth(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail")

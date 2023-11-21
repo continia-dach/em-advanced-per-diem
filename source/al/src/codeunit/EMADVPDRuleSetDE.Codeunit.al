@@ -9,17 +9,18 @@ codeunit 62083 "EMADV PD Rule Set DE" implements "EMADV IPerDiemRuleSetProvider"
         // TODO Create setup option "Use cust. per diem rate engine"
         if DT2DATE(PerDiem."Departure Date/Time") = PerDiemDetail.Date then begin
             //First Day
-            RateFound := PerDiemCalcMgt.GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, CustPerDiemRate."Calculation Method"::FirstDay);
+            RateFound := PerDiemCalcMgt.GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, PerDiem."Departure Country/Region", CustPerDiemRate."Calculation Method"::FirstDay);
 
         end else begin
             if (DT2DATE(PerDiem."Return Date/Time") = PerDiemDetail.Date) and
                (DT2DATE(PerDiem."Departure Date/Time") <> PerDiemDetail.Date) then begin
                 // Last Day
-                RateFound := PerDiemCalcMgt.GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, CustPerDiemRate."Calculation Method"::LastDay);
+                RateFound := PerDiemCalcMgt.GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, PerDiem."Destination Country/Region", CustPerDiemRate."Calculation Method"::LastDay);
                 CustPerDiemRate.GetDeductionAmount(PerDiemDetail);
             end else begin
                 // Full Day
-                RateFound := PerDiemCalcMgt.GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, CustPerDiemRate."Calculation Method"::FullDay);
+                //TODO Include per diem deatils
+                RateFound := PerDiemCalcMgt.GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, 'TODO', CustPerDiemRate."Calculation Method"::FullDay);
             end;
         end;
         if RateFound then begin

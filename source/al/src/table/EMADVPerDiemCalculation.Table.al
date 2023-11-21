@@ -68,6 +68,27 @@ table 62082 "EMADV Per Diem Calculation"
         {
             DataClassification = CustomerContent;
         }
+        field(31; "AT Per Diem Reimbursed Twelfth"; Integer)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(40; "Daily Meal Allowance"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(41; "Meal Reimb. Amount"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(45; "Daily Accommodation Allowance"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(46; "Accommodation Reimb. Amount"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+
     }
     keys
     {
@@ -76,6 +97,9 @@ table 62082 "EMADV Per Diem Calculation"
             Clustered = true;
         }
         key(Key2; "From DateTime")
+        {
+        }
+        key(Key3; "Daily Meal Allowance")
         {
         }
     }
