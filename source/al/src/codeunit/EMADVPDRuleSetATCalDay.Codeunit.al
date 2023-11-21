@@ -9,12 +9,13 @@ codeunit 62085 "EMADV PD Rule Set AT CalDay" implements "EMADV IPerDiemRuleSetPr
 
         SetupPerDiemCalculationTable(PerDiem, PerDiemDetail);
 
-        // Find the Austrian Twelth
+        // Calculate the Austrian twelth
         CalculateATPerDiemTwelth(PerDiem, PerDiemDetail);
 
         // Add the daily accommocation value
-        SetDailyAllowances(PerDiem, PerDiemDetail);
+        SetDailyAllowances(PerDiem);
 
+        // Calculate the reimbursement values  
         CalculateReimbursementAmounts(PerDiem);
     end;
 
@@ -79,11 +80,9 @@ codeunit 62085 "EMADV PD Rule Set AT CalDay" implements "EMADV IPerDiemRuleSetPr
     var
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         CurrDayTwelfth: Integer;
-        TwelfthConvDuration: Integer;
         CurrPerDiemDetEntry: Integer;
         Hours: Integer;
         NextDayDateTime: DateTime;
-        TotalTripDuration: Duration;
         LastCountry: Code[10];
     begin
         PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
@@ -223,12 +222,12 @@ codeunit 62085 "EMADV PD Rule Set AT CalDay" implements "EMADV IPerDiemRuleSetPr
         exit(CreateDateTime(DT2Date(BaseDateTime) + 1, 000000T));
     end;
 
-    local procedure SetDailyAllowances(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail")
+    local procedure SetDailyAllowances(var PerDiem: Record "CEM Per Diem")
     var
         CustPerDiemRate: Record "EMADV Cust PerDiem Rate";
+        PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemCalcMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
-        RateFound: Boolean;
     begin
         PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
         if PerDiemDetail.FindSet() then
@@ -248,12 +247,10 @@ codeunit 62085 "EMADV PD Rule Set AT CalDay" implements "EMADV IPerDiemRuleSetPr
 
     local procedure CalculateReimbursementAmounts(var PerDiem: Record "CEM Per Diem")
     var
-        CustPerDiemRate: Record "EMADV Cust PerDiem Rate";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemGroup: Record "CEM Per Diem Group";
         PerDiemCalcMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
-        RateFound: Boolean;
         RemainingTwelth: Integer;
         TotalReimbursedTwelth: Integer;
         RemainingDomesticTwelth: Integer;
