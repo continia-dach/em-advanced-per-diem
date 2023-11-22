@@ -79,7 +79,12 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 
     internal procedure GetTripDurationInHours(PerDiem: Record "CEM Per Diem"): Decimal
     begin
-        exit(Round((PerDiem."Return Date/Time" - PerDiem."Departure Date/Time") / (1000 * 60 * 60), 1, '>'));
+        ConvertMsecDurationIntoHours(PerDiem."Return Date/Time" - PerDiem."Departure Date/Time");
+    end;
+
+    internal procedure ConvertMsecDurationIntoHours(DurationInMsec: Integer): Decimal
+    begin
+        exit(Round((DurationInMsec) / (1000 * 60 * 60), 1, '>'));
     end;
 
     internal procedure GetTripReimbursementAmount(PerDiem: Record "CEM Per Diem") TripReimbursementAmount: Decimal
