@@ -56,6 +56,11 @@ page 62085 "EMADV Per Diem Calc. List"
                     ToolTip = 'Specifies the value of the meal allowance';
                     Visible = false;
                 }
+                field("Meal Allowance Deductions"; Rec."Meal Allowance Deductions")
+                {
+                    ToolTip = 'Specifies the amount that will be deducted from the meal allowance';
+                    ApplicationArea = All;
+                }
                 field("Accommodation Reimb. Amount"; Rec."Accommodation Reimb. Amount")
                 {
                     ToolTip = 'Specifies the reimbursed accommodation amount';

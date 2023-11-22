@@ -87,6 +87,28 @@ page 62084 "EMADV Per Diem Calc. Card"
                 PromotedIsBig = true;
                 PromotedCategory = Process;
             }
+            action("Per Diem Details")
+            {
+                ApplicationArea = All;
+                Caption = 'Per Diem Details';
+                Ellipsis = true;
+                Image = Split;
+                Promoted = true;
+                PromotedCategory = Category4;
+                ShortCutKey = 'Shift+Ctrl+L';
+                ToolTip = 'View or edit per diem details.';
+                AboutTitle = 'Per Diem Details';
+                AboutText = 'Detailed information about each day of the per diem and each element selected for reimbursement by the expense user.';
+
+                trigger OnAction()
+                var
+                    PerDiemValidate: Codeunit "CEM Per Diem-Validate";
+                begin
+                    DrillDownDetails(Rec);
+                    PerDiemValidate.RUN(Rec);
+                    CurrPage.UPDATE(FALSE);
+                end;
+            }
         }
 
     }
@@ -101,6 +123,14 @@ page 62084 "EMADV Per Diem Calc. Card"
             CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
         //if PerDiemGroup.Get(Rec."Per Diem Group Code") then
         //    CalculateAustrianPerDiem := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay])
+    end;
+
+    internal procedure DrillDownDetails(PerDiem: Record "CEM Per Diem")
+    var
+        PerDiemDetail: Record "CEM Per Diem Detail";
+    begin
+        PerDiemDetail.SETRANGE("Per Diem Entry No.", PerDiem."Entry No.");
+        PAGE.RUNMODAL(PAGE::"CEM Per Diem Details", PerDiemDetail);
     end;
 
     var

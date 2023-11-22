@@ -76,7 +76,11 @@ table 62082 "EMADV Per Diem Calculation"
         {
             DataClassification = CustomerContent;
         }
-        field(41; "Meal Reimb. Amount"; Decimal)
+        field(41; "Meal Allowance Deductions"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+        field(42; "Meal Reimb. Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }

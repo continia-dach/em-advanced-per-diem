@@ -4,7 +4,15 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
     var
         EMSetup: Record "CEM Expense Management Setup";
         PerDiemGroup: Record "CEM Per Diem Group";
+
+        PerDiemDetailUpdate: record "CEM Per Diem Detail";
+        PerDiemCalculation: Record "EMADV Per Diem Calculation";
+        Currency: Record Currency;
     begin
+        // we only calculate on first entry
+        if (PerDiemDetail."Entry No." <> 1) then
+            exit;
+
         if not EMSetup.Get() then
             exit;
 
@@ -20,10 +28,43 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         CalculateATPerDiemTwelth(PerDiem, PerDiemDetail);
 
         // Add the daily accommocation value
-        SetDailyAllowances(PerDiem);
+        SetDailyAllowancesAndDeductions(PerDiem);
 
         // Calculate the reimbursement values  
         CalculateReimbursementAmounts(PerDiem);
+
+        // Iterate and update new diem details 
+        PerDiemDetailUpdate.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        if PerDiemDetailUpdate.FindSet(true) then
+            repeat
+                // Clear old values >>>
+                Clear(PerDiemDetailUpdate."Accommodation Allowance Amount");
+                Clear(PerDiemDetailUpdate."Meal Allowance Amount");
+                Clear(PerDiemDetailUpdate."Transport Allowance Amount");
+                Clear(PerDiemDetailUpdate."Entertainment Allowance Amount");
+                Clear(PerDiemDetailUpdate."Drinks Allowance Amount");
+
+                Clear(PerDiemDetailUpdate."Taxable Acc. Allowance Amount");
+                Clear(PerDiemDetailUpdate."Taxable Meal Allowance Amount");
+                Clear(PerDiemDetailUpdate."Taxable Amount");
+                Clear(PerDiemDetailUpdate."Taxable Amount (LCY)");
+
+                // Get fill calculation table and fill amount fields
+                PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+                PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetailUpdate."Entry No.");
+                PerDiemCalculation.SetRange("From DateTime", CreateDateTime(PerDiemDetailUpdate.Date, 000000T), CreateDateTime(PerDiemDetailUpdate.Date, 235959T));
+                if PerDiemCalculation.FindSet() then
+                    repeat
+                        if PerDiemCalculation."Meal Allowance Deductions" <= PerDiemCalculation."Meal Reimb. Amount" then
+                            PerDiemDetailUpdate."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount" - PerDiemCalculation."Meal Allowance Deductions";
+                        PerDiemDetailUpdate."Accommodation Allowance Amount" += PerDiemCalculation."Accommodation Reimb. Amount";
+                    until PerDiemCalculation.Next() = 0;
+
+                PerDiemDetailUpdate.Amount := ROUND(PerDiemDetailUpdate."Accommodation Allowance Amount" + PerDiemDetailUpdate."Meal Allowance Amount" + PerDiemDetailUpdate."Transport Allowance Amount" +
+                      PerDiemDetailUpdate."Entertainment Allowance Amount" + PerDiemDetailUpdate."Drinks Allowance Amount", Currency."Amount Rounding Precision");
+                PerDiemDetailUpdate."Amount (LCY)" := PerDiemDetailUpdate.Amount; // TODO: Set up LCY calculation
+                PerDiemDetailUpdate.Modify();
+            until PerDiemDetailUpdate.Next() = 0;
     end;
 
 
@@ -126,12 +167,14 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         until PerDiemCalculation.Next() = 0;
     end;
 
-    local procedure SetDailyAllowances(var PerDiem: Record "CEM Per Diem")
+    local procedure SetDailyAllowancesAndDeductions(var PerDiem: Record "CEM Per Diem")
     var
-        CustPerDiemRate: Record "EMADV Cust PerDiem Rate";
+        //CustPerDiemRate: Record "EMADV Cust PerDiem Rate";
+        PerDiemRate: Record "CEM Per Diem Rate v.2";
         PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
     begin
+
         PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
         if PerDiemDetail.FindSet() then
             repeat
@@ -139,9 +182,27 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
                 if PerDiemCalculation.FindSet() then
                     repeat
-                        if PerDiemCalcMgt.GetValidCustPerDiemRate(CustPerDiemRate, PerDiemDetail, PerDiem, PerDiemCalculation."Country/Region", CustPerDiemRate."Calculation Method"::FullDay) then begin
-                            PerDiemCalculation."Daily Accommodation Allowance" := CustPerDiemRate."Daily Accommodation Allowance";
-                            PerDiemCalculation."Daily Meal Allowance" := CustPerDiemRate."Daily Meal Allowance";
+                        if PerDiemCalcMgt.GetValidPerDiemRate(PerDiemRate, PerDiemDetail, PerDiem, PerDiemCalculation."Country/Region") then begin
+                            case true of
+                                DT2Date(PerDiemCalculation."From DateTime") = DT2Date(PerDiem."Departure Date/Time"):
+                                    begin
+                                        PerDiemCalculation."Daily Accommodation Allowance" := 0;
+                                        PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."First/Last Day Meal Allowance";
+                                        PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiemDetail, PerDiemRate, false);
+                                    end;
+                                (DT2Date(PerDiemCalculation."From DateTime") = DT2Date(PerDiem."Return Date/Time")):
+                                    begin
+                                        PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
+                                        PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."First/Last Day Meal Allowance";
+                                        PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiemDetail, PerDiemRate, false);
+                                    end;
+                                else begin
+                                    PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
+                                    PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."Daily Meal Allowance";
+                                    PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiemDetail, PerDiemRate, true);
+                                end;
+                            end;
+
                             PerDiemCalculation.Modify();
                         end;
                     until PerDiemCalculation.Next() = 0;
@@ -207,6 +268,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                     until PerDiemCalculation.Next() = 0;
             until PerDiemDetail.Next() = 0;
 
+            // Calculate the domestic rest-amount that 
             RemainingDomesticTwelth := PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) - TotalReimbursedTwelth;
             if RemainingDomesticTwelth > 0 then begin
                 //Calculate remaining twelth and reimbursement amount for domestic time
@@ -312,6 +374,58 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 //TODO Find out if we need another default calculation and in case which one is needed
                 exit(BaseDateTime);
         end;
+    end;
+
+    local procedure GetMaxDailyMealDeductions(PerDiemDetail: Record "CEM Per Diem Detail"; PerDiemRate: Record "CEM Per Diem Rate v.2"; FullDay: Boolean): Decimal
+    begin
+        // Breakfast only
+        if PerDiemDetail.Breakfast and (not PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
+            if FullDay then
+                exit(PerDiemRate."Full day Breakfast Ded.")
+            else
+                exit(PerDiemRate."Part day Breakfast Ded.");
+
+        // Breakfast and lunch 
+        if PerDiemDetail.Breakfast and PerDiemDetail.Lunch and (not PerDiemDetail.Dinner) then
+            if FullDay then
+                exit(PerDiemRate."Full day Breakfast-Lunch Ded.")
+            else
+                exit(PerDiemRate."Part day Breakfast-Lunch Ded.");
+
+        // Breakfast and dinner
+        if PerDiemDetail.Breakfast and (not PerDiemDetail.Lunch) and PerDiemDetail.Dinner then
+            if FullDay then
+                exit(PerDiemRate."Full day Breakfast-Dinner Ded.")
+            else
+                exit(PerDiemRate."Part day Breakfast-Dinner Ded.");
+
+        // Lunch only
+        if (not PerDiemDetail.Breakfast) and PerDiemDetail.Lunch and (not PerDiemDetail.Dinner) then
+            if FullDay then
+                exit(PerDiemRate."Full day Lunch Ded.")
+            else
+                exit(PerDiemRate."Part day Lunch Ded.");
+
+        // Lunch and Dinner
+        if (not PerDiemDetail.Breakfast) and PerDiemDetail.Lunch and PerDiemDetail.Dinner then
+            if FullDay then
+                exit(PerDiemRate."Full day Lunch-Dinner Ded.")
+            else
+                exit(PerDiemRate."Part day Lunch-Dinner Ded.");
+
+        // Dinner only
+        if (not PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and PerDiemDetail.Dinner then
+            if FullDay then
+                exit(PerDiemRate."Full day Dinner Ded.")
+            else
+                exit(PerDiemRate."Part day Dinner Ded.");
+
+        // All meals
+        if PerDiemDetail.Breakfast and PerDiemDetail.Lunch and PerDiemDetail.Dinner then
+            if FullDay then
+                exit(PerDiemRate."Full day All meal Ded.")
+            else
+                exit(PerDiemRate."Part day All meal Ded.");
     end;
 
     var
