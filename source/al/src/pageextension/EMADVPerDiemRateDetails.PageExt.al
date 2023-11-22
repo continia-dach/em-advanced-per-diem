@@ -53,6 +53,5 @@ pageextension 62081 "EMADV Per Diem Rate Details" extends "CEM Per Diem Details"
     end;
 
     var
-        [InDataSet]
         MultiDestinationsEnabled: Boolean;
 }

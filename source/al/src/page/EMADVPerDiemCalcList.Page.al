@@ -90,6 +90,5 @@ page 62085 "EMADV Per Diem Calc. List"
     end;
 
     var
-        [InDataSet]
         CalculateAustrianPerDiem: Boolean;
 }

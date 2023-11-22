@@ -17,11 +17,11 @@ enum 62082 "EMADV Per Diem Calc. Rule Set" implements "EMADV IPerDiemRuleSetProv
     value(20; Austria24h)
     {
         Caption = 'Austria 24h';
-        Implementation = "EMADV IPerDiemRuleSetProvider" = "EMADV PD Rule Set AT 24h";
+        Implementation = "EMADV IPerDiemRuleSetProvider" = "EMADV PD Rule Set AT";
     }
     value(24; AustriaByDay)
     {
         Caption = 'Austria per calendar day';
-        Implementation = "EMADV IPerDiemRuleSetProvider" = "EMADV PD Rule Set AT CalDay";
+        Implementation = "EMADV IPerDiemRuleSetProvider" = "EMADV PD Rule Set AT";
     }
 }

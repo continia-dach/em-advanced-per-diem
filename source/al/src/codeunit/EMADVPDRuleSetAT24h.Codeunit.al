@@ -3,9 +3,15 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
     internal procedure CalcPerDiemRate(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail")
     var
         EMSetup: Record "CEM Expense Management Setup";
+        PerDiemGroup: Record "CEM Per Diem Group";
     begin
         if not EMSetup.Get() then
             exit;
+
+        if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+            exit;
+
+        PerDiemCalcRuleSet := PerDiemGroup."Calculation rule set";
 
         // Fill per diem calculation table
         SetupPerDiemCalculationTable(PerDiem, PerDiemDetail);
@@ -39,11 +45,10 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
         ResetPerDiemCalculation(PerDiem);
 
         //Create 1st day >>>
-        //24h rule 
         if not PerDiemDetail.Get(CurrPerDiemDetail."Per Diem Entry No.", CurrPerDiemDetail."Entry No.", CurrPerDiemDetail.Date) then
             exit;
 
-        NextDayDateTime := AddDayToDT(PerDiem."Departure Date/Time");
+        NextDayDateTime := GetNextDayTime(PerDiem."Departure Date/Time");
 
         CurrCountry := PerDiem."Departure Country/Region";
         InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiem."Departure Date/Time", NextDayDateTime, CurrCountry, false);
@@ -64,7 +69,7 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
                                 InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", PerDiem."Return Date/Time", CurrCountry, true);
                             end;
                         end else begin
-                            NextDayDateTime := AddDayToDT(NextDayDateTime);
+                            NextDayDateTime := GetNextDayTime(NextDayDateTime);
                             InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrCountry, true);
                         end;
                     end;
@@ -78,11 +83,9 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
     var
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         CurrDayTwelfth: Integer;
-        TwelfthConvDuration: Integer;
-        CurrePerDiemDetEntry: Integer;
+        CurrPerDiemDetEntry: Integer;
         Hours: Integer;
         NextDayDateTime: DateTime;
-        TotalTripDuration: Duration;
         LastCountry: Code[10];
     begin
         PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
@@ -94,16 +97,18 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
             PerDiemCalculation.SetRange("Country/Region");
 
 
-        CurrePerDiemDetEntry := PerDiemDetail."Entry No.";
+        CurrPerDiemDetEntry := PerDiemDetail."Entry No.";
 
-        PerDiemCalculation.FindSet();
-        NextDayDateTime := AddDayToDT(PerDiemCalculation."From DateTime");
+        if not PerDiemCalculation.FindSet() then
+            exit;
+
+        NextDayDateTime := GetNextDayTime(PerDiemCalculation."From DateTime");
         repeat
             if PerDiemCalculation."From DateTime" = NextDayDateTime then begin
-                //if CurrePerDiemDetEntry <> PerDiemCalculation."Per Diem Det. Entry No." then begin
-                CurrePerDiemDetEntry := PerDiemCalculation."Per Diem Det. Entry No.";
+                //if CurrPerDiemDetEntry <> PerDiemCalculation."Per Diem Det. Entry No." then begin
+                CurrPerDiemDetEntry := PerDiemCalculation."Per Diem Det. Entry No.";
                 CurrDayTwelfth := 0;
-                NextDayDateTime := AddDayToDT(NextDayDateTime);
+                NextDayDateTime := GetNextDayTime(NextDayDateTime);
             end;
 
             if LastCountry <> PerDiemCalculation."Country/Region" then
@@ -204,8 +209,6 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
                     until PerDiemCalculation.Next() = 0;
             until PerDiemDetail.Next() = 0;
 
-            //PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) -TotalReimbursedTwelth;
-
             RemainingDomesticTwelth := PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) - TotalReimbursedTwelth;
             if RemainingDomesticTwelth > 0 then begin
                 //Calculate remaining twelth and reimbursement amount for domestic time
@@ -247,7 +250,7 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
         repeat
             // Check if we have to log a new day till destination arrival
             if NextDayDateTime < CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time") then begin
-                NextDayDateTime := AddDayToDT(NextDayDateTime);
+                NextDayDateTime := GetNextDayTime(NextDayDateTime);
                 InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrCountry, true);
             end;
 
@@ -255,7 +258,12 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
             if (PerDiemDetailDest."Destination Country/Region" <> PerDiem."Departure Country/Region") and
                 (CurrCountry = PerDiem."Departure Country/Region") then begin
 
-                NextDayDateTime := CreateDateTime(PerDiemDetail.Date + 1, PerDiemDetailDest."Arrival Time");
+                case PerDiemCalcRuleSet of
+                    "EMADV Per Diem Calc. Rule Set"::Austria24h:
+                        NextDayDateTime := CreateDateTime(PerDiemDetail.Date + 1, PerDiemDetailDest."Arrival Time");
+                    "EMADV Per Diem Calc. Rule Set"::AustriaByDay:
+                        NextDayDateTime := CreateDateTime(PerDiemDetail.Date + 1, 000000T);
+                end;
             end;
             if NextDayDateTime > PerDiem."Return Date/Time" then
                 NextDayDateTime := PerDiem."Return Date/Time";
@@ -302,8 +310,19 @@ codeunit 62089 "EMADV PD Rule Set AT 24h" implements "EMADV IPerDiemRuleSetProvi
             PerDiemCalculation.DeleteAll(true);
     end;
 
-    local procedure AddDayToDT(BaseDateTime: DateTime): DateTime
+    local procedure GetNextDayTime(BaseDateTime: DateTime): DateTime
     begin
-        exit(CreateDateTime(DT2Date(BaseDateTime) + 1, DT2Time(BaseDateTime)));
+        case PerDiemCalcRuleSet of
+            "EMADV Per Diem Calc. Rule Set"::Austria24h:
+                exit(CreateDateTime(DT2Date(BaseDateTime) + 1, DT2Time(BaseDateTime)));
+            "EMADV Per Diem Calc. Rule Set"::AustriaByDay:
+                exit(CreateDateTime(DT2Date(BaseDateTime) + 1, 000000T));
+            else
+                //TODO Find out if we need another default calculation and in case which one is needed
+                exit(BaseDateTime);
+        end;
     end;
+
+    var
+        PerDiemCalcRuleSet: enum "EMADV Per Diem Calc. Rule Set";
 }
