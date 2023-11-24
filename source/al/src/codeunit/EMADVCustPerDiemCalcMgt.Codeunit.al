@@ -31,7 +31,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
             exit;
 
         // Recalculation and update of reimbursement amounts only on first record until we are sure, that we do it only once
-        if PerDiemDetail."Per Diem Entry No." <> 1 then
+        if PerDiemDetail."Entry No." <> 1 then
             exit(true);
 
         PerDiemRuleSetProvider := PerDiemGroup."Calculation rule set";

@@ -29,11 +29,7 @@ table 62082 "EMADV Per Diem Calculation"
             Editable = false;
             AutoIncrement = true;
         }
-        /*field(5; "Date"; Date)
-        {
-            Caption = 'Date';
-            DataClassification = CustomerContent;
-        }*/
+
         field(10; "From DateTime"; DateTime)
         {
             DataClassification = CustomerContent;
@@ -46,7 +42,10 @@ table 62082 "EMADV Per Diem Calculation"
                 "Day Duration" := Rec."To DateTime" - Rec."From DateTime";
             end;
         }
-
+        field(12; "First-Last Entry"; Boolean)
+        {
+            DataClassification = CustomerContent;
+        }
         field(15; "Country/Region"; Code[10])
         {
             Caption = 'Country/Region';

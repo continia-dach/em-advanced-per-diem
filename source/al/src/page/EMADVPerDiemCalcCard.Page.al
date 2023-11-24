@@ -4,6 +4,7 @@ page 62084 "EMADV Per Diem Calc. Card"
     Caption = 'EMADV Per Diem Calc Card';
     PageType = Card;
     SourceTable = "CEM Per Diem";
+    Editable = false;
 
     layout
     {
@@ -67,10 +68,8 @@ page 62084 "EMADV Per Diem Calc. Card"
                 {
                     ToolTip = 'Specifies the amount in local currency calculated based on the mileage rates.';
                 }
-
             }
         }
-
     }
     actions
     {
@@ -87,6 +86,19 @@ page 62084 "EMADV Per Diem Calc. Card"
                 PromotedIsBig = true;
                 PromotedCategory = Process;
             }
+            action(Update)
+            {
+                ApplicationArea = All;
+                Image = Recalculate;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                trigger OnAction()
+                begin
+                    UpdatePerDiemCalculation();
+                    CurrPage.Update(false);
+                end;
+            }
             action("Per Diem Details")
             {
                 ApplicationArea = All;
@@ -94,7 +106,7 @@ page 62084 "EMADV Per Diem Calc. Card"
                 Ellipsis = true;
                 Image = Split;
                 Promoted = true;
-                PromotedCategory = Category4;
+                PromotedCategory = Process;
                 ShortCutKey = 'Shift+Ctrl+L';
                 ToolTip = 'View or edit per diem details.';
                 AboutTitle = 'Per Diem Details';
@@ -109,10 +121,35 @@ page 62084 "EMADV Per Diem Calc. Card"
                     CurrPage.UPDATE(FALSE);
                 end;
             }
+            action(OpenRateCard)
+            {
+                ApplicationArea = All;
+                Image = Card;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                trigger OnAction()
+                var
+                    PerDiemRate: Record "CEM Per Diem Rate v.2";
+                    PerDiemCalculation: Record "EMADV Per Diem Calculation";
+                begin
+                    PerDiemRate.SetRange("Per Diem Group Code", Rec."Per Diem Group Code");
+                    CurrPage."Per Diem Calc. Subpage".Page.GetRecord(PerDiemCalculation);
+                    PerDiemRate.SetRange("Destination Country/Region", PerDiemCalculation."Country/Region");
+                    PerDiemRate.SetFilter("Start Date", '..%1', DT2date(PerDiemCalculation."To DateTime"));
+                    if PerDiemRate.FindLast() then
+                        Page.RunModal(page::"CEM Per Diem Rate Card v.2", PerDiemRate);
+                end;
+            }
         }
 
     }
     trigger OnAfterGetCurrRecord()
+    begin
+        UpdatePerDiemCalculation();
+    end;
+
+    local procedure UpdatePerDiemCalculation()
     var
         PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemGroup: Record "CEM Per Diem Group";
@@ -121,8 +158,6 @@ page 62084 "EMADV Per Diem Calc. Card"
         PerDiemDetail.SetRange("Per Diem Entry No.", Rec."Entry No.");
         if PerDiemDetail.FindFirst() then
             CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
-        //if PerDiemGroup.Get(Rec."Per Diem Group Code") then
-        //    CalculateAustrianPerDiem := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay])
     end;
 
     internal procedure DrillDownDetails(PerDiem: Record "CEM Per Diem")
