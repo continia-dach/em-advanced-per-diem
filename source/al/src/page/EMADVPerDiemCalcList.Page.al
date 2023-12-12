@@ -1,7 +1,7 @@
 page 62085 "EMADV Per Diem Calc. List"
 {
     ApplicationArea = All;
-    Caption = 'EMADV Per Diem Calc. List';
+    Caption = 'Per Diem calculation details';
     PageType = CardPart;
     SourceTable = "EMADV Per Diem Calculation";
 
@@ -47,10 +47,7 @@ page 62085 "EMADV Per Diem Calc. List"
                 {
                     ToolTip = 'Specifies the value of the Duration field.';
                 }
-                field("Meal Reimb. Amount"; Rec."Meal Reimb. Amount")
-                {
-                    ToolTip = 'Specifies the reimbursed meal amount';
-                }
+
                 field("Meal Allowance"; rec."Daily Meal Allowance")
                 {
                     ToolTip = 'Specifies the value of the meal allowance';
@@ -59,7 +56,11 @@ page 62085 "EMADV Per Diem Calc. List"
                 field("Meal Allowance Deductions"; Rec."Meal Allowance Deductions")
                 {
                     ToolTip = 'Specifies the amount that will be deducted from the meal allowance';
-                    ApplicationArea = All;
+                    Visible = false;
+                }
+                field("Meal Reimb. Amount"; Rec."Meal Reimb. Amount")
+                {
+                    ToolTip = 'Specifies the reimbursed meal amount';
                 }
                 field("Accommodation Reimb. Amount"; Rec."Accommodation Reimb. Amount")
                 {

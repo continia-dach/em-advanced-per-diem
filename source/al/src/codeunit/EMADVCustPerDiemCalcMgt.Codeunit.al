@@ -27,6 +27,9 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         if not PerDiem.Get(PerDiemDetail."Per Diem Entry No.") then
             exit;
 
+        if (PerDiem."Departure Date/Time" = 0DT) or (PerDiem."Return Date/Time" = 0DT) then
+            exit;
+
         if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
             exit;
 
@@ -99,11 +102,21 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         exit(CustPerDiemRate.FindLast());
     end;
 
-    internal procedure GetValidPerDiemRate(var PerDiemRate: Record "CEM Per Diem Rate v.2"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; DestinationCountry: Code[10]): Boolean
+    internal procedure GetValidPerDiemRate(var PerDiemRate: Record "CEM Per Diem Rate v.2"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; PerDiemCalc: Record "EMADV Per Diem Calculation"): Boolean
     begin
+
         PerDiemRate.SetRange("Per Diem Group Code", PerDiem."Per Diem Group Code");
-        PerDiemRate.SetRange("Destination Country/Region", DestinationCountry);
+        PerDiemRate.SetRange("Destination Country/Region", PerDiemCalc."Country/Region");
         PerDiemRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
+
+        // Make sure to get only rates with minimum stay hours of trip
+        PerDiemRate.SetFilter("Minimum Stay (hours)", '<=%1', GetTripDurationInHours(PerDiem));
+
+        // Make sure to get only rates with minimum stay hours of first & last day
+        if ((PerDiemDetail.Date = DT2Date(PerDiem."Departure Date/Time")) or (PerDiemDetail.Date = DT2Date(PerDiem."Return Date/Time"))) then
+            PerDiemRate.SetFilter("First/Last Day Minimum Stay", '<=%1', ConvertMsecDurationIntoHours(PerDiemCalc."Day Duration"))
+        else
+            PerDiemRate.SetFilter("Minimum Stay (hours)", '<=%1', ConvertMsecDurationIntoHours(PerDiemCalc."Day Duration"));
         //CustPerDiemRate.SetRange("Calculation Method", CalcMethod);
         exit(PerDiemRate.FindLast());
     end;

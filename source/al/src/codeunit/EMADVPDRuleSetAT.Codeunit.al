@@ -91,6 +91,8 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             exit;
 
         NextDayDateTime := GetNextDayTime(PerDiem."Departure Date/Time");
+        if PerDiem."Return Date/Time" < NextDayDateTime then
+            NextDayDateTime := PerDiem."Return Date/Time";
 
         CurrCountry := PerDiem."Departure Country/Region";
         InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiem."Departure Date/Time", NextDayDateTime, CurrCountry, false, true);
@@ -192,7 +194,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
                 if PerDiemCalculation.FindSet() then
                     repeat
-                        if PerDiemCalcMgt.GetValidPerDiemRate(PerDiemRate, PerDiemDetail, PerDiem, PerDiemCalculation."Country/Region") then begin
+                        if PerDiemCalcMgt.GetValidPerDiemRate(PerDiemRate, PerDiemDetail, PerDiem, PerDiemCalculation) then begin
                             case true of
                                 DT2Date(PerDiemCalculation."From DateTime") = DT2Date(PerDiem."Departure Date/Time"):
                                     begin
