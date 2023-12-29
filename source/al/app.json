@@ -15,11 +15,11 @@
       "id": "8d4eab29-8c7f-4b6c-be9a-b7fdfb9da196",
       "name": "Continia Expense Management",
       "publisher": "Continia Software",
-      "version": "8.0.0.0"
+      "version": "12.0.0.0"
     }
   ],
   "screenshots": [],
-  "platform": "1.0.0.0",
+  "platform": "23.0.0.0",
   "application": "22.0.0.0",
   "idRanges": [
     {
@@ -34,6 +34,8 @@
   },
   "runtime": "11.0",
   "features": [
-    "NoImplicitWith"
-  ]
+    "NoImplicitWith",
+    "TranslationFile"
+  ],
+  "supportedLocales": ["en-US","de-DE","de-AT","de-CH"]
 }

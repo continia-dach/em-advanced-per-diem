@@ -42,7 +42,7 @@ table 62082 "EMADV Per Diem Calculation"
                 "Day Duration" := Rec."To DateTime" - Rec."From DateTime";
             end;
         }
-        field(12; "First-Last Entry"; Boolean)
+        field(12; "Domestic Entry"; Boolean)
         {
             DataClassification = CustomerContent;
         }
