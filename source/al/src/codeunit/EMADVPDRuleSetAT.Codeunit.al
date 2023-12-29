@@ -179,34 +179,6 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
             LastCountry := PerDiemCalculation."Country/Region";
         until PerDiemCalculation.Next() = 0;
-
-        if PerDiemWithMultipleDestinations(PerDiem) then begin
-            PerDiemCalculation.SetRange("Domestic Entry", true);
-            RemainingDomesticTwelth := PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) - TotalTwelthToReimburse;
-
-            if RemainingDomesticTwelth > 0 then begin
-                if PerDiemCalculation.FindSet() then
-                    repeat
-                        Hours := PerDiemCalcMgt.ConvertMsecDurationIntoHours(PerDiemCalculation."Day Duration");
-                        if Hours <= RemainingDomesticTwelth then begin
-                            PerDiemCalculation."AT Per Diem Twelfth" := Hours;
-                            RemainingDomesticTwelth := 0;
-                        end else begin
-                            if Hours >= 12 then begin
-                                PerDiemCalculation."AT Per Diem Twelfth" := 12;
-                                RemainingDomesticTwelth -= 12;
-                            end else begin
-                                PerDiemCalculation."AT Per Diem Twelfth" := RemainingDomesticTwelth;
-                                RemainingDomesticTwelth -= RemainingDomesticTwelth;
-                            end;
-                        end;
-                        PerDiemCalculation.Modify(true);
-                    until (PerDiemCalculation.Next() = 0) or (RemainingDomesticTwelth <= 0);
-            end;
-        end;
-
-
-
     end;
 
     local procedure SetDailyAllowancesAndDeductions(var PerDiem: Record "CEM Per Diem")
@@ -260,6 +232,8 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         RemainingTwelth: Integer;
         TotalReimbursedTwelth: Integer;
         RemainingDomesticTwelth: Integer;
+        DomesticPartInHours: Integer;
+        MaxTwelthOfDayToReimburse: Integer;
     begin
         if PerDiem."Entry No." = 0 then
             exit;
@@ -308,20 +282,46 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                         PerDiemCalculation.Modify();
                         TotalReimbursedTwelth += PerDiemCalculation."AT Per Diem Reimbursed Twelfth";
                     until PerDiemCalculation.Next() = 0;
+                CalculateAccommodationReimbursement(PerDiemDetail);
             until PerDiemDetail.Next() = 0;
 
-            // Calculate the domestic rest-amount that 
-            RemainingDomesticTwelth := PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) - TotalReimbursedTwelth;
-            if RemainingDomesticTwelth > 0 then begin
-                //Calculate remaining twelth and reimbursement amount for domestic time
-                PerDiemCalculation.Reset();
-                PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-                if PerDiemCalculation.FindLast() then begin
-                    PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * (RemainingDomesticTwelth);
-                    PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := RemainingDomesticTwelth;
-                    PerDiemCalculation.Modify();
+            // Handling of domestic part >>>
+            if PerDiemWithMultipleDestinations(PerDiem) then begin
+                PerDiemCalculation.SetRange("AT Per Diem Twelfth");
+                PerDiemCalculation.SetRange("Per Diem Det. Entry No.");
+                PerDiemCalculation.SetRange("Domestic Entry", true);
+
+                RemainingDomesticTwelth := PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) - TotalReimbursedTwelth;
+
+                if RemainingDomesticTwelth > 0 then begin
+                    if PerDiemCalculation.FindSet() then
+                        repeat
+                            DomesticPartInHours := PerDiemCalcMgt.ConvertMsecDurationIntoHours(PerDiemCalculation."Day Duration");
+                            MaxTwelthOfDayToReimburse := 12 - GetReimbursedTwelthOfDay(PerDiem."Entry No.", PerDiemCalculation."Per Diem Det. Entry No.");
+                            if (MaxTwelthOfDayToReimburse > 0) then begin
+                                if DomesticPartInHours >= MaxTwelthOfDayToReimburse then
+                                    DomesticPartInHours := MaxTwelthOfDayToReimburse;
+
+                                if DomesticPartInHours <= RemainingDomesticTwelth then begin
+                                    PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := DomesticPartInHours;
+                                    RemainingDomesticTwelth -= DomesticPartInHours;
+                                end else begin
+                                    if DomesticPartInHours >= 12 then begin
+                                        PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := 12;
+                                        //RemainingDomesticTwelth -= 12;
+                                    end else begin
+                                        PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := RemainingDomesticTwelth;
+                                        //RemainingDomesticTwelth := 0;
+                                    end;
+                                    RemainingDomesticTwelth := 0;
+                                end;
+                            end;
+                            PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * (PerDiemCalculation."AT Per Diem Reimbursed Twelfth");
+                            PerDiemCalculation.Modify(true);
+                        until (PerDiemCalculation.Next() = 0) or (RemainingDomesticTwelth <= 0);
                 end;
             end;
+            // Handling of domestic part <<<
         end;
     end;
 
@@ -481,6 +481,49 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         // return true if destination table is not empy 
         exit(not PerDiemDestinations.IsEmpty);
     end;
+
+    local procedure GetReimbursedTwelthOfDay(PerDiemEntryNo: Integer; PerDiemDetEntryNo: Integer) ReimbursedTwelthOfDay: Integer
+    var
+        //PerDiemDetail: Record "CEM Per Diem Detail";
+        PerDiemCalculation: Record "EMADV Per Diem Calculation";
+    begin
+        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiemEntryNo);
+        PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetEntryNo);
+        if PerDiemCalculation.FindSet() then
+            repeat
+                ReimbursedTwelthOfDay += PerDiemCalculation."AT Per Diem Reimbursed Twelfth";
+            until PerDiemCalculation.Next() = 0;
+    end;
+
+    local procedure CalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail")
+    var
+        PerDiemCalculation: Record "EMADV Per Diem Calculation";
+        IsHandled: Boolean;
+    begin
+        OnBeforeCalculateAccommodationReimbursement(PerDiemDetail, IsHandled);
+        if IsHandled then
+            exit;
+
+        // Filter for first calculation (country) entry and use this as accommodation source
+        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiemDetail."Per Diem Entry No.");
+        PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
+        if PerDiemCalculation.FindFirst() then begin
+            PerDiemCalculation."Accommodation Reimb. Amount" := PerDiemCalculation."Daily Accommodation Allowance";
+        end;
+
+        OnAfterCalculateAccommodationReimbursement(PerDiemDetail);
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeCalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail"; var IsHandled: Boolean)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterCalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail")
+    begin
+    end;
+
 
     var
         PerDiemCalcRuleSet: enum "EMADV Per Diem Calc. Rule Set";

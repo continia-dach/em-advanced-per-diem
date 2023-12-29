@@ -148,7 +148,6 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 
     internal procedure GetTripDurationInTwelth(PerDiem: Record "CEM Per Diem") TripTwelth: Integer
     var
-        PerDiemCalculation: Record "EMADV Per Diem Calculation";
         TripDurationInHours: Decimal;
     begin
         TripDurationInHours := GetTripDurationInHours(PerDiem);
