@@ -200,18 +200,21 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                             case true of
                                 DT2Date(PerDiemCalculation."From DateTime") = DT2Date(PerDiem."Departure Date/Time"):
                                     begin
-                                        PerDiemCalculation."Daily Accommodation Allowance" := 0;
+                                        if PerDiemDetail."Accommodation Allowance" then
+                                            PerDiemCalculation."Daily Accommodation Allowance" := 0;
                                         PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."First/Last Day Meal Allowance";
                                         PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiemDetail, PerDiemRate, false);
                                     end;
                                 (DT2Date(PerDiemCalculation."From DateTime") = DT2Date(PerDiem."Return Date/Time")):
                                     begin
-                                        PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
+                                        if PerDiemDetail."Accommodation Allowance" then
+                                            PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
                                         PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."First/Last Day Meal Allowance";
                                         PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiemDetail, PerDiemRate, false);
                                     end;
                                 else begin
-                                    PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
+                                    if PerDiemDetail."Accommodation Allowance" then
+                                        PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
                                     PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."Daily Meal Allowance";
                                     PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiemDetail, PerDiemRate, true);
                                 end;
@@ -509,6 +512,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
         if PerDiemCalculation.FindFirst() then begin
             PerDiemCalculation."Accommodation Reimb. Amount" := PerDiemCalculation."Daily Accommodation Allowance";
+            PerDiemCalculation.Modify(true);
         end;
 
         OnAfterCalculateAccommodationReimbursement(PerDiemDetail);

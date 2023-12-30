@@ -158,14 +158,20 @@ page 62084 "EMADV Per Diem Calc. Card"
         PerDiemDetail.SetRange("Per Diem Entry No.", Rec."Entry No.");
         if PerDiemDetail.FindFirst() then
             CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
+        CurrPage.Update(false);
     end;
 
     internal procedure DrillDownDetails(PerDiem: Record "CEM Per Diem")
     var
         PerDiemDetail: Record "CEM Per Diem Detail";
+        CustPerDiemCalcMgt: codeunit "EMADV Cust. Per Diem Calc.Mgt.";
     begin
         PerDiemDetail.SETRANGE("Per Diem Entry No.", PerDiem."Entry No.");
         PAGE.RUNMODAL(PAGE::"CEM Per Diem Details", PerDiemDetail);
+        if PerDiemDetail.FindFirst() then begin
+            CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
+            CurrPage.Update(false);
+        end;
     end;
 
     var
