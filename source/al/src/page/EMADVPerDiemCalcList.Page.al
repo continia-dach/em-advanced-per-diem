@@ -51,12 +51,10 @@ page 62085 "EMADV Per Diem Calc. List"
                 field("Meal Allowance"; rec."Daily Meal Allowance")
                 {
                     ToolTip = 'Specifies the value of the meal allowance';
-                    Visible = false;
                 }
                 field("Meal Allowance Deductions"; Rec."Meal Allowance Deductions")
                 {
                     ToolTip = 'Specifies the amount that will be deducted from the meal allowance';
-                    Visible = false;
                 }
                 field("Meal Reimb. Amount"; Rec."Meal Reimb. Amount")
                 {

@@ -73,8 +73,10 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         EMSetup: Record "CEM Expense Management Setup";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemDetail: Record "CEM Per Diem Detail";
+        PerDiemGroup: Record "CEM Per Diem Group";
         CurrCountry: Code[10];
         NextDayDateTime: DateTime;
+        ForeignCountryDuration: Duration;
     begin
         // This procedure is only used on the first per diem detail entry
         if CurrPerDiemDetail."Entry No." > 1 then
@@ -122,10 +124,29 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 end;
             until PerDiemDetail.Next() = 0;
 
-            // Mark last entry as "last entry"
+            // Mark last entry as "Domestic entry"
             PerDiemCalculation."Domestic Entry" := true;
             PerDiemCalculation.Modify();
-        end
+        end;
+
+        // Check if duration of foreign country part is less then allowed to be marked as foreign
+        if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+            exit;
+
+        if PerDiemGroup."Min. foreign country duration" = 0 then
+            exit;
+
+        PerDiemCalculation.Reset();
+        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        PerDiemCalculation.SetFilter("Country/Region", '<>%1', PerDiem."Departure Country/Region");
+        if PerDiemCalculation.IsEmpty() then
+            exit;
+        if PerDiemCalculation.FindSet() then
+            repeat
+                ForeignCountryDuration += PerDiemCalculation."Day Duration";
+            until PerDiemCalculation.Next() = 0;
+        if PerDiemCalcMgt.ConvertMsecDurationIntoHours(ForeignCountryDuration) < PerDiemGroup."Min. foreign country duration" then
+            PerDiemCalculation.ModifyAll("Domestic Entry", true);
     end;
 
     local procedure CalculateATPerDiemTwelth(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail")
@@ -300,7 +321,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                     if PerDiemCalculation.FindSet() then
                         repeat
                             DomesticPartInHours := PerDiemCalcMgt.ConvertMsecDurationIntoHours(PerDiemCalculation."Day Duration");
-                            MaxTwelthOfDayToReimburse := 12 - GetReimbursedTwelthOfDay(PerDiem."Entry No.", PerDiemCalculation."Per Diem Det. Entry No.");
+                            MaxTwelthOfDayToReimburse := GetMaxTwelthOfDayToReimburse(PerDiem."Entry No.", PerDiemCalculation."Per Diem Det. Entry No.");
                             if (MaxTwelthOfDayToReimburse > 0) then begin
                                 if DomesticPartInHours >= MaxTwelthOfDayToReimburse then
                                     DomesticPartInHours := MaxTwelthOfDayToReimburse;
@@ -368,7 +389,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
             CurrCountry := PerDiemDetailDest."Destination Country/Region";
 
-            InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time"), NextDayDateTime, CurrCountry, true, false)
+            InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time"), NextDayDateTime, CurrCountry, true, false);
         until PerDiemDetailDest.Next() = 0;
         exit(true);
     end;
@@ -485,17 +506,27 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         exit(not PerDiemDestinations.IsEmpty);
     end;
 
-    local procedure GetReimbursedTwelthOfDay(PerDiemEntryNo: Integer; PerDiemDetEntryNo: Integer) ReimbursedTwelthOfDay: Integer
+    local procedure GetMaxTwelthOfDayToReimburse(PerDiemEntryNo: Integer; PerDiemDetEntryNo: Integer) ReimbursedTwelthOfDay: Integer
     var
         //PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
+        PerDiemGroup: Record "CEM Per Diem Group";
+        PerDiem: Record "CEM Per Diem";
     begin
-        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiemEntryNo);
-        PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetEntryNo);
-        if PerDiemCalculation.FindSet() then
-            repeat
-                ReimbursedTwelthOfDay += PerDiemCalculation."AT Per Diem Reimbursed Twelfth";
-            until PerDiemCalculation.Next() = 0;
+        if not PerDiem.Get(PerDiemEntryNo) then
+            exit;
+        if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+            exit;
+        if PerDiemGroup."Calculation rule set" = PerDiemGroup."Calculation rule set"::AustriaByDay then begin
+            PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiemEntryNo);
+            PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetEntryNo);
+            if PerDiemCalculation.FindSet() then
+                repeat
+                    ReimbursedTwelthOfDay += PerDiemCalculation."AT Per Diem Reimbursed Twelfth";
+                until PerDiemCalculation.Next() = 0;
+        end;
+
+        ReimbursedTwelthOfDay := 12 - ReimbursedTwelthOfDay;
     end;
 
     local procedure CalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail")

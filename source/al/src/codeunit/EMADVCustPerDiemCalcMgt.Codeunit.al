@@ -106,7 +106,10 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
     begin
 
         PerDiemRate.SetRange("Per Diem Group Code", PerDiem."Per Diem Group Code");
-        PerDiemRate.SetRange("Destination Country/Region", PerDiemCalc."Country/Region");
+        if PerDiemCalc."Domestic Entry" then
+            PerDiemRate.SetRange("Destination Country/Region", PerDiem."Departure Country/Region")
+        else
+            PerDiemRate.SetRange("Destination Country/Region", PerDiemCalc."Country/Region");
         PerDiemRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
 
         // Make sure to get only rates with minimum stay hours of trip
