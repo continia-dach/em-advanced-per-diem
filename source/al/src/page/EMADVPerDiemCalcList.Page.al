@@ -80,6 +80,7 @@ page 62085 "EMADV Per Diem Calc. List"
                     Visible = false;
                 }
             }
+
         }
     }
 

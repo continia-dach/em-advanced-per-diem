@@ -70,6 +70,17 @@ page 62084 "EMADV Per Diem Calc. Card"
                 }
             }
         }
+        area(FactBoxes)
+        {
+            part(PerDiemDetails; "EMADV Calculation Detail FB")
+            {
+                ApplicationArea = All;
+                Caption = 'Per diem details';
+                Provider = "Per Diem Calc. Subpage";
+                SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."), "Entry No." = field("Per Diem Det. Entry No.");
+
+            }
+        }
     }
     actions
     {

@@ -12,7 +12,10 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
             {
                 ApplicationArea = All;
             }
+        }
 
+        addafter(PostingGroups)
+        {
             group(ATRulesetFields)
             {
                 Visible = ShowAustrianRuleFields;
