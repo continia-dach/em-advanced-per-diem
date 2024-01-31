@@ -13,7 +13,6 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         EMSetup: Record "CEM Expense Management Setup";
         PerDiem: Record "CEM Per Diem";
         PerDiemGroup: Record "CEM Per Diem Group";
-        CustPerDiemRate: Record "EMADV Cust PerDiem Rate";
         Currency: Record Currency;
         PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
@@ -92,19 +91,28 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         exit(true);
     end;
 
-    [Obsolete]
-    internal procedure GetValidCustPerDiemRate(var CustPerDiemRate: Record "EMADV Cust PerDiem Rate"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; DestinationCountry: Code[10]; CalcMethod: Enum "EMADV Per Diem Calc. Method"): Boolean
+    internal procedure GetValidPerDiemRate(var PerDiemRate: Record "CEM Per Diem Rate v.2"; var PerDiemSubRate: Record "CEM Per Diem Rate Details v.2"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; PerDiemCalc: Record "EMADV Per Diem Calculation"): Boolean
+    var
+    //PerDiemSubRate: Record "CEM Per Diem Rate Details v.2"
     begin
-        CustPerDiemRate.SetRange("Per Diem Group Code", PerDiem."Per Diem Group Code");
-        CustPerDiemRate.SetRange("Destination Country/Region", DestinationCountry);
-        CustPerDiemRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
-        CustPerDiemRate.SetRange("Calculation Method", CalcMethod);
-        exit(CustPerDiemRate.FindLast());
-    end;
+        PerDiemSubRate.SetRange("Per Diem Group Code", PerDiem."Per Diem Group Code");
+        if PerDiemCalc."Domestic Entry" then
+            PerDiemSubRate.SetRange("Destination Country/Region", PerDiem."Departure Country/Region")
+        else
+            PerDiemSubRate.SetRange("Destination Country/Region", PerDiemCalc."Country/Region");
+        //Not used at the moment PerDiemSubRate.SetRange("Accommodation Allowance Code");
 
-    internal procedure GetValidPerDiemRate(var PerDiemRate: Record "CEM Per Diem Rate v.2"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; PerDiemCalc: Record "EMADV Per Diem Calculation"): Boolean
-    begin
+        PerDiemSubRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
 
+        // Make sure to get only rates with minimum stay hours of trip
+        PerDiemSubRate.SetFilter("Minimum Stay (hours)", '<=%1', GetTripDurationInHours(PerDiem));
+
+        if PerDiemSubRate.FindLast() then begin
+            if PerDiemRate.Get(PerDiemSubRate."Per Diem Group Code", PerDiemSubRate."Destination Country/Region", PerDiemSubRate."Accommodation Allowance Code", PerDiemSubRate."Start Date") then
+                exit(true);
+        end;
+
+        /*
         PerDiemRate.SetRange("Per Diem Group Code", PerDiem."Per Diem Group Code");
         if PerDiemCalc."Domestic Entry" then
             PerDiemRate.SetRange("Destination Country/Region", PerDiem."Departure Country/Region")
@@ -122,6 +130,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
             PerDiemRate.SetFilter("Minimum Stay (hours)", '<=%1', ConvertMsecDurationIntoHours(PerDiemCalc."Day Duration"));
         //CustPerDiemRate.SetRange("Calculation Method", CalcMethod);
         exit(PerDiemRate.FindLast());
+        */
     end;
 
 

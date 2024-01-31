@@ -17,5 +17,26 @@ tableextension 62081 "EMADV Per Diem Group Ext." extends "CEM Per Diem Group"
             Caption = 'Min. foreign country duration';
             DataClassification = CustomerContent;
         }
+        field(62089; "Time-based meal deductions"; Boolean)
+        {
+            Caption = 'Time-based meal deductions';
+            DataClassification = CustomerContent;
+        }
+
+        field(62090; "Breakfast from-time"; Time)
+        {
+            Caption = 'Breakfast from-time';
+            DataClassification = CustomerContent;
+        }
+        field(62091; "Lunch from-time"; Time)
+        {
+            Caption = 'Lunch from-time';
+            DataClassification = CustomerContent;
+        }
+        field(62092; "Dinner from-time"; Time)
+        {
+            Caption = 'Dinner from-time';
+            DataClassification = CustomerContent;
+        }
     }
 }

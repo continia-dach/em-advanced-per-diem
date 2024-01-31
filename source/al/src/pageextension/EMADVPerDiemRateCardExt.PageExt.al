@@ -4,6 +4,15 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
     {
         addbefore("Additional allowances")
         {
+            part(PerDiemRateDetailsAdv; "CEM Per Diem Rate Detail v.2")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Per Diem Group Code" = FIELD("Per Diem Group Code"),
+                              "Destination Country/Region" = FIELD("Destination Country/Region"),
+                              "Accommodation Allowance Code" = FIELD("Accommodation Allowance Code"),
+                              "Start Date" = FIELD("Start Date");
+                Visible = AdvancedPerDiemEnabled;
+            }
             group(AdvancedPerDiemAllowances)
             {
                 Caption = 'Advanced Per Diem Meal Allowances';
@@ -49,98 +58,115 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
                     }
                 }
             }
+            /*
+                       group(AdvancedPerdiemMealDeductions)
+                       {
+                           Caption = 'Advanced Per Diem Meal deductions';
+                           Visible = AdvancedPerDiemEnabled;
+                           group(FullDayDeductions)
+                           {
+                               Caption = 'Full day meal deductions';
 
-            group(AdvancedPerdiemMealDeductions)
+                               field("Full day All meal Ded."; Rec."Full day All meal Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the All meal deduction (full day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Full day Breakfast Ded."; Rec."Full day Breakfast Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Breakfast deduction (full day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Full day Breakfast-Lunch Ded."; Rec."Full day Breakfast-Lunch Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Breakfast & Lunch deduction (full day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Full day Breakfast-Dinner Ded."; Rec."Full day Breakfast-Dinner Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Breakfast & Dinner deduction (full day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Full day Dinner Ded."; Rec."Full day Dinner Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Dinner deduction (full day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Full day Lunch Ded."; Rec."Full day Lunch Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Lunch deduction (full day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Full day Lunch-Dinner Ded."; Rec."Full day Lunch-Dinner Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Lunch & Dinner deduction (full day) field.';
+                                   ApplicationArea = All;
+                               }
+                           }
+                           group(PartDayDeductions)
+                           {
+                               Caption = 'Part day meal deductions';
+
+                               field("Part day All meal Ded."; Rec."Part day All meal Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the All meal deduction (part day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Part day Breakfast Ded."; Rec."Part day Breakfast Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Breakfast deduction (part day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Part day Breakfast-Lunch Ded."; Rec."Part day Breakfast-Lunch Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Breakfast & Lunch deduction (part day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Part day Breakfast-Dinner Ded."; Rec."Part day Breakfast-Dinner Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Breakfast & Dinner deduction (part day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Part day Dinner Ded."; Rec."Part day Dinner Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Dinner deduction (part day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Part day Lunch Ded."; Rec."Part day Lunch Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Lunch deduction (part day) field.';
+                                   ApplicationArea = All;
+                               }
+                               field("Part day Lunch-Dinner Ded."; Rec."Part day Lunch-Dinner Ded.")
+                               {
+                                   ToolTip = 'Specifies the value of the Lunch & Dinner deduction (part day) field.';
+                                   ApplicationArea = All;
+                               }
+                           }
+                       }
+                       */
+        }
+
+
+        addlast(content)
+        {
+            part(MealDeduction; "EMADV Meal Deduction List")
             {
-                Caption = 'Advanced Per Diem Meal deductions';
-                Visible = AdvancedPerDiemEnabled;
-                group(FullDayDeductions)
-                {
-                    Caption = 'Full day meal deductions';
+                SubPageLink = "Per Diem Group Code" = field("Per Diem Group Code"), "Destination Country/Region" = field("Destination Country/Region"),
+                              "Accommodation Allowance Code" = field("Accommodation Allowance Code"), "Start Date" = field("Start Date");
 
-                    field("Full day All meal Ded."; Rec."Full day All meal Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the All meal deduction (full day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Full day Breakfast Ded."; Rec."Full day Breakfast Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Breakfast deduction (full day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Full day Breakfast-Lunch Ded."; Rec."Full day Breakfast-Lunch Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Breakfast & Lunch deduction (full day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Full day Breakfast-Dinner Ded."; Rec."Full day Breakfast-Dinner Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Breakfast & Dinner deduction (full day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Full day Dinner Ded."; Rec."Full day Dinner Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Dinner deduction (full day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Full day Lunch Ded."; Rec."Full day Lunch Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Lunch deduction (full day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Full day Lunch-Dinner Ded."; Rec."Full day Lunch-Dinner Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Lunch & Dinner deduction (full day) field.';
-                        ApplicationArea = All;
-                    }
-                }
-                group(PartDayDeductions)
-                {
-                    Caption = 'Part day meal deductions';
-
-                    field("Part day All meal Ded."; Rec."Part day All meal Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the All meal deduction (part day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Part day Breakfast Ded."; Rec."Part day Breakfast Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Breakfast deduction (part day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Part day Breakfast-Lunch Ded."; Rec."Part day Breakfast-Lunch Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Breakfast & Lunch deduction (part day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Part day Breakfast-Dinner Ded."; Rec."Part day Breakfast-Dinner Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Breakfast & Dinner deduction (part day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Part day Dinner Ded."; Rec."Part day Dinner Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Dinner deduction (part day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Part day Lunch Ded."; Rec."Part day Lunch Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Lunch deduction (part day) field.';
-                        ApplicationArea = All;
-                    }
-                    field("Part day Lunch-Dinner Ded."; Rec."Part day Lunch-Dinner Ded.")
-                    {
-                        ToolTip = 'Specifies the value of the Lunch & Dinner deduction (part day) field.';
-                        ApplicationArea = All;
-                    }
-                }
             }
         }
-
-        modify("Meal rate details")
-        {
-            Visible = not AdvancedPerDiemEnabled;
-        }
+        /*
+                modify("Meal rate details")
+                {
+                    Visible = not AdvancedPerDiemEnabled;
+                }
+                modify(SubRates)
+                {
+                    Visible = not AdvancedPerDiemEnabled;
+                }
+                */
     }
 
     trigger OnAfterGetRecord()
