@@ -46,32 +46,45 @@ table 62081 "EMADV Meal Deduction"
         field(62080; "Breakfast Deduction"; Decimal)
         {
             Caption = 'Breakfast deduction';
+            DecimalPlaces = 2 : 5;
+            BlankZero = true;
         }
         field(62081; "Breakfast-Lunch Deduction"; Decimal)
         {
             Caption = 'Breakfast & Lunch deduction';
+            DecimalPlaces = 2 : 5;
+            BlankZero = true;
         }
         field(62082; "Breakfast-Dinner Deduction"; Decimal)
         {
             Caption = 'Breakfast & Dinner deduction';
+            DecimalPlaces = 2 : 5;
+            BlankZero = true;
         }
         field(62083; "All meal Deduction"; Decimal)
         {
             Caption = 'All meal deduction';
+            DecimalPlaces = 2 : 5;
+            BlankZero = true;
         }
         field(62084; "Lunch Deduction"; Decimal)
         {
             Caption = 'Lunch deduction';
+            DecimalPlaces = 2 : 5;
+            BlankZero = true;
         }
         field(62085; "Lunch-Dinner Deduction"; Decimal)
         {
             Caption = 'Lunch & Dinner deduction';
+            DecimalPlaces = 2 : 5;
+            BlankZero = true;
         }
         field(62086; "Dinner Deduction"; Decimal)
         {
             Caption = 'Dinner deduction';
+            DecimalPlaces = 2 : 5;
+            BlankZero = true;
         }
-
     }
     keys
     {

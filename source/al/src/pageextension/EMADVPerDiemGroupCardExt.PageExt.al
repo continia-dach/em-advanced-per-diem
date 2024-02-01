@@ -103,7 +103,7 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
         {
             part(MealDeduction; "EMADV Meal Deduction List")
             {
-                SubPageLink = "Per Diem Group Code" = field(Code);
+                SubPageLink = "Per Diem Group Code" = field(Code), "Destination Country/Region" = filter(''), "Accommodation Allowance Code" = filter(''), "Start Date" = filter(0D);
             }
         }
     }
