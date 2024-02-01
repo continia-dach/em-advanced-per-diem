@@ -4,19 +4,20 @@ enum 62085 "EMADV Meal Deduction Types"
 
     value(0; ForeignFullDay)
     {
-        Caption = 'Foreign full day';
+        Caption = 'Full day';
     }
     value(1; ForeignFirstDay)
     {
-        Caption = 'Foreign first day';
+        Caption = 'First day';
     }
     value(2; ForeignLastDay)
     {
-        Caption = 'Foreign last day';
+        Caption = 'Last day';
     }
-    value(3; DomesticFullDay)
+    /*value(3; DomesticFullDay)
     {
         Caption = 'Domestic full day';
+        
     }
     value(4; DomesticFirstDay)
     {
@@ -25,6 +26,6 @@ enum 62085 "EMADV Meal Deduction Types"
     value(5; DomesticLastDay)
     {
         Caption = 'Domestic last day';
-    }
+    }*/
 
 }

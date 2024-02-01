@@ -33,6 +33,10 @@ page 62081 "EMADV Meal Deduction List"
                     ToolTip = 'Specifies the value of the Accommodation Allowance Code field.';
                     Visible = false;
                 }
+                field("Domestic Day"; Rec."Domestic Day")
+                {
+                    ToolTip = 'Specifies if the entry is valid for domestic per diem days only';
+                }
                 field("Deduction Type"; Rec."Deduction Type")
                 {
                     ToolTip = 'Specifies the value of the Meal deduction type field.';
@@ -53,10 +57,7 @@ page 62081 "EMADV Meal Deduction List"
                 {
                     ToolTip = 'Specifies the value of the Breakfast & Dinner deduction field.';
                 }
-                field("All meal Deduction"; Rec."All meal Deduction")
-                {
-                    ToolTip = 'Specifies the value of the All meal deduction field.';
-                }
+
                 field("Lunch Deduction"; Rec."Lunch Deduction")
                 {
                     ToolTip = 'Specifies the value of the Lunch deduction field.';
@@ -68,6 +69,10 @@ page 62081 "EMADV Meal Deduction List"
                 field("Dinner Deduction"; Rec."Dinner Deduction")
                 {
                     ToolTip = 'Specifies the value of the Dinner deduction field.';
+                }
+                field("All meal Deduction"; Rec."All meal Deduction")
+                {
+                    ToolTip = 'Specifies the value of the All meal deduction field.';
                 }
             }
         }

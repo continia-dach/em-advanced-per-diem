@@ -105,7 +105,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         PerDiemSubRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
 
         // Make sure to get only rates with minimum stay hours of trip
-        PerDiemSubRate.SetFilter("Minimum Stay (hours)", '<=%1', GetTripDurationInHours(PerDiem));
+        PerDiemSubRate.SetFilter("Minimum Stay (hours)", '<=%1', GetTripDurationInHours(PerDiem, 1, '<'));
 
         if PerDiemSubRate.FindLast() then begin
             if PerDiemRate.Get(PerDiemSubRate."Per Diem Group Code", PerDiemSubRate."Destination Country/Region", PerDiemSubRate."Accommodation Allowance Code", PerDiemSubRate."Start Date") then
@@ -134,14 +134,19 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
     end;
 
 
-    internal procedure GetTripDurationInHours(PerDiem: Record "CEM Per Diem"): Decimal
+    internal procedure GetTripDurationInHours(PerDiem: Record "CEM Per Diem"; Precision: Decimal; Direction: Text[1]): Decimal
     begin
-        exit(ConvertMsecDurationIntoHours(PerDiem."Return Date/Time" - PerDiem."Departure Date/Time"));
+        exit(ConvertMsecDurationIntoHours(PerDiem."Return Date/Time" - PerDiem."Departure Date/Time", Precision, Direction));
     end;
 
-    internal procedure ConvertMsecDurationIntoHours(DurationInMsec: Integer): Decimal
+    internal procedure GetTripDurationInHours(PerDiem: Record "CEM Per Diem"): Decimal
     begin
-        exit(Round((DurationInMsec) / (1000 * 60 * 60), 1, '>'));
+        GetTripDurationInHours(PerDiem, 1, '>');
+    end;
+
+    internal procedure ConvertMsecDurationIntoHours(DurationInMsec: Integer; Precision: Decimal; Direction: Text[1]): Decimal
+    begin
+        exit(Round((DurationInMsec) / (1000 * 60 * 60), Precision, Direction));
     end;
 
     internal procedure GetTripReimbursementAmount(PerDiem: Record "CEM Per Diem") TripReimbursementAmount: Decimal
@@ -171,4 +176,17 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
             TripTwelth += (TripDurationInHours mod 24);
         exit(TripTwelth);
     end;
+
+    ///<summary>Helper functionality to check if current Per Diem Detail entry is first day of Per Diem</summary>
+    internal procedure IsFirstDay(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
+    begin
+        exit(PerDiemDetail.Date = DT2Date(PerDiem."Departure Date/Time"));
+    end;
+
+    ///<summary>Helper functionality to check if current Per Diem Detail entry is last day of Per Diem</summary>
+    internal procedure IsLastDay(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
+    begin
+        exit(PerDiemDetail.Date = DT2Date(PerDiem."Return Date/Time"));
+    end;
+
 }

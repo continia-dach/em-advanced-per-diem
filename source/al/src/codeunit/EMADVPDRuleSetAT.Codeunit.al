@@ -21,11 +21,10 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         SetupPerDiemCalculationTable(PerDiem, PerDiemDetail);
 
         // Calculate the Austrian twelth
-        CalculateATPerDiemTwelth(PerDiem, PerDiemDetail);
+        CalculateAustrianPerDiemTwelth(PerDiem, PerDiemDetail);
 
         // Add the daily accommocation value
-        //SetDailyAllowancesAndDeductions(PerDiem);
-        SetDetailAllowancesAndDeductions(PerDiem);
+        CalculateAllowances(PerDiem);
 
         // Calculate the reimbursement values  
         CalculateReimbursementAmounts(PerDiem);
@@ -49,9 +48,9 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 Clear(MealAllowanceDeductionAmt);
                 Clear(PerDiemDetailUpdate."Accommodation Allowance Amount");
                 Clear(PerDiemDetailUpdate."Meal Allowance Amount");
-                Clear(PerDiemDetailUpdate."Transport Allowance Amount");
-                Clear(PerDiemDetailUpdate."Entertainment Allowance Amount");
-                Clear(PerDiemDetailUpdate."Drinks Allowance Amount");
+                //Clear(PerDiemDetailUpdate."Transport Allowance Amount");
+                //Clear(PerDiemDetailUpdate."Entertainment Allowance Amount");
+                //Clear(PerDiemDetailUpdate."Drinks Allowance Amount");
                 Clear(PerDiemDetailUpdate."Taxable Acc. Allowance Amount");
                 Clear(PerDiemDetailUpdate."Taxable Meal Allowance Amount");
                 Clear(PerDiemDetailUpdate."Taxable Amount");
@@ -70,8 +69,8 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                         PerDiemDetailUpdate."Accommodation Allowance Amount" += PerDiemCalculation."Accommodation Reimb. Amount";
                     until PerDiemCalculation.Next() = 0;
 
-                // Calculate the meal deductions
-                MealAllowanceDeductionAmt := GetMealDeductionNew(PerDiem, PerDiemDetailUpdate, IsDomesticOnlyPerDiemDetail(PerDiemDetailUpdate));
+                // Calculate the meal deductions per detail entry
+                MealAllowanceDeductionAmt := GetMealDeduction(PerDiem, PerDiemDetailUpdate);
                 if MealAllowanceDeductionAmt < PerDiemDetailUpdate."Meal Allowance Amount" then
                     PerDiemDetailUpdate."Meal Allowance Amount" -= MealAllowanceDeductionAmt
                 else
@@ -88,7 +87,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
     end;
 
 
-    local procedure SetupPerDiemCalculationTable(var PerDiem: Record "CEM Per Diem"; var CurrPerDiemDetail: Record "CEM Per Diem Detail"): Boolean
+    local procedure SetupPerDiemCalculationTable(var PerDiem: Record "CEM Per Diem"; CurrPerDiemDetail: Record "CEM Per Diem Detail"): Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
@@ -125,7 +124,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             repeat
                 // Either there are multiple destination linked to one per diem detail or not
                 // Try to process the multiple destinations first and if not found then process the current destination
-                if not AddPerDiemDestToCalc(PerDiem, PerDiemDetail, PerDiemCalculation, NextDayDateTime, CurrCountry) then begin
+                if not AddDestinationToCalculation(PerDiem, PerDiemDetail, PerDiemCalculation, NextDayDateTime, CurrCountry) then begin
                     // not on the first day
                     if (PerDiemDetail.Date > DT2Date(PerDiem."Departure Date/Time")) then begin
                         // Return on the same date and return date is smaller than next day date
@@ -165,17 +164,16 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             repeat
                 ForeignCountryDuration += PerDiemCalculation."Day Duration";
             until PerDiemCalculation.Next() = 0;
-        if PerDiemCalcMgt.ConvertMsecDurationIntoHours(ForeignCountryDuration) < PerDiemGroup."Min. foreign country duration" then
+        if PerDiemCalcMgt.ConvertMsecDurationIntoHours(ForeignCountryDuration, 1, '>') < PerDiemGroup."Min. foreign country duration" then
             PerDiemCalculation.ModifyAll("Domestic Entry", true);
     end;
 
-    local procedure CalculateATPerDiemTwelth(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail")
+    local procedure CalculateAustrianPerDiemTwelth(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail")
     var
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         CurrDayTwelfth: Integer;
         CurrPerDiemDetEntry: Integer;
         TotalTwelthToReimburse: Integer;
-        RemainingDomesticTwelth: Integer;
         Hours: Integer;
         NextDayDateTime: DateTime;
         LastCountry: Code[10];
@@ -207,7 +205,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             if LastCountry <> PerDiemCalculation."Country/Region" then
                 CurrDayTwelfth := 0;
 
-            Hours := PerDiemCalcMgt.ConvertMsecDurationIntoHours(PerDiemCalculation."Day Duration");// / (1000 * 60 * 60), 1, '>');
+            Hours := PerDiemCalcMgt.ConvertMsecDurationIntoHours(PerDiemCalculation."Day Duration", 1, '>');// / (1000 * 60 * 60), 1, '>');
 
             if (Hours >= 12) then
                 PerDiemCalculation."AT Per Diem Twelfth" := 12 - CurrDayTwelfth
@@ -222,24 +220,17 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         until PerDiemCalculation.Next() = 0;
     end;
 
-    local procedure SetDetailAllowancesAndDeductions(var PerDiem: Record "CEM Per Diem")
+    local procedure CalculateAllowances(var PerDiem: Record "CEM Per Diem")
     var
         PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemRate: Record "CEM Per Diem Rate v.2";
         PerDiemSubRate: Record "CEM Per Diem Rate Details v.2";
-        DetailMealAllowanceAmt: Decimal;
-        DetailMealAllowanceDeductionAmt: Decimal;
-        IsDomesticOnlyDetail: Boolean;
     begin
         // Iterate through each day/detail 
         PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
         if PerDiemDetail.FindSet() then
             repeat
-                Clear(DetailMealAllowanceAmt);
-
-                IsDomesticOnlyDetail := IsDomesticOnlyPerDiemDetail(PerDiemDetail);
-
                 PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
                 PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
                 if PerDiemCalculation.FindSet() then
@@ -247,285 +238,93 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                         if PerDiemCalcMgt.GetValidPerDiemRate(PerDiemRate, PerDiemSubRate, PerDiemDetail, PerDiem, PerDiemCalculation) then begin
                             // set the accommodation allowance if enabled and not first day
                             if PerDiemDetail."Accommodation Allowance" then
-                                if not IsFirstDay(PerDiem, PerDiemDetail) then
+                                if not PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail) then
                                     PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
 
                             // set the meal allowance
                             PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
-                            DetailMealAllowanceAmt += PerDiemSubRate."Meal Allowance";
-
-                            //PerDiemCalculation."Meal Allowance Deductions" := GetMealDeduction(PerDiem, PerDiemDetail, PerDiemSubRate, IsDomesticOnlyDetail);
-                            //DetailMealAllowanceDeductionAmt += PerDiemCalculation."Meal Allowance Deductions";
 
                             PerDiemCalculation.Modify();
-                            //if not MealDeduction.Get(PerDiem. ."Per Diem Entry No.", '', '', 0D, MealDeduction."Deduction Type"::FullDay) then
                         end;
                     until PerDiemCalculation.Next() = 0;
+            until PerDiemDetail.Next() = 0;
+    end;
 
-            /*
-            if DetailMealAllowanceDeductionAmt > DetailMealAllowanceAmt then
-                PerDiemDetail.Validate("Meal Allowance Amount", 0)
+    local procedure GetMealDeduction(PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"): Decimal
+    var
+        MealDeduction: Record "EMADV Meal Deduction";
+        CurrDeductionType: enum "EMADV Meal Deduction Types";
+    begin
+        /*if IsDomesticOnlyDetail then begin
+            case true of
+                PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail):
+                    CurrDeductionType := CurrDeductionType::DomesticFirstDay;
+                PerDiemCalcMgt.IsLastDay(PerDiem, PerDiemDetail):
+                    CurrDeductionType := CurrDeductionType::DomesticLastDay;
+                else
+                    CurrDeductionType := CurrDeductionType::DomesticFullDay;
+            end;
+        end else begin*/
+        case true of
+            PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail):
+                CurrDeductionType := CurrDeductionType::ForeignFirstDay;
+            PerDiemCalcMgt.IsLastDay(PerDiem, PerDiemDetail):
+                CurrDeductionType := CurrDeductionType::ForeignLastDay;
             else
-                PerDiemDetail.Validate("Meal Allowance Amount", DetailMealAllowanceAmt - DetailMealAllowanceDeductionAmt);
-
-            PerDiemDetail.Modify();
-            */
-            until PerDiemDetail.Next() = 0;
-
-        /*
-        // Iterate to calc deductions
-        if PerDiemDetail.FindSet() then
-            repeat
-                if IsDomesticOnlyPerDiemDetail(PerDiemDetail) then begin
-
-                end;
-            until PerDiemDetail.Next() = 0;
-            */
-    end;
-
-    local procedure GetMealDeductionNew(PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"; IsDomesticOnlyDetail: Boolean): Decimal
-    var
-        MealDeduction: Record "EMADV Meal Deduction";
-        CurrDeductionType: enum "EMADV Meal Deduction Types";
-    begin
-        if IsDomesticOnlyDetail then begin
-            case true of
-                IsFirstDay(PerDiem, PerDiemDetail):
-                    CurrDeductionType := CurrDeductionType::DomesticFirstDay;
-                IsLastDay(PerDiem, PerDiemDetail):
-                    CurrDeductionType := CurrDeductionType::DomesticLastDay;
-                else
-                    CurrDeductionType := CurrDeductionType::DomesticFullDay;
-            end;
-        end else begin
-            case true of
-                IsFirstDay(PerDiem, PerDiemDetail):
-                    CurrDeductionType := CurrDeductionType::ForeignFirstDay;
-                IsLastDay(PerDiem, PerDiemDetail):
-                    CurrDeductionType := CurrDeductionType::ForeignLastDay;
-                else
-                    CurrDeductionType := CurrDeductionType::ForeignFullDay;
-            end;
+                CurrDeductionType := CurrDeductionType::ForeignFullDay;
         end;
-
-        if MealDeduction.Get(PerDiem."Per Diem Group Code", '', '', 0D, CurrDeductionType)
+        //end;
+        //TODO Add code to handle Deduction records that have only fulldays => meaning it should fall-back from e.g. FirstDay to FullDay
+        if MealDeduction.Get(PerDiem."Per Diem Group Code", '', '', 0D, IsDomesticOnlyPerDiemDetail(PerDiemDetail), CurrDeductionType)
         then begin
             // Breakfast only
             if (not PerDiemDetail.Breakfast) and (PerDiemDetail.Lunch) and (PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmountNew(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Breakfast Deduction"));
+                exit(CalcMealDeductionAmount(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Breakfast Deduction"));
 
             // Breakfast and lunch 
             if (not PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and (PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmountNew(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Breakfast-Lunch Deduction"));
+                exit(CalcMealDeductionAmount(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Breakfast-Lunch Deduction"));
 
             // Breakfast and dinner
             if (not PerDiemDetail.Breakfast) and (PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmountNew(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Breakfast-Dinner Deduction"));
+                exit(CalcMealDeductionAmount(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Breakfast-Dinner Deduction"));
 
             // Lunch only
             if (PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and (PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmountNew(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Lunch Deduction"));
+                exit(CalcMealDeductionAmount(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Lunch Deduction"));
 
             // Lunch and Dinner
             if (PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmountNew(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Lunch-Dinner Deduction"));
+                exit(CalcMealDeductionAmount(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Lunch-Dinner Deduction"));
 
             // Dinner only
             if (PerDiemDetail.Breakfast) and (PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmountNew(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Dinner Deduction"));
+                exit(CalcMealDeductionAmount(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."Dinner Deduction"));
 
             // All meals
             if (not PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmountNew(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."All meal Deduction"));
+                exit(CalcMealDeductionAmount(MealDeduction, PerDiemDetail."Meal Allowance Amount", MealDeduction."All meal Deduction"));
         end;
 
     end;
 
-    local procedure GetMealDeduction(PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"; PerDiemSubRate: Record "CEM Per Diem Rate Details v.2"; IsDomesticOnlyDetail: Boolean): Decimal
-    var
-        MealDeduction: Record "EMADV Meal Deduction";
-        CurrDeductionType: enum "EMADV Meal Deduction Types";
-    begin
-        if IsDomesticOnlyDetail then begin
-            case true of
-                IsFirstDay(PerDiem, PerDiemDetail):
-                    CurrDeductionType := CurrDeductionType::DomesticFirstDay;
-                IsLastDay(PerDiem, PerDiemDetail):
-                    CurrDeductionType := CurrDeductionType::DomesticLastDay;
-                else
-                    CurrDeductionType := CurrDeductionType::DomesticFullDay;
-            end;
-        end else begin
-            case true of
-                IsFirstDay(PerDiem, PerDiemDetail):
-                    CurrDeductionType := CurrDeductionType::ForeignFirstDay;
-                IsLastDay(PerDiem, PerDiemDetail):
-                    CurrDeductionType := CurrDeductionType::ForeignLastDay;
-                else
-                    CurrDeductionType := CurrDeductionType::ForeignFullDay;
-            end;
-        end;
-
-        if MealDeduction.Get(PerDiem."Per Diem Group Code", '', '', 0D, CurrDeductionType)
-        then begin
-            // Breakfast only
-            if (not PerDiemDetail.Breakfast) and (PerDiemDetail.Lunch) and (PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction, PerDiemSubRate, MealDeduction."Breakfast Deduction"));
-
-            // Breakfast and lunch 
-            if (not PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and (PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction, PerDiemSubRate, MealDeduction."Breakfast-Lunch Deduction"));
-
-            // Breakfast and dinner
-            if (not PerDiemDetail.Breakfast) and (PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction, PerDiemSubRate, MealDeduction."Breakfast-Dinner Deduction"));
-
-            // Lunch only
-            if (PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and (PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction, PerDiemSubRate, MealDeduction."Lunch Deduction"));
-
-            // Lunch and Dinner
-            if (PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction, PerDiemSubRate, MealDeduction."Lunch-Dinner Deduction"));
-
-            // Dinner only
-            if (PerDiemDetail.Breakfast) and (PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction, PerDiemSubRate, MealDeduction."Dinner Deduction"));
-
-            // All meals
-            if (not PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction, PerDiemSubRate, MealDeduction."All meal Deduction"));
-        end;
-
-    end;
-
-
-    local procedure CalcMealDeductionAmount(MealDeduction: Record "EMADV Meal Deduction"; PerDiemSubRate: Record "CEM Per Diem Rate Details v.2"; DeductionCalcValue: Decimal): Decimal
-    begin
-        if MealDeduction."Deduction Method" = MealDeduction."Deduction Method"::Amount then
-            exit(DeductionCalcValue)
-        else
-            exit(PerDiemSubRate."Meal Allowance" * (DeductionCalcValue / 100));
-    end;
-
-    local procedure CalcMealDeductionAmountNew(MealDeduction: Record "EMADV Meal Deduction"; MealAllowanceAmt: Decimal; DeductionCalcValue: Decimal): Decimal
+    local procedure CalcMealDeductionAmount(MealDeduction: Record "EMADV Meal Deduction"; MealAllowanceAmt: Decimal; DeductionCalcValue: Decimal): Decimal
     begin
         if MealDeduction."Deduction Method" = MealDeduction."Deduction Method"::Amount then
             exit(DeductionCalcValue)
         else
             exit(MealAllowanceAmt * (DeductionCalcValue / 100));
     end;
-    /*
-        local procedure CalcMealDeduction(PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail")
-        var
-            MealDeduction: Record "EMADV Meal Deduction";
-        begin
-            if PerDiemCalcMgt.GetValidPerDiemRate(PerDiemRate, PerDiemSubRate, PerDiemDetail, PerDiem, PerDiemCalculation) then begin
-                if not MealDeduction.Get(PerDiem. ."Per Diem Entry No.", '', '', 0D, MealDeduction."Deduction Type"::FullDay) then
-                    exit(0);
-            end;
-            // Foreign country per diem
-            // Breakfast only
-            if PerDiemDetail.Breakfast and (not PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Breakfast Deduction"));
 
-            // Breakfast and lunch 
-            if PerDiemDetail.Breakfast and PerDiemDetail.Lunch and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Breakfast-Lunch Deduction"));
 
-            // Breakfast and dinner
-            if PerDiemDetail.Breakfast and (not PerDiemDetail.Lunch) and PerDiemDetail.Dinner then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Breakfast-Dinner Deduction"));
-
-            // Lunch only
-            if (not PerDiemDetail.Breakfast) and PerDiemDetail.Lunch and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Lunch Deduction"));
-
-            // Lunch and Dinner
-            if (not PerDiemDetail.Breakfast) and PerDiemDetail.Lunch and PerDiemDetail.Dinner then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Lunch-Dinner Deduction"));
-
-            // Dinner only
-            if (not PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and PerDiemDetail.Dinner then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Dinner Deduction"));
-
-            // All meals
-            if PerDiemDetail.Breakfast and PerDiemDetail.Lunch and PerDiemDetail.Dinner then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."All meal Deduction"));
-
-        end;
-        */
-
-    local procedure IsFirstDay(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
-    begin
-        exit(PerDiemDetail.Date = DT2Date(PerDiem."Departure Date/Time"));
-    end;
-
-    local procedure IsLastDay(var PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
-    begin
-        exit(PerDiemDetail.Date = DT2Date(PerDiem."Return Date/Time"));
-    end;
-
-    /*
-        local procedure SetDailyAllowancesAndDeductions(var PerDiem: Record "CEM Per Diem")
-        var
-            //CustPerDiemRate: Record "EMADV Cust PerDiem Rate";
-            PerDiemRate: Record "CEM Per Diem Rate v.2";
-            PerDiemSubRate: Record "CEM Per Diem Rate Details v.2";
-            PerDiemDetail: Record "CEM Per Diem Detail";
-            PerDiemCalculation: Record "EMADV Per Diem Calculation";
-        begin
-
-            PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-            if PerDiemDetail.FindSet() then
-                repeat
-                    PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-                    PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
-                    if PerDiemCalculation.FindSet() then
-                        repeat
-                            if PerDiemCalcMgt.GetValidPerDiemRate(PerDiemRate, PerDiemSubRate, PerDiemDetail, PerDiem, PerDiemCalculation) then begin
-                                case true of
-                                    // Departure day = Partial
-                                    DT2Date(PerDiemCalculation."From DateTime") = DT2Date(PerDiem."Departure Date/Time"):
-                                        begin
-                                            if PerDiemDetail."Accommodation Allowance" then
-                                                PerDiemCalculation."Daily Accommodation Allowance" := 0;
-                                            //PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."First/Last Day Meal Allowance";
-                                            PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
-                                            PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiem, PerDiemDetail, PerDiemRate, PerDiemSubRate, false);
-                                        end;
-                                    // Arrival day = Partial
-                                    DT2Date(PerDiemCalculation."From DateTime") = DT2Date(PerDiem."Return Date/Time"):
-                                        begin
-                                            if PerDiemDetail."Accommodation Allowance" then
-                                                PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
-                                            //PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."First/Last Day Meal Allowance";
-                                            PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
-                                            PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiem, PerDiemDetail, PerDiemRate, PerDiemSubRate, false);
-                                        end;
-                                    // Full day
-                                    else begin
-                                        if PerDiemDetail."Accommodation Allowance" then
-                                            PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
-                                        //PerDiemCalculation."Daily Meal Allowance" := PerDiemRate."Daily Meal Allowance";
-                                        PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
-                                        PerDiemCalculation."Meal Allowance Deductions" := GetMaxDailyMealDeductions(PerDiem, PerDiemDetail, PerDiemRate, PerDiemSubRate, true);
-                                    end;
-                                end;
-
-                                PerDiemCalculation.Modify();
-                            end;
-                        until PerDiemCalculation.Next() = 0;
-                until PerDiemDetail.Next() = 0;
-        end;
-    */
-
+    /// <summary>
+    /// Calculates the reimbursement amounts of the current per diem record and writes them back to the Per Diem Calculation table
+    /// </summary>
     local procedure CalculateReimbursementAmounts(var PerDiem: Record "CEM Per Diem")
     var
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemGroup: Record "CEM Per Diem Group";
-
         RemainingTwelth: Integer;
         TotalReimbursedTwelth: Integer;
         RemainingDomesticTwelth: Integer;
@@ -582,7 +381,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 CalculateAccommodationReimbursement(PerDiemDetail);
             until PerDiemDetail.Next() = 0;
 
-            // Handling of domestic part >>>
+            // Handling domestic part of per diem
             if PerDiemWithMultipleDestinations(PerDiem) then begin
                 PerDiemCalculation.SetRange("AT Per Diem Twelfth");
                 PerDiemCalculation.SetRange("Per Diem Det. Entry No.");
@@ -590,10 +389,10 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
                 RemainingDomesticTwelth := PerDiemCalcMgt.GetTripDurationInTwelth(PerDiem) - TotalReimbursedTwelth;
 
-                if RemainingDomesticTwelth > 0 then begin
+                if RemainingDomesticTwelth > 0 then
                     if PerDiemCalculation.FindSet() then
                         repeat
-                            DomesticPartInHours := PerDiemCalcMgt.ConvertMsecDurationIntoHours(PerDiemCalculation."Day Duration");
+                            DomesticPartInHours := PerDiemCalcMgt.ConvertMsecDurationIntoHours(PerDiemCalculation."Day Duration", 1, '>');
                             MaxTwelthOfDayToReimburse := GetMaxTwelthOfDayToReimburse(PerDiem."Entry No.", PerDiemCalculation."Per Diem Det. Entry No.");
                             if (MaxTwelthOfDayToReimburse > 0) then begin
                                 if DomesticPartInHours >= MaxTwelthOfDayToReimburse then
@@ -616,13 +415,11 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                             PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * (PerDiemCalculation."AT Per Diem Reimbursed Twelfth");
                             PerDiemCalculation.Modify(true);
                         until (PerDiemCalculation.Next() = 0) or (RemainingDomesticTwelth <= 0);
-                end;
             end;
-            // Handling of domestic part <<<
         end;
     end;
 
-    local procedure AddPerDiemDestToCalc(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalculation: Record "EMADV Per Diem Calculation"; var NextDayDateTime: DateTime; var CurrCountry: Code[10]): Boolean
+    local procedure AddDestinationToCalculation(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalculation: Record "EMADV Per Diem Calculation"; var NextDayDateTime: DateTime; var CurrCountry: Code[10]): Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
         PerDiemDetailDest: Record "CEM Per Diem Detail Dest.";
@@ -675,8 +472,6 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
     end;
 
     local procedure InsertCalc(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalc: Record "EMADV Per Diem Calculation"; FromDateTime: DateTime; ToDateTime: DateTime; CurrCountry: Code[10]; UpdateCurrCalcToDTWithNewFromDT: Boolean; FirstLastEntry: Boolean)
-    var
-
     begin
         //Update last calulation ToDate with new FromDate
         if UpdateCurrCalcToDTWithNewFromDT then
@@ -716,58 +511,6 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         end;
     end;
 
-    /*
-        local procedure GetMaxDailyMealDeductions(PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"; PerDiemRate: Record "CEM Per Diem Rate v.2"; PerDiemSubRate: Record "CEM Per Diem Rate Details v.2"; FullDay: Boolean): Decimal
-        var
-            MealDeduction: Record "EMADV Meal Deduction";
-            MealDeductionValue: Decimal;
-            MealDeductionFound: Boolean;
-        begin
-
-            if IsDomesticOnlyPerDiem(PerDiemDetail) then begin
-                // Domestic country per diem
-                if not FullDay then
-                    if not MealDeduction.Get(PerDiem."Per Diem Group Code", '', '', 0D, MealDeduction."Deduction Type"::FullDay) then
-                        if not MealDeduction.Get(PerDiem."Per Diem Group Code", '', '', 0D, MealDeduction."Deduction Type"::FullDay) then
-                            exit(0);
-            end else begin
-                if not FullDay then
-                    if not MealDeduction.Get(PerDiem."Per Diem Group Code", '', '', 0D, MealDeduction."Deduction Type"::FullDay) then
-                        if not MealDeduction.Get(PerDiem."Per Diem Group Code", '', '', 0D, MealDeduction."Deduction Type"::FullDay) then
-                            exit(0);
-            end;
-            // Foreign country per diem
-            // Breakfast only
-            if PerDiemDetail.Breakfast and (not PerDiemDetail.Lunch) and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Breakfast Deduction"));
-
-            // Breakfast and lunch 
-            if PerDiemDetail.Breakfast and PerDiemDetail.Lunch and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Breakfast-Lunch Deduction"));
-
-            // Breakfast and dinner
-            if PerDiemDetail.Breakfast and (not PerDiemDetail.Lunch) and PerDiemDetail.Dinner then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Breakfast-Dinner Deduction"));
-
-            // Lunch only
-            if (not PerDiemDetail.Breakfast) and PerDiemDetail.Lunch and (not PerDiemDetail.Dinner) then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Lunch Deduction"));
-
-            // Lunch and Dinner
-            if (not PerDiemDetail.Breakfast) and PerDiemDetail.Lunch and PerDiemDetail.Dinner then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Lunch-Dinner Deduction"));
-
-            // Dinner only
-            if (not PerDiemDetail.Breakfast) and (not PerDiemDetail.Lunch) and PerDiemDetail.Dinner then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."Dinner Deduction"));
-
-            // All meals
-            if PerDiemDetail.Breakfast and PerDiemDetail.Lunch and PerDiemDetail.Dinner then
-                exit(CalcMealDeductionAmount(MealDeduction."Deduction Method", PerDiemSubRate."Meal Allowance", MealDeduction."All meal Deduction"));
-
-        end;
-        */
-
     local procedure IsDomesticOnlyPerDiemDetail(PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
     var
         PerDiemCalc: Record "EMADV Per Diem Calculation";
@@ -791,7 +534,6 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
     local procedure GetMaxTwelthOfDayToReimburse(PerDiemEntryNo: Integer; PerDiemDetEntryNo: Integer) ReimbursedTwelthOfDay: Integer
     var
-        //PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemGroup: Record "CEM Per Diem Group";
         PerDiem: Record "CEM Per Diem";
@@ -832,12 +574,6 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         OnAfterCalculateAccommodationReimbursement(PerDiemDetail);
     end;
 
-
-
-
-
-
-
     [IntegrationEvent(false, false)]
     local procedure OnBeforeCalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail"; var IsHandled: Boolean)
     begin
@@ -847,7 +583,6 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
     local procedure OnAfterCalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail")
     begin
     end;
-
 
     var
         PerDiemCalcRuleSet: enum "EMADV Per Diem Calc. Rule Set";

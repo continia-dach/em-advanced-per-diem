@@ -32,6 +32,11 @@ table 62081 "EMADV Meal Deduction"
             DataClassification = CustomerContent;
             TableRelation = "CEM Allowance" WHERE(Type = FILTER(' ' | Accommodation));
         }
+        field(9; "Domestic Day"; Boolean)
+        {
+            Caption = 'Domestic Day';
+            DataClassification = CustomerContent;
+        }
         field(10; "Deduction Type"; Enum "EMADV Meal Deduction Types")
         {
             Caption = 'Meal deduction type';
@@ -88,7 +93,7 @@ table 62081 "EMADV Meal Deduction"
     }
     keys
     {
-        key(PK; "Per Diem Group Code", "Destination Country/Region", "Accommodation Allowance Code", "Start Date", "Deduction Type")
+        key(PK; "Per Diem Group Code", "Destination Country/Region", "Accommodation Allowance Code", "Start Date", "Domestic Day", "Deduction Type")
 
         {
             Clustered = true;
