@@ -242,7 +242,8 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                                     PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
 
                             // set the meal allowance
-                            PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
+                            //PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
+                            PerDiemCalculation."Meal Reimb. Amount" := PerDiemSubRate."Meal Allowance";
 
                             PerDiemCalculation.Modify();
                         end;
@@ -366,11 +367,11 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                             PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := 0;
                         end else begin
                             if PerDiemCalculation."AT Per Diem Twelfth" > RemainingTwelth then begin
-                                PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * RemainingTwelth;
+                                //TODO CHECK PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * RemainingTwelth;
                                 PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := RemainingTwelth;
                                 RemainingTwelth := 0;
                             end else begin
-                                PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * PerDiemCalculation."AT Per Diem Twelfth";
+                                //TODO CHECK PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * PerDiemCalculation."AT Per Diem Twelfth";
                                 PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := PerDiemCalculation."AT Per Diem Twelfth";
                                 RemainingTwelth -= PerDiemCalculation."AT Per Diem Twelfth";
                             end;

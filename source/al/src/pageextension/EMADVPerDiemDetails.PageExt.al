@@ -1,4 +1,4 @@
-pageextension 62081 "EMADV Per Diem Rate Details" extends "CEM Per Diem Details"
+pageextension 62081 "EMADV Per Diem Details" extends "CEM Per Diem Details"
 {
     layout
     {
@@ -12,6 +12,35 @@ pageextension 62081 "EMADV Per Diem Rate Details" extends "CEM Per Diem Details"
                 SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."),
                               "Per Diem Detail Entry No." = field("Entry No.");
             }
+        }
+        modify(Breakfast)
+        {
+            trigger OnAfterValidate()
+            begin
+                UpdateDetails();
+            end;
+        }
+
+        modify(Lunch)
+        {
+            trigger OnAfterValidate()
+            begin
+                UpdateDetails();
+            end;
+        }
+        modify(Dinner)
+        {
+            trigger OnAfterValidate()
+            begin
+                UpdateDetails();
+            end;
+        }
+        modify("Accommodation Allowance")
+        {
+            trigger OnAfterValidate()
+            begin
+                UpdateDetails();
+            end;
         }
     }
     actions
@@ -32,16 +61,22 @@ pageextension 62081 "EMADV Per Diem Rate Details" extends "CEM Per Diem Details"
                     ToolTip = 'Update current line';
 
                     trigger OnAction()
-                    var
-                        CustPerDiemCalMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
                     begin
-                        CurrPage.Update(true);
-                        CustPerDiemCalMgt.CalcCustPerDiemRate(Rec);
+                        UpdateDetails();
                     end;
                 }
             }
         }
     }
+
+    local procedure UpdateDetails()
+    var
+        CustPerDiemCalMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
+    begin
+        CurrPage.Update(true);
+        CustPerDiemCalMgt.CalcCustPerDiemRate(Rec);
+    end;
+
     trigger OnOpenPage()
     var
         EMSetup: Record "CEM Expense Management Setup";
