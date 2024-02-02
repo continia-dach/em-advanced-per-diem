@@ -244,9 +244,9 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                     repeat
                         if GetValidPerDiemRate(PerDiemRate, PerDiemSubRate, PerDiemDetail, PerDiem, PerDiemCalculation) then begin
                             // set the accommodation allowance if enabled and not first day
-                            if PerDiemDetail."Accommodation Allowance" then
-                                if not PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail) then
-                                    PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
+                            //if PerDiemDetail."Accommodation Allowance" then
+                            if not PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail) then
+                                PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
 
                             // set the meal allowance
                             PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
@@ -610,6 +610,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiemDetail."Per Diem Entry No.");
         PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
         if PerDiemCalculation.FindFirst() then begin
+            //TODO Accommodation Zuweisung prüfen
             PerDiemCalculation."Accommodation Reimb. Amount" := PerDiemCalculation."Daily Accommodation Allowance";
             PerDiemCalculation.Modify(true);
         end;
