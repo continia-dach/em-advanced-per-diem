@@ -43,6 +43,11 @@ page 62085 "EMADV Per Diem Calc. List"
                 {
                     ToolTip = 'Specifies the value of the Destination Name field.';
                 }
+                field("Domestic Entry"; Rec."Domestic Entry")
+                {
+                    ToolTip = 'Sepecifies if the country is marked as domestic country';
+                    //TODO consider to hide the field
+                }
                 field("Duration Integer"; Rec."Day Duration")
                 {
                     ToolTip = 'Specifies the value of the Duration field.';

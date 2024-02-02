@@ -21,7 +21,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         SetupPerDiemCalculationTable(PerDiem, PerDiemDetail);
 
         // Calculate the Austrian twelth
-        CalculateAustrianPerDiemTwelth(PerDiem, PerDiemDetail);
+        //CalculateAustrianPerDiemTwelth(PerDiem, PerDiemDetail);
 
         // Add the daily accommocation value
         CalculateAllowances(PerDiem);
@@ -90,10 +90,11 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
     local procedure SetupPerDiemCalculationTable(var PerDiem: Record "CEM Per Diem"; CurrPerDiemDetail: Record "CEM Per Diem Detail"): Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
+        CurrentCountry: Record "CEM Country/Region";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemGroup: Record "CEM Per Diem Group";
-        CurrCountry: Code[10];
+        //CurrCountry: Code[10];
         NextDayDateTime: DateTime;
         ForeignCountryDuration: Duration;
     begin
@@ -104,6 +105,8 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         if not EMSetup.Get() then
             exit;
 
+        if not CurrentCountry.Get(PerDiem."Departure Country/Region") then
+            exit;
         // Delete existing calculations
         ResetPerDiemCalculation(PerDiem);
 
@@ -115,8 +118,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         if PerDiem."Return Date/Time" < NextDayDateTime then
             NextDayDateTime := PerDiem."Return Date/Time";
 
-        CurrCountry := PerDiem."Departure Country/Region";
-        InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiem."Departure Date/Time", NextDayDateTime, CurrCountry, false, true);
+        InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiem."Departure Date/Time", NextDayDateTime, CurrentCountry, false);
         //Create 1st day <<<
 
         PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
@@ -124,7 +126,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             repeat
                 // Either there are multiple destination linked to one per diem detail or not
                 // Try to process the multiple destinations first and if not found then process the current destination
-                if not AddDestinationToCalculation(PerDiem, PerDiemDetail, PerDiemCalculation, NextDayDateTime, CurrCountry) then begin
+                if not AddDestinationToCalculation(PerDiem, PerDiemDetail, PerDiemCalculation, NextDayDateTime, CurrentCountry) then begin
                     // not on the first day
                     if (PerDiemDetail.Date > DT2Date(PerDiem."Departure Date/Time")) then begin
                         // Return on the same date and return date is smaller than next day date
@@ -133,11 +135,11 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                                 UpdateCalcWithToDT(PerDiemCalculation, PerDiem."Return Date/Time")
                             else begin
                                 NextDayDateTime := PerDiem."Return Date/Time";
-                                InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", PerDiem."Return Date/Time", CurrCountry, true, false);
+                                InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", PerDiem."Return Date/Time", CurrentCountry, true);
                             end;
                         end else begin
                             NextDayDateTime := GetNextDayTime(NextDayDateTime);
-                            InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrCountry, true, false);
+                            InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrentCountry, true);
                         end;
                     end;
                 end;
@@ -235,15 +237,16 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
                 if PerDiemCalculation.FindSet() then
                     repeat
-                        if PerDiemCalcMgt.GetValidPerDiemRate(PerDiemRate, PerDiemSubRate, PerDiemDetail, PerDiem, PerDiemCalculation) then begin
+                        if GetValidPerDiemRate(PerDiemRate, PerDiemSubRate, PerDiemDetail, PerDiem, PerDiemCalculation) then begin
                             // set the accommodation allowance if enabled and not first day
                             if PerDiemDetail."Accommodation Allowance" then
                                 if not PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail) then
                                     PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
 
                             // set the meal allowance
-                            //PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
-                            PerDiemCalculation."Meal Reimb. Amount" := PerDiemSubRate."Meal Allowance";
+                            PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
+                            PerDiemCalculation."AT Per Diem Twelfth" := PerDiemSubRate."Minimum Stay (hours)" + 1; // add 1 twelth as rate table is working different
+                            //PerDiemCalculation."Meal Reimb. Amount" := PerDiemSubRate."Meal Allowance";
 
                             PerDiemCalculation.Modify();
                         end;
@@ -251,11 +254,37 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             until PerDiemDetail.Next() = 0;
     end;
 
+    local procedure GetValidPerDiemRate(var PerDiemRate: Record "CEM Per Diem Rate v.2"; var PerDiemSubRate: Record "CEM Per Diem Rate Details v.2"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; PerDiemCalc: Record "EMADV Per Diem Calculation"): Boolean
+    begin
+        PerDiemSubRate.SetRange("Per Diem Group Code", PerDiem."Per Diem Group Code");
+        if PerDiemCalc."Domestic Entry" then
+            PerDiemSubRate.SetRange("Destination Country/Region", PerDiem."Departure Country/Region")
+        else
+            PerDiemSubRate.SetRange("Destination Country/Region", PerDiemCalc."Country/Region");
+
+        //Not used at the moment PerDiemSubRate.SetRange("Accommodation Allowance Code");
+
+        PerDiemSubRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
+
+        // Make sure to get only rates with minimum stay hours of trip
+        PerDiemSubRate.SetFilter("Minimum Stay (hours)", '<%1', PerDiemCalcMgt.ConvertMsecDurationIntoHours(PerDiemCalc."Day Duration", 1, '>'));
+
+        if PerDiemSubRate.FindLast() then begin
+            if PerDiemRate.Get(PerDiemSubRate."Per Diem Group Code", PerDiemSubRate."Destination Country/Region", PerDiemSubRate."Accommodation Allowance Code", PerDiemSubRate."Start Date") then
+                exit(true);
+        end;
+
+    end;
+
     local procedure GetMealDeduction(PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"): Decimal
     var
         MealDeduction: Record "EMADV Meal Deduction";
+        PerDiemCalc: Record "EMADV Per Diem Calculation";
         CurrDeductionType: enum "EMADV Meal Deduction Types";
     begin
+        PerDiemCalc.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        PerDiemCalc.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
+
         /*if IsDomesticOnlyDetail then begin
             case true of
                 PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail):
@@ -266,6 +295,11 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                     CurrDeductionType := CurrDeductionType::DomesticFullDay;
             end;
         end else begin*/
+
+        if PerDiemWithMultipleDestinations(PerDiem) then begin
+            //PerDiemDetail.
+        end;
+
         case true of
             PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail):
                 CurrDeductionType := CurrDeductionType::ForeignFirstDay;
@@ -358,6 +392,9 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                     end;
             end;
 
+            if PerDiemWithMultipleDestinations(PerDiem) then
+                PerDiemCalculation.SetRange("Domestic Entry", false);
+
             repeat
                 RemainingTwelth := 12;
                 PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
@@ -367,11 +404,13 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                             PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := 0;
                         end else begin
                             if PerDiemCalculation."AT Per Diem Twelfth" > RemainingTwelth then begin
-                                //TODO CHECK PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * RemainingTwelth;
+                                //PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance";//TODO / 12 * RemainingTwelth;
+                                PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / PerDiemCalculation."AT Per Diem Twelfth" * RemainingTwelth;
                                 PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := RemainingTwelth;
                                 RemainingTwelth := 0;
                             end else begin
-                                //TODO CHECK PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * PerDiemCalculation."AT Per Diem Twelfth";
+                                //PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance";//TODO CHECK  / 12 * PerDiemCalculation."AT Per Diem Twelfth";
+                                PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / PerDiemCalculation."AT Per Diem Twelfth" * PerDiemCalculation."AT Per Diem Twelfth";
                                 PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := PerDiemCalculation."AT Per Diem Twelfth";
                                 RemainingTwelth -= PerDiemCalculation."AT Per Diem Twelfth";
                             end;
@@ -413,14 +452,14 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                                     RemainingDomesticTwelth := 0;
                                 end;
                             end;
-                            PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / 12 * (PerDiemCalculation."AT Per Diem Reimbursed Twelfth");
+                            PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / PerDiemCalculation."AT Per Diem Twelfth" * PerDiemCalculation."AT Per Diem Reimbursed Twelfth";
                             PerDiemCalculation.Modify(true);
                         until (PerDiemCalculation.Next() = 0) or (RemainingDomesticTwelth <= 0);
             end;
         end;
     end;
 
-    local procedure AddDestinationToCalculation(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalculation: Record "EMADV Per Diem Calculation"; var NextDayDateTime: DateTime; var CurrCountry: Code[10]): Boolean
+    local procedure AddDestinationToCalculation(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalculation: Record "EMADV Per Diem Calculation"; var NextDayDateTime: DateTime; var CurrentCountry: Record "CEM Country/Region"): Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
         PerDiemDetailDest: Record "CEM Per Diem Detail Dest.";
@@ -441,12 +480,12 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             // Check if we have to log a new day till destination arrival
             if NextDayDateTime < CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time") then begin
                 NextDayDateTime := GetNextDayTime(NextDayDateTime);
-                InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrCountry, true, false);
+                InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrentCountry, true);
             end;
 
             // track begin of foreign country
             if (PerDiemDetailDest."Destination Country/Region" <> PerDiem."Departure Country/Region") and
-                (CurrCountry = PerDiem."Departure Country/Region") then begin
+                (CurrentCountry.Code = PerDiem."Departure Country/Region") then begin
 
                 case PerDiemCalcRuleSet of
                     "EMADV Per Diem Calc. Rule Set"::Austria24h:
@@ -458,9 +497,9 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             if NextDayDateTime > PerDiem."Return Date/Time" then
                 NextDayDateTime := PerDiem."Return Date/Time";
 
-            CurrCountry := PerDiemDetailDest."Destination Country/Region";
+            CurrentCountry.Get(PerDiemDetailDest."Destination Country/Region");
 
-            InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time"), NextDayDateTime, CurrCountry, true, false);
+            InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time"), NextDayDateTime, CurrentCountry, true);
         until PerDiemDetailDest.Next() = 0;
         exit(true);
     end;
@@ -472,7 +511,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         PerDiemCalculation.Modify(true);
     end;
 
-    local procedure InsertCalc(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalc: Record "EMADV Per Diem Calculation"; FromDateTime: DateTime; ToDateTime: DateTime; CurrCountry: Code[10]; UpdateCurrCalcToDTWithNewFromDT: Boolean; FirstLastEntry: Boolean)
+    local procedure InsertCalc(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalc: Record "EMADV Per Diem Calculation"; FromDateTime: DateTime; ToDateTime: DateTime; CurrCountry: Record "CEM Country/Region"; UpdateCurrCalcToDTWithNewFromDT: Boolean)
     begin
         //Update last calulation ToDate with new FromDate
         if UpdateCurrCalcToDTWithNewFromDT then
@@ -485,8 +524,8 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         PerDiemCalc."Entry No." := 0;
         PerDiemCalc.Validate("From DateTime", FromDateTime);
         PerDiemCalc.Validate("To DateTime", ToDateTime);
-        PerDiemCalc.Validate("Domestic Entry", FirstLastEntry);
-        PerDiemCalc.Validate("Country/Region", CurrCountry);
+        PerDiemCalc.Validate("Domestic Entry", CurrCountry."Domestic Country");
+        PerDiemCalc.Validate("Country/Region", CurrCountry.Code);
         PerDiemCalc.Insert(true);
     end;
 

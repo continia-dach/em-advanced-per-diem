@@ -104,8 +104,9 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 
         PerDiemSubRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
 
+
         // Make sure to get only rates with minimum stay hours of trip
-        PerDiemSubRate.SetFilter("Minimum Stay (hours)", '<=%1', GetTripDurationInHours(PerDiem, 1, '<'));
+        PerDiemSubRate.SetFilter("Minimum Stay (hours)", '<%1', ConvertMsecDurationIntoHours(PerDiemCalc."Day Duration", 1, '>'));
 
         if PerDiemSubRate.FindLast() then begin
             if PerDiemRate.Get(PerDiemSubRate."Per Diem Group Code", PerDiemSubRate."Destination Country/Region", PerDiemSubRate."Accommodation Allowance Code", PerDiemSubRate."Start Date") then
@@ -141,7 +142,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 
     internal procedure GetTripDurationInHours(PerDiem: Record "CEM Per Diem"): Decimal
     begin
-        GetTripDurationInHours(PerDiem, 1, '>');
+        exit(GetTripDurationInHours(PerDiem, 1, '>'));
     end;
 
     internal procedure ConvertMsecDurationIntoHours(DurationInMsec: Integer; Precision: Decimal; Direction: Text[1]): Decimal
