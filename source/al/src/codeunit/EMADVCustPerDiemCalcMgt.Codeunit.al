@@ -53,42 +53,33 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
             Currency."Amount Rounding Precision" := 1;
         */
 
-
-
-        // Iterate and update new diem details 
-        /*PerDiemDetailUpdate.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-        if PerDiemDetailUpdate.FindSet(true) then
-            repeat
-                // Clear old values >>>
-                Clear(PerDiemDetailUpdate."Accommodation Allowance Amount");
-                Clear(PerDiemDetailUpdate."Meal Allowance Amount");
-                Clear(PerDiemDetailUpdate."Transport Allowance Amount");
-                Clear(PerDiemDetailUpdate."Entertainment Allowance Amount");
-                Clear(PerDiemDetailUpdate."Drinks Allowance Amount");
-
-                Clear(PerDiemDetailUpdate."Taxable Acc. Allowance Amount");
-                Clear(PerDiemDetailUpdate."Taxable Meal Allowance Amount");
-                Clear(PerDiemDetailUpdate."Taxable Amount");
-                Clear(PerDiemDetailUpdate."Taxable Amount (LCY)");
-
-                // Get fill calculation table and fill amount fields
-                PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-                PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetailUpdate."Entry No.");
-                PerDiemCalculation.SetRange("To DateTime", CreateDateTime(PerDiemDetail.Date, 000000T), CreateDateTime(PerDiemDetailUpdate.Date, 235959T));
-                if PerDiemCalculation.FindSet() then
-                    repeat
-                        if PerDiemCalculation."Meal Allowance Deductions" <= PerDiemCalculation."Meal Reimb. Amount" then
-                            PerDiemDetailUpdate."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount" - PerDiemCalculation."Meal Allowance Deductions";
-                        PerDiemDetailUpdate."Accommodation Allowance Amount" += PerDiemCalculation."Accommodation Reimb. Amount";
-                    until PerDiemCalculation.Next() = 0;
-
-                PerDiemDetailUpdate.Amount := ROUND(PerDiemDetailUpdate."Accommodation Allowance Amount" + PerDiemDetailUpdate."Meal Allowance Amount" + PerDiemDetailUpdate."Transport Allowance Amount" +
-                      PerDiemDetailUpdate."Entertainment Allowance Amount" + PerDiemDetailUpdate."Drinks Allowance Amount", Currency."Amount Rounding Precision");
-                PerDiemDetailUpdate."Amount (LCY)" := PerDiemDetailUpdate.Amount; // TODO: Set up LCY calculation
-                PerDiemDetailUpdate.Modify();
-            until PerDiemDetailUpdate.Next() = 0;
-            */
         exit(true);
+    end;
+
+    internal procedure UpdatePerDiemDetail(var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
+    var
+        EMSetup: Record "CEM Expense Management Setup";
+        PerDiem: Record "CEM Per Diem";
+        PerDiemGroup: Record "CEM Per Diem Group";
+        Currency: Record Currency;
+        PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
+        PerDiemCalculation: Record "EMADV Per Diem Calculation";
+        PerDiemDetailUpdate: Record "CEM Per Diem Detail";
+    begin
+        if not EMSetup.Get() then
+            exit;
+
+        if not EMSetup."Use Custom Per Diem Engine" then
+            exit;
+
+        if not PerDiem.Get(PerDiemDetail."Per Diem Entry No.") then
+            exit;
+
+        if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+            exit;
+
+        PerDiemRuleSetProvider := PerDiemGroup."Calculation rule set";
+        PerDiemRuleSetProvider.UpdatePerDiemDetail(PerDiem, PerDiemDetail);
     end;
 
     internal procedure GetValidPerDiemRate(var PerDiemRate: Record "CEM Per Diem Rate v.2"; var PerDiemSubRate: Record "CEM Per Diem Rate Details v.2"; var PerDiemDetail: Record "CEM Per Diem Detail"; PerDiem: Record "CEM Per Diem"; PerDiemCalc: Record "EMADV Per Diem Calculation"): Boolean

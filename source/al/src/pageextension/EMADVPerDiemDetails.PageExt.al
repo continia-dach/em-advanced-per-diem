@@ -72,9 +72,12 @@ pageextension 62081 "EMADV Per Diem Details" extends "CEM Per Diem Details"
     local procedure UpdateDetails()
     var
         CustPerDiemCalMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
+        PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
+
     begin
-        CurrPage.Update(true);
-        CustPerDiemCalMgt.CalcCustPerDiemRate(Rec);
+        //CurrPage.Update(true);
+        CustPerDiemCalMgt.UpdatePerDiemDetail(Rec);
+        CurrPage.Update(false);
     end;
 
     trigger OnOpenPage()

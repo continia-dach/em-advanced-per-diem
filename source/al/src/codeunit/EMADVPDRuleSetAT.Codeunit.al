@@ -31,59 +31,66 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
         // Iterate and update new per diem details 
         UpdatePerDiemDetails(PerDiem);
-
     end;
 
-    local procedure UpdatePerDiemDetails(var PerDiem: Record "CEM Per Diem")
+    internal procedure UpdatePerDiemDetails(PerDiem: Record "CEM Per Diem")
+    var
+        PerDiemDetail: record "CEM Per Diem Detail";
+    begin
+        PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        if PerDiemDetail.FindSet(true) then
+            repeat
+                UpdatePerDiemDetail(PerDiem, PerDiemDetail);
+            until PerDiemDetail.Next() = 0;
+    end;
+
+    //internal procedure UpdatePerDiemDetail(PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail")
+    internal procedure UpdatePerDiemDetail(PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
     var
         Currency: Record Currency;
-        PerDiemDetailUpdate: record "CEM Per Diem Detail";
+        //PerDiemDetailUpdate: record "CEM Per Diem Detail";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         MealAllowanceDeductionAmt: Decimal;
     begin
-        PerDiemDetailUpdate.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-        if PerDiemDetailUpdate.FindSet(true) then
+        // Clear old values >>>
+        Clear(MealAllowanceDeductionAmt);
+        Clear(PerDiemDetail."Accommodation Allowance Amount");
+        Clear(PerDiemDetail."Meal Allowance Amount");
+        //Clear(PerDiemDetailUpdate."Transport Allowance Amount");
+        //Clear(PerDiemDetailUpdate."Entertainment Allowance Amount");
+        //Clear(PerDiemDetailUpdate."Drinks Allowance Amount");
+        Clear(PerDiemDetail."Taxable Acc. Allowance Amount");
+        Clear(PerDiemDetail."Taxable Meal Allowance Amount");
+        Clear(PerDiemDetail."Taxable Amount");
+        Clear(PerDiemDetail."Taxable Amount (LCY)");
+
+        // Filter calculation table and fill details amount fields
+        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiemDetail."Per Diem Entry No.");
+        PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
+        PerDiemCalculation.SetRange("From DateTime", CreateDateTime(PerDiemDetail.Date, 000000T), CreateDateTime(PerDiemDetail.Date, 235959T));
+        if PerDiemCalculation.FindSet() then
             repeat
-                // Clear old values >>>
-                Clear(MealAllowanceDeductionAmt);
-                Clear(PerDiemDetailUpdate."Accommodation Allowance Amount");
-                Clear(PerDiemDetailUpdate."Meal Allowance Amount");
-                //Clear(PerDiemDetailUpdate."Transport Allowance Amount");
-                //Clear(PerDiemDetailUpdate."Entertainment Allowance Amount");
-                //Clear(PerDiemDetailUpdate."Drinks Allowance Amount");
-                Clear(PerDiemDetailUpdate."Taxable Acc. Allowance Amount");
-                Clear(PerDiemDetailUpdate."Taxable Meal Allowance Amount");
-                Clear(PerDiemDetailUpdate."Taxable Amount");
-                Clear(PerDiemDetailUpdate."Taxable Amount (LCY)");
+                //if PerDiemCalculation."Meal Allowance Deductions" <= PerDiemCalculation."Meal Reimb. Amount" then
+                //PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount" - PerDiemCalculation."Meal Allowance Deductions";
+                PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount";
 
-                // Filter calculation table and fill details amount fields
-                PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-                PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetailUpdate."Entry No.");
-                PerDiemCalculation.SetRange("From DateTime", CreateDateTime(PerDiemDetailUpdate.Date, 000000T), CreateDateTime(PerDiemDetailUpdate.Date, 235959T));
-                if PerDiemCalculation.FindSet() then
-                    repeat
-                        //if PerDiemCalculation."Meal Allowance Deductions" <= PerDiemCalculation."Meal Reimb. Amount" then
-                        //PerDiemDetailUpdate."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount" - PerDiemCalculation."Meal Allowance Deductions";
-                        PerDiemDetailUpdate."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount";
+                PerDiemDetail."Accommodation Allowance Amount" += PerDiemCalculation."Accommodation Reimb. Amount";
+            until PerDiemCalculation.Next() = 0;
 
-                        PerDiemDetailUpdate."Accommodation Allowance Amount" += PerDiemCalculation."Accommodation Reimb. Amount";
-                    until PerDiemCalculation.Next() = 0;
+        // Calculate the meal deductions per detail entry
+        MealAllowanceDeductionAmt := GetMealDeduction(PerDiem, PerDiemDetail);
+        if MealAllowanceDeductionAmt < PerDiemDetail."Meal Allowance Amount" then
+            PerDiemDetail."Meal Allowance Amount" -= MealAllowanceDeductionAmt
+        else
+            PerDiemDetail."Meal Allowance Amount" := 0;
 
-                // Calculate the meal deductions per detail entry
-                MealAllowanceDeductionAmt := GetMealDeduction(PerDiem, PerDiemDetailUpdate);
-                if MealAllowanceDeductionAmt < PerDiemDetailUpdate."Meal Allowance Amount" then
-                    PerDiemDetailUpdate."Meal Allowance Amount" -= MealAllowanceDeductionAmt
-                else
-                    PerDiemDetailUpdate."Meal Allowance Amount" := 0;
+        // Final calculation of reimbursement amounts
+        PerDiemDetail.Amount := ROUND(PerDiemDetail."Accommodation Allowance Amount" + PerDiemDetail."Meal Allowance Amount" + PerDiemDetail."Transport Allowance Amount" +
+              PerDiemDetail."Entertainment Allowance Amount" + PerDiemDetail."Drinks Allowance Amount", Currency."Amount Rounding Precision");
+        PerDiemDetail."Amount (LCY)" := PerDiemDetail.Amount; // TODO: Set up LCY calculation
 
-                // Final calculation of reimbursement amounts
-                PerDiemDetailUpdate.Amount := ROUND(PerDiemDetailUpdate."Accommodation Allowance Amount" + PerDiemDetailUpdate."Meal Allowance Amount" + PerDiemDetailUpdate."Transport Allowance Amount" +
-                      PerDiemDetailUpdate."Entertainment Allowance Amount" + PerDiemDetailUpdate."Drinks Allowance Amount", Currency."Amount Rounding Precision");
-                PerDiemDetailUpdate."Amount (LCY)" := PerDiemDetailUpdate.Amount; // TODO: Set up LCY calculation
-
-                // Save updated detail record
-                PerDiemDetailUpdate.Modify();
-            until PerDiemDetailUpdate.Next() = 0;
+        // Save updated detail record
+        exit(PerDiemDetail.Modify());
     end;
 
 
@@ -145,8 +152,6 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 end;
             until PerDiemDetail.Next() = 0;
 
-            // Mark last entry as "Domestic entry"
-            PerDiemCalculation."Domestic Entry" := true;
             PerDiemCalculation.Modify();
         end;
 
@@ -404,12 +409,10 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                             PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := 0;
                         end else begin
                             if PerDiemCalculation."AT Per Diem Twelfth" > RemainingTwelth then begin
-                                //PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance";//TODO / 12 * RemainingTwelth;
                                 PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / PerDiemCalculation."AT Per Diem Twelfth" * RemainingTwelth;
                                 PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := RemainingTwelth;
                                 RemainingTwelth := 0;
                             end else begin
-                                //PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance";//TODO CHECK  / 12 * PerDiemCalculation."AT Per Diem Twelfth";
                                 PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance" / PerDiemCalculation."AT Per Diem Twelfth" * PerDiemCalculation."AT Per Diem Twelfth";
                                 PerDiemCalculation."AT Per Diem Reimbursed Twelfth" := PerDiemCalculation."AT Per Diem Twelfth";
                                 RemainingTwelth -= PerDiemCalculation."AT Per Diem Twelfth";

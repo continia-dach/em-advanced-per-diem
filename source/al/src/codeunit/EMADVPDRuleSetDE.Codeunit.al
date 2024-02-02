@@ -30,4 +30,8 @@ codeunit 62083 "EMADV PD Rule Set DE" implements "EMADV IPerDiemRuleSetProvider"
            end
            */
     end;
+
+    internal procedure UpdatePerDiemDetail(PerDiem: Record "CEM Per Diem"; PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
+    begin
+    end;
 }
