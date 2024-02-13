@@ -75,7 +75,6 @@ pageextension 62081 "EMADV Per Diem Details" extends "CEM Per Diem Details"
         PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
 
     begin
-        //CurrPage.Update(true);
         CustPerDiemCalMgt.UpdatePerDiemDetail(Rec);
         CurrPage.Update(false);
     end;

@@ -9,9 +9,9 @@ page 62086 "EMADV Calculation Detail FB"
     {
         area(content)
         {
-            group(General)
+            group(Meal)
             {
-                Caption = 'General';
+                Caption = 'Meal';
 
                 field(Breakfast; Rec.Breakfast)
                 {
@@ -25,13 +25,20 @@ page 62086 "EMADV Calculation Detail FB"
                 field("Meal Allowance Amount"; Rec."Meal Allowance Amount")
                 {
                 }
-                field("Accommodation Allowance Amount"; Rec."Accommodation Allowance Amount")
+                field("No. of Destinations"; Rec."No. of Destinations")
                 {
+                    Visible = false;
                 }
+
+            }
+            group(Accommodation)
+            {
+                Caption = 'Accommodation';
+
                 field("Accommodation Allowance"; Rec."Accommodation Allowance")
                 {
                 }
-                field("No. of Destinations"; Rec."No. of Destinations")
+                field("Accommodation Allowance Amount"; Rec."Accommodation Allowance Amount")
                 {
                 }
             }

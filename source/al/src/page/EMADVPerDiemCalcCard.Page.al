@@ -45,7 +45,7 @@ page 62084 "EMADV Per Diem Calc. Card"
             }
             group(Calculation)
             {
-                Caption = 'Calculation';
+                Caption = 'Calculation Details';
 
 
                 field(TripDurationInHours; CalculationMgt.GetTripDurationInHours(Rec))
@@ -58,6 +58,7 @@ page 62084 "EMADV Per Diem Calc. Card"
                 }
                 field(TripMealReimbursementAmount; CalculationMgt.GetTripReimbursementAmount(Rec))
                 {
+                    Visible = false;
                     ToolTip = 'Specifies the reimbursement amount of the current per diem';
                 }
                 field("EM Standard Amount"; Rec.Amount)
@@ -80,6 +81,15 @@ page 62084 "EMADV Per Diem Calc. Card"
                 SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."), "Entry No." = field("Per Diem Det. Entry No.");
 
             }
+            // Obsolete???
+            // part(Destinations; "EMADV Per Diem Det. Dest FB")
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Per diem destinations';
+            //     Provider = "Per Diem Calc. Subpage";
+            //     SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."), "Per Diem Detail Entry No." = field("Per Diem Det. Entry No.");
+            // }
+
         }
     }
     actions

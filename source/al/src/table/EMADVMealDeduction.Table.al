@@ -4,6 +4,7 @@ table 62081 "EMADV Meal Deduction"
     DataClassification = CustomerContent;
     LookupPageId = "EMADV Meal Deduction List";
     DrillDownPageId = "EMADV Meal Deduction List";
+    PasteIsValid = true;
 
     fields
     {

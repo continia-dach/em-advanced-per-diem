@@ -74,7 +74,10 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 //PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount" - PerDiemCalculation."Meal Allowance Deductions";
                 PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount";
 
-                PerDiemDetail."Accommodation Allowance Amount" += PerDiemCalculation."Accommodation Reimb. Amount";
+                //PerDiemDetail."Accommodation Allowance Amount" += PerDiemCalculation."Accommodation Reimb. Amount";
+                // Transfer accommodation amount to detail
+                if PerDiemDetail."Accommodation Allowance" and (PerDiemCalculation."Daily Accommodation Allowance" <> 0) then
+                    PerDiemDetail.Validate("Accommodation Allowance Amount", PerDiemCalculation."Daily Accommodation Allowance");
             until PerDiemCalculation.Next() = 0;
 
         // Calculate the meal deductions per detail entry
@@ -83,6 +86,8 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             PerDiemDetail."Meal Allowance Amount" -= MealAllowanceDeductionAmt
         else
             PerDiemDetail."Meal Allowance Amount" := 0;
+
+
 
         // Final calculation of reimbursement amounts
         PerDiemDetail.Amount := ROUND(PerDiemDetail."Accommodation Allowance Amount" + PerDiemDetail."Meal Allowance Amount" + PerDiemDetail."Transport Allowance Amount" +
@@ -233,6 +238,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemRate: Record "CEM Per Diem Rate v.2";
         PerDiemSubRate: Record "CEM Per Diem Rate Details v.2";
+        LastDate: Date;
     begin
         // Iterate through each day/detail 
         PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
@@ -245,13 +251,17 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                         if GetValidPerDiemRate(PerDiemRate, PerDiemSubRate, PerDiemDetail, PerDiem, PerDiemCalculation) then begin
                             // set the accommodation allowance if enabled and not first day
                             //if PerDiemDetail."Accommodation Allowance" then
-                            if not PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail) then
+                            if (not PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail)) and
+                               (DT2Date(PerDiemCalculation."From DateTime") <> LastDate)
+                            then begin
                                 PerDiemCalculation."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
+                                LastDate := DT2Date(PerDiemCalculation."From DateTime");
+                            end;
 
                             // set the meal allowance
                             PerDiemCalculation."Daily Meal Allowance" := PerDiemSubRate."Meal Allowance";
                             PerDiemCalculation."AT Per Diem Twelfth" := PerDiemSubRate."Minimum Stay (hours)" + 1; // add 1 twelth as rate table is working different
-                            //PerDiemCalculation."Meal Reimb. Amount" := PerDiemSubRate."Meal Allowance";
+                                                                                                                   //PerDiemCalculation."Meal Reimb. Amount" := PerDiemSubRate."Meal Allowance";
 
                             PerDiemCalculation.Modify();
                         end;
@@ -421,7 +431,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                         PerDiemCalculation.Modify();
                         TotalReimbursedTwelth += PerDiemCalculation."AT Per Diem Reimbursed Twelfth";
                     until PerDiemCalculation.Next() = 0;
-                CalculateAccommodationReimbursement(PerDiemDetail);
+            //CalculateAccommodationReimbursement(PerDiemDetail);
             until PerDiemDetail.Next() = 0;
 
             // Handling domestic part of per diem
@@ -597,36 +607,36 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         ReimbursedTwelthOfDay := 12 - ReimbursedTwelthOfDay;
     end;
 
-    local procedure CalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail")
-    var
-        PerDiemCalculation: Record "EMADV Per Diem Calculation";
-        IsHandled: Boolean;
-    begin
-        OnBeforeCalculateAccommodationReimbursement(PerDiemDetail, IsHandled);
-        if IsHandled then
-            exit;
+    // local procedure CalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail")
+    // var
+    //     PerDiemCalculation: Record "EMADV Per Diem Calculation";
+    //     IsHandled: Boolean;
+    // begin
+    //     OnBeforeCalculateAccommodationReimbursement(PerDiemDetail, IsHandled);
+    //     if IsHandled then
+    //         exit;
 
-        // Filter for first calculation (country) entry and use this as accommodation source
-        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiemDetail."Per Diem Entry No.");
-        PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
-        if PerDiemCalculation.FindFirst() then begin
-            //TODO Accommodation Zuweisung prüfen
-            PerDiemCalculation."Accommodation Reimb. Amount" := PerDiemCalculation."Daily Accommodation Allowance";
-            PerDiemCalculation.Modify(true);
-        end;
+    //     // Filter for first calculation (country) entry and use this as accommodation source
+    //     PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiemDetail."Per Diem Entry No.");
+    //     PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
+    //     if PerDiemCalculation.FindFirst() then begin
+    //         //TODO Accommodation Zuweisung prüfen
+    //         PerDiemCalculation."Accommodation Reimb. Amount" := PerDiemCalculation."Daily Accommodation Allowance";
+    //         PerDiemCalculation.Modify(true);
+    //     end;
 
-        OnAfterCalculateAccommodationReimbursement(PerDiemDetail);
-    end;
+    //     OnAfterCalculateAccommodationReimbursement(PerDiemDetail);
+    // end;
 
-    [IntegrationEvent(false, false)]
-    local procedure OnBeforeCalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail"; var IsHandled: Boolean)
-    begin
-    end;
+    // [IntegrationEvent(false, false)]
+    // local procedure OnBeforeCalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail"; var IsHandled: Boolean)
+    // begin
+    // end;
 
-    [IntegrationEvent(false, false)]
-    local procedure OnAfterCalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail")
-    begin
-    end;
+    // [IntegrationEvent(false, false)]
+    // local procedure OnAfterCalculateAccommodationReimbursement(PerDiemDetail: Record "CEM Per Diem Detail")
+    // begin
+    // end;
 
     var
         PerDiemCalcRuleSet: enum "EMADV Per Diem Calc. Rule Set";
