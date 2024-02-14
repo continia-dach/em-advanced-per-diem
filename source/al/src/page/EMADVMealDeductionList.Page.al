@@ -1,8 +1,8 @@
 page 62081 "EMADV Meal Deduction List"
 {
     ApplicationArea = All;
-    Caption = 'Meal deduction';
-    PageType = ListPart;
+    Caption = 'Meal allowance deductions';
+    PageType = List;
     SourceTable = "EMADV Meal Deduction";
     UsageCategory = None;
     DelayedInsert = true;

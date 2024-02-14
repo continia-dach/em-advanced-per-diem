@@ -176,7 +176,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             repeat
                 ForeignCountryDuration += PerDiemCalculation."Day Duration";
             until PerDiemCalculation.Next() = 0;
-        if PerDiemCalcMgt.ConvertMsecDurationIntoHours(ForeignCountryDuration, 1, '>') < PerDiemGroup."Min. foreign country duration" then
+        if PerDiemCalcMgt.ConvertMsecDurationIntoHours(ForeignCountryDuration, 0.1, '>') < PerDiemGroup."Min. foreign country duration" then
             PerDiemCalculation.ModifyAll("Domestic Entry", true);
     end;
 

@@ -176,26 +176,37 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
         }
 
 
-        addlast(content)
-        {
-            part(MealDeduction; "EMADV Meal Deduction List")
-            {
-                Caption = 'Test';
-                SubPageLink = "Per Diem Group Code" = field("Per Diem Group Code"), "Destination Country/Region" = field("Destination Country/Region"),
-                              "Accommodation Allowance Code" = field("Accommodation Allowance Code"), "Start Date" = field("Start Date");
+        // // addlast(content)
+        // // {
+        // //     part(MealDeduction; "EMADV Meal Deduction List")
+        // //     {
+        // //         Caption = 'Test';
+        // //         SubPageLink = "Per Diem Group Code" = field("Per Diem Group Code"), "Destination Country/Region" = field("Destination Country/Region"),
+        // //                       "Accommodation Allowance Code" = field("Accommodation Allowance Code"), "Start Date" = field("Start Date");
 
+        // //     }
+        // // }
+    }
+    actions
+    {
+        addfirst(Navigation)
+        {
+            action(MealDeductions)
+            {
+
+                ApplicationArea = All;
+                Caption = 'Rate meal deductions';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                PromotedOnly = true;
+                Image = LineDiscount;
+
+                RunObject = page "EMADV Meal Deduction List";
+                RunPageLink = "Per Diem Group Code" = field("Per Diem Group Code"), "Destination Country/Region" = field("Destination Country/Region"),
+                              "Accommodation Allowance Code" = field("Accommodation Allowance Code"), "Start Date" = field("Start Date");
             }
         }
-        /*
-                modify("Meal rate details")
-                {
-                    Visible = not AdvancedPerDiemEnabled;
-                }
-                modify(SubRates)
-                {
-                    Visible = not AdvancedPerDiemEnabled;
-                }
-                */
     }
 
     trigger OnAfterGetRecord()

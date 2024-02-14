@@ -2,6 +2,7 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
 {
     layout
     {
+
         addafter(Default)
         {
             field("Calculation rule set"; Rec."Calculation rule set")
@@ -33,11 +34,6 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
                     ApplicationArea = All;
                     ToolTip = 'Minimum hours that needs to be tracked for a foreign country per diem trip';
                 }
-            }
-            part(MealDeduction; "EMADV Meal Deduction List")
-            {
-                ApplicationArea = All;
-                SubPageLink = "Per Diem Group Code" = field(Code), "Destination Country/Region" = filter(''), "Accommodation Allowance Code" = filter(''), "Start Date" = filter(0D);
             }
             group(MealTimes)
             {
@@ -106,6 +102,26 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
                         ToolTip = 'Defines the to-time, where the system will deduct the dinner amount';
                     }
                 }
+            }
+        }
+    }
+
+    actions
+    {
+        addfirst(Navigation)
+        {
+            action(MealDeductions)
+            {
+                ApplicationArea = All;
+                Caption = 'Group meal deductions';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                PromotedOnly = true;
+                Image = LineDiscount;
+
+                RunObject = page "EMADV Meal Deduction List";
+                RunPageLink = "Per Diem Group Code" = field(Code), "Destination Country/Region" = filter(''), "Accommodation Allowance Code" = filter(''), "Start Date" = filter(0D);
             }
         }
     }
