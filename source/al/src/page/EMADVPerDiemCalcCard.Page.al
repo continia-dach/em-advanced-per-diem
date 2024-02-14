@@ -76,7 +76,7 @@ page 62084 "EMADV Per Diem Calc. Card"
             part(PerDiemDetails; "EMADV Calculation Detail FB")
             {
                 ApplicationArea = All;
-                Caption = 'Per diem details';
+                UpdatePropagation = Both;
                 Provider = "Per Diem Calc. Subpage";
                 SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."), "Entry No." = field("Per Diem Det. Entry No.");
 
@@ -96,17 +96,7 @@ page 62084 "EMADV Per Diem Calc. Card"
     {
         area(Navigation)
         {
-            action(PerDiemGroup)
-            {
-                ApplicationArea = All;
-                RunObject = Page "CEM Per Diem Group Card";
-                RunPageLink = Code = field("Per Diem Group Code");
-                RunPageMode = View;
-                Image = Card;
-                Promoted = true;
-                PromotedIsBig = true;
-                PromotedCategory = Process;
-            }
+
             action(Update)
             {
                 ApplicationArea = All;
@@ -142,26 +132,39 @@ page 62084 "EMADV Per Diem Calc. Card"
                     CurrPage.UPDATE(FALSE);
                 end;
             }
-            action(OpenRateCard)
+            action(PerDiemGroup)
             {
                 ApplicationArea = All;
+                Caption = 'Per Diem Group';
+                RunObject = Page "CEM Per Diem Group Card";
+                RunPageLink = Code = field("Per Diem Group Code");
+                RunPageMode = View;
                 Image = Card;
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
-                trigger OnAction()
-                var
-                    PerDiemRate: Record "CEM Per Diem Rate v.2";
-                    PerDiemCalculation: Record "EMADV Per Diem Calculation";
-                begin
-                    PerDiemRate.SetRange("Per Diem Group Code", Rec."Per Diem Group Code");
-                    CurrPage."Per Diem Calc. Subpage".Page.GetRecord(PerDiemCalculation);
-                    PerDiemRate.SetRange("Destination Country/Region", PerDiemCalculation."Country/Region");
-                    PerDiemRate.SetFilter("Start Date", '..%1', DT2date(PerDiemCalculation."To DateTime"));
-                    if PerDiemRate.FindLast() then
-                        Page.RunModal(page::"CEM Per Diem Rate Card v.2", PerDiemRate);
-                end;
             }
+            // action(OpenRateCard)
+            // {
+            //     ApplicationArea = All;
+            //     Caption = 'Per Diem Rate';
+            //     Image = Card;
+            //     Promoted = true;
+            //     PromotedIsBig = true;
+            //     PromotedCategory = Process;
+            //     trigger OnAction()
+            //     var
+            //         PerDiemRate: Record "CEM Per Diem Rate v.2";
+            //         PerDiemCalculation: Record "EMADV Per Diem Calculation";
+            //     begin
+            //         PerDiemRate.SetRange("Per Diem Group Code", Rec."Per Diem Group Code");
+            //         CurrPage."Per Diem Calc. Subpage".Page.GetRecord(PerDiemCalculation);
+            //         PerDiemRate.SetRange("Destination Country/Region", PerDiemCalculation."Country/Region");
+            //         PerDiemRate.SetFilter("Start Date", '..%1', DT2date(PerDiemCalculation."To DateTime"));
+            //         if PerDiemRate.FindLast() then
+            //             Page.RunModal(page::"CEM Per Diem Rate Card v.2", PerDiemRate);
+            //     end;
+            // }
         }
 
     }

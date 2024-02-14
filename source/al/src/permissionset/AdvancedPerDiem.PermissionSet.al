@@ -9,7 +9,6 @@ permissionset 62080 "Advanced Per Diem"
          codeunit "EMADV PD Rule Set AT" = X,
          codeunit "EMADV PD Rule Set DE" = X,
          codeunit "EMADV PD Rule Set Default" = X,
-         page "EMADV AT Calc Helper" = X,
          page "EMADV Calculation Detail FB" = X,
          page "EMADV Meal Deduction List" = X,
          page "EMADV Per Diem Calc. Card" = X,

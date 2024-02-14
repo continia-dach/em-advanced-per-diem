@@ -1,0 +1,1375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="de-AT" original="EM Custom per diem rates.g.xlf">
+    <body>
+      <group id="body">
+        <trans-unit id="Table 3694061891 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EMADV Meal Deduction</source>
+          <target>Abzüge Mahlzeiten</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 3662954407 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Accommodation Allowance Code</source>
+          <target>Übernachtungspauschale Code</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Accommodation Allowance Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 3460617893 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>All meal deduction</source>
+          <target>Alle Mahlzeiten</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field All meal Deduction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 2498414052 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Breakfast deduction</source>
+          <target>Frühstück</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Breakfast Deduction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 1186315857 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Breakfast &amp; Dinner deduction</source>
+          <target>Frühstück &amp; Abendessen</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Breakfast-Dinner Deduction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 3752121363 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Breakfast &amp; Lunch deduction</source>
+          <target>Frühstück &amp; Mittagessen</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Breakfast-Lunch Deduction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 2021716772 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Deduction method</source>
+          <target>Abzug Methode</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Deduction Method - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 3042341177 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Meal deduction type</source>
+          <target>Mahlzeitabzug Art</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Deduction Type - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 786029541 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Destination Country/Region</source>
+          <target>Zielland/-region</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Destination Country/Region - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 3587600535 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dinner deduction</source>
+          <target>Abendessen</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Dinner Deduction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 1745888582 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Domestic Day</source>
+          <target>Inlandstag</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Domestic Day - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 2220597613 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lunch deduction</source>
+          <target>Mittagessen</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Lunch Deduction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 4052922912 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lunch &amp; Dinner deduction</source>
+          <target>Mittag- &amp; Abendessen</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Lunch-Dinner Deduction - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 583558796 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Group Code</source>
+          <target>Pauschalgruppe Code</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Per Diem Group Code - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 3694061891 - Field 474480784 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Start Date</source>
+          <target>Startdatum</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Meal Deduction - Field Start Date - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EMADV Per Diem Calculation</source>
+          <target>Pauschalenberechnung</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 2170176333 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Accommodation Reimb. Amount</source>
+          <target>Übernachtung Erstattungsbetrag</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Accommodation Reimb. Amount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 1574935957 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>AT Per Diem Reimbursed Twelfth</source>
+          <target>Taggeld Zwöfltel Ersttattet (Österreich)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field AT Per Diem Reimbursed Twelfth - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 1002333937 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>AT Per Diem Twelfth</source>
+          <target>Taggeld Zwöfltel (Österreich)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field AT Per Diem Twelfth - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 4148176377 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Country/Region</source>
+          <target>Land/Region</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Country/Region - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 1359545011 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Daily Accommodation Allowance</source>
+          <target>Tagessetz Unterkunft</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Daily Accommodation Allowance - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 2527429888 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Daily Meal Allowance</source>
+          <target>Tagessatz Essen</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Daily Meal Allowance - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 1579406294 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day Duration</source>
+          <target>Dauer</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Day Duration - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 1460302909 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Country/Region Name</source>
+          <target>Länder-/Regionsname</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Destination Name - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 4284514774 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Domestic Entry</source>
+          <target>Inland</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Domestic Entry - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 883711285 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Entry No.</source>
+          <target>Lfd. Nr.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 3425420017 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>From DateTime</source>
+          <target>Von Datum/Uhrzeit</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field From DateTime - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 1621086571 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Meal Allowance Deductions</source>
+          <target>[NAB: REVIEW]Meal Allowance Deductions</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Meal Allowance Deductions - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 2104603778 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Meal Reimb. Amount</source>
+          <target>Mahlzeit Erstattungsbetrag</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Meal Reimb. Amount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 3834297486 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Detail Entry No.</source>
+          <target>Pauschaldetail Posten Nr.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Per Diem Det. Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 4168354787 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Entry No.</source>
+          <target>Pauschale Lfd. Nr.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field Per Diem Entry No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 384503108 - Field 1379082726 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>To DateTime</source>
+          <target>Bis Datum/Uhrzeit</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table EMADV Per Diem Calculation - Field To DateTime - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EMADV AT Calc Helper</source>
+          <target>[NAB: REVIEW]EMADV AT Calc Helper</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Control 1151592955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day based rule set</source>
+          <target>[NAB: REVIEW]Day based rule set</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Control DayBasedRuleSet - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Control 109081802 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>First Day</source>
+          <target>Erster Tag</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Control FirstDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Control 3209009610 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Day</source>
+          <target>Letzter Tag</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Control LastDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Control 245426702 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Trip Total</source>
+          <target>Reise Gesamt</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Control Total - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Control 1636061239 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Number of twelth to claim</source>
+          <target>[NAB: REVIEW]Number of twelth to claim</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Control RuleByDay_12 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target>[NAB: SUGGESTION]Allgemein</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Control General - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Control 1771112039 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>24Hour rule set</source>
+          <target>[NAB: REVIEW]24Hour rule set</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Control HourBasedRuleSet - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Control 3125114576 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Number of twelth to claim</source>
+          <target>[NAB: REVIEW]Number of twelth to claim</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Control Rule24_12 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Action 4171318679 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Calc</source>
+          <target>[NAB: REVIEW]Calc</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Action Calc - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1095317415 - Action 4171318679 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Calc</source>
+          <target>[NAB: REVIEW]Calc</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV AT Calc Helper - Action Calc - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2139350785 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Day Details</source>
+          <target>[NAB: REVIEW]Day Details</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Calculation Detail FB - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2139350785 - Control 3189547716 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Accommodation</source>
+          <target>[NAB: REVIEW]Accommodation</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Calculation Detail FB - Control Accommodation - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2139350785 - Control 909242519 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Meal</source>
+          <target>[NAB: REVIEW]Meal</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Calculation Detail FB - Control Meal - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Meal allowance deductions</source>
+          <target>[NAB: REVIEW]Meal allowance deductions</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 3662954407 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Accommodation Allowance Code field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Accommodation Allowance Code field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Accommodation Allowance Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 3460617893 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the All meal deduction field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the All meal deduction field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control All meal Deduction - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 2498414052 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Breakfast deduction field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Breakfast deduction field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Breakfast Deduction - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 1186315857 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Breakfast &amp; Dinner deduction field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Breakfast &amp; Dinner deduction field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Breakfast-Dinner Deduction - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 3752121363 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Breakfast &amp; Lunch deduction field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Breakfast &amp; Lunch deduction field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Breakfast-Lunch Deduction - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 2021716772 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if the defined value will be deducted as amount or calculated percentage</source>
+          <target>[NAB: REVIEW]Specifies if the defined value will be deducted as amount or calculated percentage</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Deduction Method - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 3042341177 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Meal deduction type field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Meal deduction type field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Deduction Type - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 786029541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Destination Country/Region field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Destination Country/Region field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Destination Country/Region - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 3587600535 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Dinner deduction field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Dinner deduction field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Dinner Deduction - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 1745888582 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies if the entry is valid for domestic per diem days only</source>
+          <target>[NAB: REVIEW]Specifies if the entry is valid for domestic per diem days only</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Domestic Day - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 2220597613 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Lunch deduction field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Lunch deduction field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Lunch Deduction - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 4052922912 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Lunch &amp; Dinner deduction field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Lunch &amp; Dinner deduction field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Lunch-Dinner Deduction - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 583558796 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Per Diem Group Code field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Per Diem Group Code field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Per Diem Group Code - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 656026093 - Control 474480784 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Start Date field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Start Date field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Meal Deduction List - Control Start Date - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EMADV Per Diem Calc Card</source>
+          <target>[NAB: REVIEW]EMADV Per Diem Calc Card</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 501661907 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Calculation Details</source>
+          <target>[NAB: REVIEW]Calculation Details</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control Calculation - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 3467489009 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount.</source>
+          <target>[NAB: REVIEW]Specifies the amount.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control EM Standard Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 2464369956 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount in local currency calculated based on the mileage rates.</source>
+          <target>[NAB: REVIEW]Specifies the amount in local currency calculated based on the mileage rates.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control EM Standard Amount (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 555418031 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the duration of the trip</source>
+          <target>[NAB: REVIEW]Specifies the duration of the trip</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control TripDurationInHours - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 483316772 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the duration in Austrian twelth</source>
+          <target>[NAB: REVIEW]Specifies the duration in Austrian twelth</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control TripDurationInTwelth - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 2529891512 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the reimbursement amount of the current per diem</source>
+          <target>[NAB: REVIEW]Specifies the reimbursement amount of the current per diem</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control TripMealReimbursementAmount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 2445482498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Travel details</source>
+          <target>[NAB: REVIEW]Travel details</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control General - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 3528688045 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the departure country or region.</source>
+          <target>[NAB: REVIEW]Specifies the departure country or region.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control Departure Country/Region - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 3448549278 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date and time of the departure.</source>
+          <target>[NAB: REVIEW]Specifies the date and time of the departure.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control Departure Date/Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the description of the per diem.</source>
+          <target>[NAB: REVIEW]Specifies the description of the per diem.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control Description - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 786029541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the destination country or region.</source>
+          <target>[NAB: REVIEW]Specifies the destination country or region.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control Destination Country/Region - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Control 2619725976 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date and time of the return.</source>
+          <target>[NAB: REVIEW]Specifies the date and time of the return.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Control Return Date/Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Action 3976407644 - Property 1064389655" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Details</source>
+          <target>Pauschale Details</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Action Per Diem Details - Property AboutTitle</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Action 3976407644 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View or edit per diem details.</source>
+          <target>[NAB: REVIEW]View or edit per diem details.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Action Per Diem Details - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Action 3976407644 - Property 247559172" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Detailed information about each day of the per diem and each element selected for reimbursement by the expense user.</source>
+          <target>[NAB: REVIEW]Detailed information about each day of the per diem and each element selected for reimbursement by the expense user.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Action Per Diem Details - Property AboutText</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Action 3976407644 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Details</source>
+          <target>Pauschale Details</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Action Per Diem Details - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1985804002 - Action 3222678039 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Group</source>
+          <target>Pauschalgruppe</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. Card - Action PerDiemGroup - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem calculation details</source>
+          <target>Berechnungsdetails</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 3820522236 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the accommodation Allowance.</source>
+          <target>Gibt den Wert der Übernachtungspauschale an.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Accommodation Allowance - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 2170176333 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the reimbursed accommodation amount</source>
+          <target>[NAB: REVIEW]Specifies the reimbursed accommodation amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Accommodation Reimb. Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 1574935957 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of twelth used to calculate the reimbursed amount.</source>
+          <target>[NAB: REVIEW]Specifies the number of twelth used to calculate the reimbursed amount.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control AT Per Diem Reimbursed Twelfth - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 1002333937 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the AT Per Diem Twelfth field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the AT Per Diem Twelfth field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control AT Per Diem Twelfth - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 786029541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Destination Country/Region field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Destination Country/Region field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Destination Country/Region - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 1460302909 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Destination Name field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Destination Name field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Destination Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 4284514774 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sepecifies if the country is marked as domestic country</source>
+          <target>[NAB: REVIEW]Sepecifies if the country is marked as domestic country</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Domestic Entry - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 348701972 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Duration field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Duration field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Duration Integer - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 883711285 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Entry No. field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Entry No. field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 215693941 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the From Time field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the From Time field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control From Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 100658799 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the meal allowance</source>
+          <target>[NAB: REVIEW]Specifies the value of the meal allowance</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Meal Allowance - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 1621086571 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount that will be deducted from the meal allowance</source>
+          <target>[NAB: REVIEW]Specifies the amount that will be deducted from the meal allowance</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Meal Allowance Deductions - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 2104603778 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the reimbursed meal amount</source>
+          <target>[NAB: REVIEW]Specifies the reimbursed meal amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Meal Reimb. Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 3834297486 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Per Diem Detail Entry No. field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Per Diem Detail Entry No. field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Per Diem Det. Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 4168354787 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Per Diem Entry No. field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Per Diem Entry No. field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control Per Diem Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Control 3127472418 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the To Time field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the To Time field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Control To Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2890518212 - Action 3052048926 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Rate</source>
+          <target>Pauschalsatz</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Action OpenRateCard - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem calculation details</source>
+          <target>Pauschal Berechnungsübersicht</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 3820522236 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the accommodation Allowance.</source>
+          <target>[NAB: REVIEW]Specifies the value of the accommodation Allowance.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Accommodation Allowance - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 2170176333 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the reimbursed accommodation amount</source>
+          <target>[NAB: REVIEW]Specifies the reimbursed accommodation amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Accommodation Reimb. Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 1574935957 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the number of twelth used to calculate the reimbursed amount.</source>
+          <target>[NAB: REVIEW]Specifies the number of twelth used to calculate the reimbursed amount.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control AT Per Diem Reimbursed Twelfth - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 1002333937 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the AT Per Diem Twelfth field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the AT Per Diem Twelfth field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control AT Per Diem Twelfth - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 786029541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Destination Country/Region field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Destination Country/Region field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Destination Country/Region - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 1460302909 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Destination Name field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Destination Name field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Destination Name - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 4284514774 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sepecifies if the country is marked as domestic country</source>
+          <target>[NAB: REVIEW]Sepecifies if the country is marked as domestic country</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Domestic Entry - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 348701972 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Duration field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Duration field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Duration Integer - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 883711285 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Entry No. field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Entry No. field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 215693941 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the From Time field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the From Time field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control From Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 100658799 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the meal allowance</source>
+          <target>[NAB: REVIEW]Specifies the value of the meal allowance</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Meal Allowance - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 1621086571 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount that will be deducted from the meal allowance</source>
+          <target>[NAB: REVIEW]Specifies the amount that will be deducted from the meal allowance</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Meal Allowance Deductions - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 2104603778 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the reimbursed meal amount</source>
+          <target>[NAB: REVIEW]Specifies the reimbursed meal amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Meal Reimb. Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 3834297486 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Per Diem Detail Entry No. field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Per Diem Detail Entry No. field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Per Diem Det. Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 4168354787 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the Per Diem Entry No. field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the Per Diem Entry No. field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control Per Diem Entry No. - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Control 3127472418 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the value of the To Time field.</source>
+          <target>[NAB: REVIEW]Specifies the value of the To Time field.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Control To Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Action 3052048926 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Rate</source>
+          <target>[NAB: REVIEW]Per Diem Rate</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Action OpenRateCard - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Action 3976407644 - Property 1064389655" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Details</source>
+          <target>[NAB: REVIEW]Per Diem Details</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Action Per Diem Details - Property AboutTitle</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Action 3976407644 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>View or edit per diem details.</source>
+          <target>[NAB: REVIEW]View or edit per diem details.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Action Per Diem Details - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Action 3976407644 - Property 247559172" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Detailed information about each day of the per diem and each element selected for reimbursement by the expense user.</source>
+          <target>[NAB: REVIEW]Detailed information about each day of the per diem and each element selected for reimbursement by the expense user.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Action Per Diem Details - Property AboutText</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Action 3976407644 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Details</source>
+          <target>[NAB: REVIEW]Per Diem Details</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Action Per Diem Details - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 517314894 - Action 3222678039 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Group</source>
+          <target>[NAB: REVIEW]Per Diem Group</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List2 - Action PerDiemGroup - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2938632196 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EMADV Per Diem Det. Dest FB</source>
+          <target>[NAB: REVIEW]EMADV Per Diem Det. Dest FB</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Det. Dest FB - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 2938632196 - Control 2356926402 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the destination arrival time.</source>
+          <target>[NAB: REVIEW]Specifies the destination arrival time.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Det. Dest FB - Control Arrival Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 2938632196 - Control 786029541 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the destination country or region.</source>
+          <target>[NAB: REVIEW]Specifies the destination country or region.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Det. Dest FB - Control Destination Country/Region - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1909387879 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Per Diem Summary</source>
+          <target>[NAB: REVIEW]Per Diem Summary</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem FB - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 1909387879 - Control 636392376 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount.</source>
+          <target>[NAB: REVIEW]Specifies the amount.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem FB - Control Amount - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1909387879 - Control 592951229 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the amount in local currency calculated based on the mileage rates.</source>
+          <target>[NAB: REVIEW]Specifies the amount in local currency calculated based on the mileage rates.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem FB - Control Amount (LCY) - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1909387879 - Control 3528688045 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the departure country or region.</source>
+          <target>[NAB: REVIEW]Specifies the departure country or region.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem FB - Control Departure Country/Region - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1909387879 - Control 3448549278 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date and time of the departure.</source>
+          <target>[NAB: REVIEW]Specifies the date and time of the departure.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem FB - Control Departure Date/Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1909387879 - Control 3461834954 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Shows the per diem description</source>
+          <target>[NAB: REVIEW]Shows the per diem description</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem FB - Control Description - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="Page 1909387879 - Control 2619725976 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Specifies the date and time of the return.</source>
+          <target>[NAB: REVIEW]Specifies the date and time of the return.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem FB - Control Return Date/Time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 405480838 - Action 1635242582 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 281240623">
+          <source>Show Calculation</source>
+          <target>Berechnungsübersicht</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Card Ext. - Action ShowCalculation - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2407951325 - Action 1514883969 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1485503773">
+          <source>EM ADV</source>
+          <target>[NAB: REVIEW]EM ADV</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Details - Action Setup - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2407951325 - Action 642782499 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1485503773">
+          <source>Update current line</source>
+          <target>[NAB: REVIEW]Update current line</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Details - Action Update - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2407951325 - Action 642782499 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1485503773">
+          <source>Update details</source>
+          <target>[NAB: REVIEW]Update details</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Details - Action Update - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 2407951325 - Control 4076782684 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1485503773">
+          <source>Per Diem Destinations</source>
+          <target>[NAB: REVIEW]Per Diem Destinations</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Details - Control Per Diem Dest. Details - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Action 1918962083 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Group meal deductions</source>
+          <target>[NAB: REVIEW]Group meal deductions</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Action MealDeductions - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 3325712620 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Experimental</source>
+          <target>[NAB: REVIEW]Experimental</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control Time-based meal deductions - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 2791337188 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Austrian rule setup</source>
+          <target>[NAB: REVIEW]Austrian rule setup</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control ATRulesetFields - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 439252896 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Minimum hours that needs to be tracked for a foreign country per diem trip</source>
+          <target>[NAB: REVIEW]Minimum hours that needs to be tracked for a foreign country per diem trip</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control Min. foreign country duration - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 1286269421 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Meal times</source>
+          <target>[NAB: REVIEW]Meal times</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control MealTimes - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 897110147 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Defines the from-time, where the system will deduct the breakfast amount</source>
+          <target>[NAB: REVIEW]Defines the from-time, where the system will deduct the breakfast amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control Breakfast from-time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 269921440 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Defines the to-time, where the system will deduct the breakfast amount</source>
+          <target>[NAB: REVIEW]Defines the to-time, where the system will deduct the breakfast amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control Breakfast to-time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 1337441160 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Defines the from-time, where the system will deduct the breakfast amount</source>
+          <target>[NAB: REVIEW]Defines the from-time, where the system will deduct the breakfast amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control Dinner from-time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 1045983307 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Defines the to-time, where the system will deduct the dinner amount</source>
+          <target>[NAB: REVIEW]Defines the to-time, where the system will deduct the dinner amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control Dinner to-time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 545793886 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Defines the from-time, where the system will deduct the lunch amount</source>
+          <target>[NAB: REVIEW]Defines the from-time, where the system will deduct the lunch amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control Lunch from-time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 476837479 - Control 1175464473 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
+          <source>Defines the to-time, where the system will deduct the lunch amount</source>
+          <target>[NAB: REVIEW]Defines the to-time, where the system will deduct the lunch amount</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control Lunch to-time - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1671475668 - Action 1918962083 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3656559511">
+          <source>Rate meal deductions</source>
+          <target>[NAB: REVIEW]Rate meal deductions</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Rate Card Ext. - Action MealDeductions - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1671475668 - Control 4022145908 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3656559511">
+          <source>Meals</source>
+          <target>[NAB: REVIEW]Meals</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Rate Card Ext. - Control ATMealRateDetails - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1671475668 - Control 4243353784 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3656559511">
+          <source>Specifies the daily allowance amount for the meal.</source>
+          <target>[NAB: REVIEW]Specifies the daily allowance amount for the meal.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Rate Card Ext. - Control DailyMealAllowance - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1671475668 - Control 4243353784 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3656559511">
+          <source>Tax-Free Allowance</source>
+          <target>[NAB: REVIEW]Tax-Free Allowance</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Rate Card Ext. - Control DailyMealAllowance - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1671475668 - Control 509222045 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3656559511">
+          <source>Specifies the daily taxable allowance amount for the meal.</source>
+          <target>[NAB: REVIEW]Specifies the daily taxable allowance amount for the meal.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Rate Card Ext. - Control TaxableDailyMealAllowance - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 1671475668 - Control 509222045 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3656559511">
+          <source>Taxable Allowance</source>
+          <target>[NAB: REVIEW]Taxable Allowance</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Rate Card Ext. - Control TaxableDailyMealAllowance - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 525665159 - Action 1635242582 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3847023814">
+          <source>Show Calculation</source>
+          <target>Berechnungsübersicht</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diems Ext. - Action ShowCalculation - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 525665159 - Action 1961629020 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3847023814">
+          <source>Show Calculation</source>
+          <target>Berechnungsübersicht</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diems Ext. - Action ShowCalculationList - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3356224640 - Field 620528242 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 882496312">
+          <source>Domestic Country</source>
+          <target>Inland</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Countr/Region Extension - Field Domestic Country - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3344319663 - Field 1920909816 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 158697065">
+          <source>Use Custom Per Diem Engine</source>
+          <target>Erweiterte Pauschalenberechnung verwenden</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV EM Setup Extension - Field Use Custom Per Diem Engine - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4254331147 - Field 1120966582 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 731714658">
+          <source>Auto-split AT per diem meal</source>
+          <target>Automatische Aufteilung des AT Taggeldes</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Group Ext. - Field Auto-split AT per diem meal - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4254331147 - Field 897110147 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 731714658">
+          <source>Breakfast from-time</source>
+          <target>Frühstück von-Uhrzeit</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Group Ext. - Field Breakfast from-time - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4254331147 - Field 1478195119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 731714658">
+          <source>Calculation rule set</source>
+          <target>Pauschale Berechnungsregeln</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Group Ext. - Field Calculation rule set - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4254331147 - Field 1337441160 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 731714658">
+          <source>Dinner from-time</source>
+          <target>Abendessen von-Uhrzeit</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Group Ext. - Field Dinner from-time - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4254331147 - Field 545793886 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 731714658">
+          <source>Lunch from-time</source>
+          <target>Mittag von-Uhrzeit</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Group Ext. - Field Lunch from-time - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4254331147 - Field 439252896 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 731714658">
+          <source>Min. hours foreign country duration</source>
+          <target>Mindestdauer Auslandsaufenthalt</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Group Ext. - Field Min. foreign country duration - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4254331147 - Field 2372097961 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 731714658">
+          <source>Preferred per diem rate</source>
+          <target>Bevorzugter Pauschalsatz</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Group Ext. - Field Preferred rate - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 4254331147 - Field 3325712620 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 731714658">
+          <source>Time-based meal deductions</source>
+          <target>Zeitbasierter Taggeldabzug</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Group Ext. - Field Time-based meal deductions - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 322577684 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>All meal deduction (full day)</source>
+          <target>Alle Mahlzeiten (Ganzer Tag)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Full day All meal Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 2579213173 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Breakfast deduction (full day)</source>
+          <target>[NAB: REVIEW]Breakfast deduction (full day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Full day Breakfast Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 1257591792 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Breakfast &amp; Dinner deduction (full day)</source>
+          <target>[NAB: REVIEW]Breakfast &amp; Dinner deduction (full day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Full day Breakfast-Dinner Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 3915805214 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Breakfast &amp; Lunch deduction (full day)</source>
+          <target>[NAB: REVIEW]Breakfast &amp; Lunch deduction (full day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Full day Breakfast-Lunch Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 3498491354 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Dinner deduction (full day)</source>
+          <target>[NAB: REVIEW]Dinner deduction (full day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Full day Dinner Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 2401866868 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Lunch deduction (full day)</source>
+          <target>[NAB: REVIEW]Lunch deduction (full day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Full day Lunch Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 4096258041 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Lunch &amp; Dinner deduction (full day)</source>
+          <target>[NAB: REVIEW]Lunch &amp; Dinner deduction (full day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Full day Lunch-Dinner Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 1457915664 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>All meal deduction (part day)</source>
+          <target>[NAB: REVIEW]All meal deduction (part day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Part day All meal Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 3547998353 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Breakfast deduction (part day)</source>
+          <target>[NAB: REVIEW]Breakfast deduction (part day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Part day Breakfast Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 3489033588 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Breakfast &amp; Dinner deduction (part day)</source>
+          <target>[NAB: REVIEW]Breakfast &amp; Dinner deduction (part day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Part day Breakfast-Dinner Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 2629509498 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Breakfast &amp; Lunch deduction (part day)</source>
+          <target>[NAB: REVIEW]Breakfast &amp; Lunch deduction (part day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Part day Breakfast-Lunch Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 775865502 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Dinner deduction (part day)</source>
+          <target>[NAB: REVIEW]Dinner deduction (part day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Part day Dinner Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 660144016 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Lunch deduction (part day)</source>
+          <target>[NAB: REVIEW]Lunch deduction (part day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Part day Lunch Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1927053288 - Field 1637757693 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 972096035">
+          <source>Lunch &amp; Dinner deduction (part day)</source>
+          <target>[NAB: REVIEW]Lunch &amp; Dinner deduction (part day)</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension EMADV Per Diem Rate Ext. - Field Part day Lunch-Dinner Ded. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1163081242 - EnumValue 109081802 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>First Day</source>
+          <target>[NAB: REVIEW]First Day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Calculation Day Type - EnumValue FirstDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1163081242 - EnumValue 1273254569 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Full Day</source>
+          <target>[NAB: REVIEW]Full Day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Calculation Day Type - EnumValue FullDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1163081242 - EnumValue 3209009610 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Day</source>
+          <target>[NAB: REVIEW]Last Day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Calculation Day Type - EnumValue LastDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3441533490 - EnumValue 636392376 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Amount</source>
+          <target>[NAB: SUGGESTION]Betrag</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Meal Deduction Method - EnumValue Amount - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 3441533490 - EnumValue 3557664220 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Percentage</source>
+          <target>[NAB: REVIEW]Percentage</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Meal Deduction Method - EnumValue Percentage - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2333813846 - EnumValue 250092724 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>First day</source>
+          <target>[NAB: REVIEW]First day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Meal Deduction Types - EnumValue ForeignFirstDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2333813846 - EnumValue 2893220467 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Full day</source>
+          <target>[NAB: REVIEW]Full day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Meal Deduction Types - EnumValue ForeignFullDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2333813846 - EnumValue 3208781284 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last day</source>
+          <target>[NAB: REVIEW]Last day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Meal Deduction Types - EnumValue ForeignLastDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1591714823 - EnumValue 109081802 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>First day</source>
+          <target>[NAB: REVIEW]First day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Calc. Method - EnumValue FirstDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1591714823 - EnumValue 1273254569 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Full day</source>
+          <target>[NAB: REVIEW]Full day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Calc. Method - EnumValue FullDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1591714823 - EnumValue 3209009610 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last day</source>
+          <target>[NAB: REVIEW]Last day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Calc. Method - EnumValue LastDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1614499354 - EnumValue 504684529 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Austria 24h</source>
+          <target>[NAB: REVIEW]Austria 24h</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Calc. Rule Set - EnumValue Austria24h - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1614499354 - EnumValue 477998802 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Austria per calendar day</source>
+          <target>[NAB: REVIEW]Austria per calendar day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Calc. Rule Set - EnumValue AustriaByDay - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1614499354 - EnumValue 1383905037 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Default</source>
+          <target>[NAB: SUGGESTION]Standard</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Calc. Rule Set - EnumValue Default - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 1614499354 - EnumValue 1653308221 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Germany</source>
+          <target>[NAB: SUGGESTION]Deutschland</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">Suggested translation inserted.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Calc. Rule Set - EnumValue Germany - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 537734002 - EnumValue 3977776329 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Breakfast</source>
+          <target>[NAB: REVIEW]Breakfast</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Deduction Type - EnumValue Breakfast - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 537734002 - EnumValue 3983818101 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Breakfast+Lunch</source>
+          <target>[NAB: REVIEW]Breakfast+Lunch</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Deduction Type - EnumValue BreakfastLunch - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 537734002 - EnumValue 2507775059 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Breakfast+Lunch+Dinner</source>
+          <target>[NAB: REVIEW]Breakfast+Lunch+Dinner</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Deduction Type - EnumValue BreakfastLunchDinner - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 537734002 - EnumValue 2175961094 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dinner</source>
+          <target>[NAB: REVIEW]Dinner</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Deduction Type - EnumValue Dinner - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 537734002 - EnumValue 3913967088 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lunch</source>
+          <target>[NAB: REVIEW]Lunch</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Deduction Type - EnumValue Lunch - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 537734002 - EnumValue 747426834 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Lunch+Dinner</source>
+          <target>[NAB: REVIEW]Lunch+Dinner</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Deduction Type - EnumValue LunchDinner - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 537734002 - EnumValue 419117521 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Others</source>
+          <target>[NAB: REVIEW]Others</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Deduction Type - EnumValue Others - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2563442831 - EnumValue 139100102 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>First Country of day</source>
+          <target>[NAB: REVIEW]First Country of day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Preferred Rates - EnumValue First - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2563442831 - EnumValue 4096228752 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Highest rate</source>
+          <target>[NAB: REVIEW]Highest rate</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Preferred Rates - EnumValue Highest - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Enum 2563442831 - EnumValue 658771142 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Last Country of day</source>
+          <target>[NAB: REVIEW]Last Country of day</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="NAB AL Tool Refresh Xlf" annotates="general" priority="3">New translation. Target copied from source.</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Enum EMADV Per Diem Preferred Rates - EnumValue Last - Property Caption</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

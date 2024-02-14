@@ -76,8 +76,12 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
                 //PerDiemDetail."Accommodation Allowance Amount" += PerDiemCalculation."Accommodation Reimb. Amount";
                 // Transfer accommodation amount to detail
-                if PerDiemDetail."Accommodation Allowance" and (PerDiemCalculation."Daily Accommodation Allowance" <> 0) then
+                if PerDiemDetail."Accommodation Allowance" and (PerDiemCalculation."Daily Accommodation Allowance" <> 0) then begin
                     PerDiemDetail.Validate("Accommodation Allowance Amount", PerDiemCalculation."Daily Accommodation Allowance");
+                    PerDiemCalculation.Validate("Accommodation Reimb. Amount", PerDiemDetail."Accommodation Allowance Amount");
+                end else
+                    PerDiemCalculation.Validate("Accommodation Reimb. Amount", 0);
+                PerDiemCalculation.Modify(false);
             until PerDiemCalculation.Next() = 0;
 
         // Calculate the meal deductions per detail entry

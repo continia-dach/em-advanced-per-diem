@@ -9,17 +9,25 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
             {
                 ApplicationArea = All;
             }
-            field("Auto-split AT per diem meal"; Rec."Auto-split AT per diem meal")
+
+            field("Preferred rate"; Rec."Preferred rate")
             {
                 ApplicationArea = All;
             }
-            field("Preferred rate"; Rec."Preferred rate")
+            field("Auto-split AT per diem meal"; Rec."Auto-split AT per diem meal")
             {
                 ApplicationArea = All;
             }
             field("Time-based meal deductions"; Rec."Time-based meal deductions")
             {
+                Visible = false;
                 ApplicationArea = All;
+                ToolTip = 'Experimental';
+                trigger OnValidate()
+                begin
+                    Error('In development!');
+                end;
+
             }
         }
 
