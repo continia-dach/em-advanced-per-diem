@@ -1,4 +1,4 @@
-page 62089 "EMADV Per Diem Calc. List2"
+page 62089 "EMADV Per Diem Calc. List"
 {
     ApplicationArea = All;
     Caption = 'Per Diem calculation details';
