@@ -1,8 +1,8 @@
-page 62085 "EMADV Per Diem Calc. List"
+page 62089 "EMADV Per Diem Calc. List2"
 {
     ApplicationArea = All;
     Caption = 'Per Diem calculation details';
-    PageType = CardPart;
+    PageType = List;
     SourceTable = "EMADV Per Diem Calculation";
 
     layout
@@ -60,6 +60,8 @@ page 62085 "EMADV Per Diem Calc. List"
                 field("Meal Allowance Deductions"; Rec."Meal Allowance Deductions")
                 {
                     ToolTip = 'Specifies the amount that will be deducted from the meal allowance';
+                    Visible = false;
+                    ObsoleteState = Pending;
                 }
                 field("Meal Reimb. Amount"; Rec."Meal Reimb. Amount")
                 {
@@ -85,22 +87,84 @@ page 62085 "EMADV Per Diem Calc. List"
                     Visible = false;
                 }
             }
-
         }
+        area(FactBoxes)
+        {
+            part(PerDiemInfo; "EMADV Per Diem FB")
+            {
+                ApplicationArea = all;
+                SubPageLink = "Entry No." = field("Per Diem Entry No.");
+            }
+            part(PerDiemDetailsInfo; "EMADV Calculation Detail FB")
+            {
+                ApplicationArea = All;
+                UpdatePropagation = Both;
+                SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."), "Entry No." = field("Per Diem Det. Entry No.");
 
+            }
+        }
     }
+
     actions
     {
         area(Processing)
         {
+
+            action(Update)
+            {
+                ApplicationArea = All;
+                Image = Recalculate;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+                trigger OnAction()
+                begin
+                    UpdatePerDiemCalculation();
+                    CurrPage.Update(false);
+                end;
+            }
+            action("Per Diem Details")
+            {
+                ApplicationArea = All;
+                Caption = 'Per Diem Details';
+                Ellipsis = true;
+                Image = Split;
+                Promoted = true;
+                PromotedCategory = Process;
+                ShortCutKey = 'Shift+Ctrl+L';
+                ToolTip = 'View or edit per diem details.';
+                AboutTitle = 'Per Diem Details';
+                AboutText = 'Detailed information about each day of the per diem and each element selected for reimbursement by the expense user.';
+
+                trigger OnAction()
+                var
+                    PerDiemValidate: Codeunit "CEM Per Diem-Validate";
+                begin
+                    DrillDownDetails(PerDiem);
+                    PerDiemValidate.RUN(PerDiem);
+                    CurrPage.UPDATE(FALSE);
+                end;
+            }
+            action(PerDiemGroup)
+            {
+                ApplicationArea = All;
+                Caption = 'Per Diem Group';
+                RunObject = Page "CEM Per Diem Group Card";
+                //RunPageLink = Code = field "Per Diem Group Code");
+                RunPageMode = View;
+                Image = Card;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
+            }
             action(OpenRateCard)
             {
                 ApplicationArea = All;
                 Caption = 'Per Diem Rate';
                 Image = Line;
-                //Promoted = true;
-                //PromotedIsBig = true;
-                //PromotedCategory = Process;
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedCategory = Process;
                 trigger OnAction()
                 var
                     PerDiem: Record "CEM Per Diem";
@@ -120,16 +184,49 @@ page 62085 "EMADV Per Diem Calc. List"
         }
     }
 
-    trigger OnAfterGetRecord()
-    var
-        PerDiem: Record "CEM Per Diem";
-        PerDiemGroup: Record "CEM Per Diem Group";
+    trigger OnOpenPage()
     begin
-        if PerDiem.Get(Rec."Per Diem Entry No.") then
-            if PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
-                CalculateAustrianPerDiem := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay])
+        if not PerDiem.Get(Rec.GetFilter("Per Diem Entry No.")) then
+            Error('Cannot find Per Diem Entry with Id: %1', Rec.GetFilter("Per Diem Entry No."));
+        UpdatePerDiemCalculation();
     end;
 
+    local procedure UpdatePerDiemCalculation()
     var
+        PerDiemDetail: Record "CEM Per Diem Detail";
+        PerDiemGroup: Record "CEM Per Diem Group";
+        CustPerDiemCalcMgt: codeunit "EMADV Cust. Per Diem Calc.Mgt.";
+    begin
+        PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        if PerDiemDetail.FindFirst() then
+            CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
+        CurrPage.Update(false);
+    end;
+
+    internal procedure DrillDownDetails(PerDiem: Record "CEM Per Diem")
+    var
+        PerDiemDetail: Record "CEM Per Diem Detail";
+        CustPerDiemCalcMgt: codeunit "EMADV Cust. Per Diem Calc.Mgt.";
+    begin
+        PerDiemDetail.SETRANGE("Per Diem Entry No.", PerDiem."Entry No.");
+        PAGE.RUNMODAL(PAGE::"CEM Per Diem Details", PerDiemDetail);
+        if PerDiemDetail.FindFirst() then begin
+            CustPerDiemCalcMgt.CalcCustPerDiemRate(PerDiemDetail);
+            CurrPage.Update(false);
+        end;
+    end;
+
+    // trigger OnAfterGetRecord()
+    // var
+    //     PerDiem: Record "CEM Per Diem";
+    //     PerDiemGroup: Record "CEM Per Diem Group";
+    // begin
+    //     if PerDiem.Get(Rec."Per Diem Entry No.") then
+    //         if PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+    //             CalculateAustrianPerDiem := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay])
+    // end;
+
+    var
+        PerDiem: Record "CEM Per Diem";
         CalculateAustrianPerDiem: Boolean;
 }
