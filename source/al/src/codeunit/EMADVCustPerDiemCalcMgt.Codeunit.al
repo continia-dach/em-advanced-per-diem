@@ -1,6 +1,10 @@
 codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 {
-
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"CEM Per Diem-Validate", 'OnBeforePerDiemValidate', '', true, true)]
+    local procedure PerDiemValidate_OnBeforePerDiemValidate(var Rec: Record "CEM Per Diem")
+    begin
+        CheckDestinationOverlap(Rec);
+    end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"CEM Per Diem Calc. Engine", OnBeforeFindRateAndUpdateAmtOnDetail, '', false, false)]
     local procedure PerDiemCalcEngine_OnBeforeFindRateAndUpdateAmtOnDetail(var PerDiemDetails: Record "CEM Per Diem Detail"; var IsHandled: Boolean)
@@ -103,26 +107,6 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
             if PerDiemRate.Get(PerDiemSubRate."Per Diem Group Code", PerDiemSubRate."Destination Country/Region", PerDiemSubRate."Accommodation Allowance Code", PerDiemSubRate."Start Date") then
                 exit(true);
         end;
-
-        /*
-        PerDiemRate.SetRange("Per Diem Group Code", PerDiem."Per Diem Group Code");
-        if PerDiemCalc."Domestic Entry" then
-            PerDiemRate.SetRange("Destination Country/Region", PerDiem."Departure Country/Region")
-        else
-            PerDiemRate.SetRange("Destination Country/Region", PerDiemCalc."Country/Region");
-        PerDiemRate.SetFilter("Start Date", '..%1', PerDiemDetail.Date);
-
-        // Make sure to get only rates with minimum stay hours of trip
-        PerDiemRate.SetFilter("Minimum Stay (hours)", '<=%1', GetTripDurationInHours(PerDiem));
-
-        // Make sure to get only rates with minimum stay hours of first & last day
-        if ((PerDiemDetail.Date = DT2Date(PerDiem."Departure Date/Time")) or (PerDiemDetail.Date = DT2Date(PerDiem."Return Date/Time"))) then
-            PerDiemRate.SetFilter("First/Last Day Minimum Stay", '<=%1', ConvertMsecDurationIntoHours(PerDiemCalc."Day Duration"))
-        else
-            PerDiemRate.SetFilter("Minimum Stay (hours)", '<=%1', ConvertMsecDurationIntoHours(PerDiemCalc."Day Duration"));
-        //CustPerDiemRate.SetRange("Calculation Method", CalcMethod);
-        exit(PerDiemRate.FindLast());
-        */
     end;
 
 
@@ -181,4 +165,42 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         exit(PerDiemDetail.Date = DT2Date(PerDiem."Return Date/Time"));
     end;
 
+    local procedure CheckDestinationOverlap(var PerDiem: Record "CEM Per Diem")
+    var
+        PerDiemDetail: Record "CEM Per Diem Detail";
+        PerDiemDetailDest: Record "CEM Per Diem Detail Dest.";
+    begin
+        if PerDiem."Departure Date/Time" <> 0DT then begin
+            PerDiemDetailDest.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+            if not PerDiemDetailDest.IsEmpty then
+                if PerDiemDetailDest.FindFirst() then begin
+                    PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+                    PerDiemDetail.SetRange("Entry No.", PerDiemDetailDest."Per Diem Detail Entry No.");
+                    if PerDiemDetail.FindFirst() then
+                        if (CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time") < PerDiem."Departure Date/Time") or
+                           (CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time") > PerDiem."Return Date/Time")
+                        then
+                            Error(DepartureTimeOverlapsDestination);
+                end
+
+        end;
+
+        if PerDiem."Return Date/Time" <> 0DT then begin
+            PerDiemDetailDest.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+            if not PerDiemDetailDest.IsEmpty then
+                if PerDiemDetailDest.FindLast() then begin
+                    PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+                    PerDiemDetail.SetRange("Entry No.", PerDiemDetailDest."Per Diem Detail Entry No.");
+                    if PerDiemDetail.FindLast() then
+                        if (CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time") < PerDiem."Departure Date/Time") or
+                           (CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time") > PerDiem."Return Date/Time")
+                        then
+                            Error(DepartureTimeOverlapsDestination);
+                end
+
+        end;
+    end;
+
+    var
+        DepartureTimeOverlapsDestination: Label 'The per diem departure time overlaps with existing per diem destinations!';
 }

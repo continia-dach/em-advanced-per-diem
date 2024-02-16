@@ -98,6 +98,9 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
               PerDiemDetail."Entertainment Allowance Amount" + PerDiemDetail."Drinks Allowance Amount", Currency."Amount Rounding Precision");
         PerDiemDetail."Amount (LCY)" := PerDiemDetail.Amount; // TODO: Set up LCY calculation
 
+
+        PerDiemDetail.Modified := true;
+
         // Save updated detail record
         exit(PerDiemDetail.Modify());
     end;
@@ -168,7 +171,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
             exit;
 
-        if PerDiemGroup."Min. foreign country duration" = 0 then
+        if PerDiemGroup."Min. Stay Foreign ctry. (h)" = 0 then
             exit;
 
         PerDiemCalculation.Reset();
@@ -180,7 +183,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             repeat
                 ForeignCountryDuration += PerDiemCalculation."Day Duration";
             until PerDiemCalculation.Next() = 0;
-        if PerDiemCalcMgt.ConvertMsecDurationIntoHours(ForeignCountryDuration, 0.1, '>') < PerDiemGroup."Min. foreign country duration" then
+        if PerDiemCalcMgt.ConvertMsecDurationIntoHours(ForeignCountryDuration, 0.1, '>') < PerDiemGroup."Min. Stay Foreign ctry. (h)" then
             PerDiemCalculation.ModifyAll("Domestic Entry", true);
     end;
 
@@ -321,11 +324,11 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
         case true of
             PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail):
-                CurrDeductionType := CurrDeductionType::ForeignFirstDay;
+                CurrDeductionType := CurrDeductionType::FirstDay;
             PerDiemCalcMgt.IsLastDay(PerDiem, PerDiemDetail):
-                CurrDeductionType := CurrDeductionType::ForeignLastDay;
+                CurrDeductionType := CurrDeductionType::LastDay;
             else
-                CurrDeductionType := CurrDeductionType::ForeignFullDay;
+                CurrDeductionType := CurrDeductionType::FullDay;
         end;
         //end;
         //TODO Add code to handle Deduction records that have only fulldays => meaning it should fall-back from e.g. FirstDay to FullDay

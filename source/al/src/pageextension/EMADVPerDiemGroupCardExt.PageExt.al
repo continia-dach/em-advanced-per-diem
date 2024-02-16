@@ -14,10 +14,14 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
             {
                 ApplicationArea = All;
             }
-            field("Auto-split AT per diem meal"; Rec."Auto-split AT per diem meal")
+            field("Minimum Stay (hours)"; Rec."Minimum Stay (hours)")
             {
                 ApplicationArea = All;
             }
+            // field("Auto-split AT per diem meal"; Rec."Auto-split AT per diem meal")
+            // {
+            //     ApplicationArea = All;
+            // }
             field("Time-based meal deductions"; Rec."Time-based meal deductions")
             {
                 Visible = false;
@@ -37,7 +41,7 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
             {
                 Visible = ShowAustrianRuleFields;
                 Caption = 'Austrian rule setup';
-                field("Min. foreign country duration"; Rec."Min. foreign country duration")
+                field("Min. foreign country duration"; Rec."Min. Stay Foreign ctry. (h)")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Minimum hours that needs to be tracked for a foreign country per diem trip';
@@ -95,7 +99,7 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
                     field("Dinner from-time"; Rec."Dinner from-time")
                     {
                         ApplicationArea = All;
-                        ToolTip = 'Defines the from-time, where the system will deduct the breakfast amount';
+                        ToolTip = 'Defines the from-time, where the system will deduct the dinner amount';
                         ShowMandatory = true;
                         trigger OnValidate()
                         begin

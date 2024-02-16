@@ -7,19 +7,25 @@ tableextension 62081 "EMADV Per Diem Group Ext." extends "CEM Per Diem Group"
             Caption = 'Calculation rule set';
             DataClassification = CustomerContent;
         }
-        field(62081; "Auto-split AT per diem meal"; Boolean)
-        {
-            Caption = 'Auto-split AT per diem meal';
-            DataClassification = CustomerContent;
-        }
-        field(62085; "Preferred rate"; Enum "EMADV Per Diem Preferred Rates")
+        // field(62081; "Auto-split AT per diem meal"; Boolean)
+        // {
+        //     Caption = 'Auto-split AT per diem meal';
+        //     DataClassification = CustomerContent;
+        // }
+        field(62083; "Preferred rate"; Enum "EMADV Per Diem Preferred Rates")
         {
             Caption = 'Preferred per diem rate';
             DataClassification = CustomerContent;
         }
-        field(62086; "Min. foreign country duration"; Decimal)
+        field(62085; "Minimum Stay (hours)"; Integer)
         {
-            Caption = 'Min. hours foreign country duration';
+            Caption = 'Minimum Stay (hours)';
+            DataClassification = CustomerContent;
+        }
+
+        field(62086; "Min. Stay Foreign ctry. (h)"; Decimal)
+        {
+            Caption = 'Min. stay hours in foreign countries';
             DataClassification = CustomerContent;
         }
         field(62089; "Time-based meal deductions"; Boolean)

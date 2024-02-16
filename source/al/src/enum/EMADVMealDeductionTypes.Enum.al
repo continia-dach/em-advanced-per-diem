@@ -2,30 +2,16 @@ enum 62085 "EMADV Meal Deduction Types"
 {
     Extensible = true;
 
-    value(0; ForeignFullDay)
+    value(0; FullDay)
     {
         Caption = 'Full day';
     }
-    value(1; ForeignFirstDay)
+    value(1; FirstDay)
     {
         Caption = 'First day';
     }
-    value(2; ForeignLastDay)
+    value(2; LastDay)
     {
         Caption = 'Last day';
     }
-    /*value(3; DomesticFullDay)
-    {
-        Caption = 'Domestic full day';
-        
-    }
-    value(4; DomesticFirstDay)
-    {
-        Caption = 'Domestic first day';
-    }
-    value(5; DomesticLastDay)
-    {
-        Caption = 'Domestic last day';
-    }*/
-
 }

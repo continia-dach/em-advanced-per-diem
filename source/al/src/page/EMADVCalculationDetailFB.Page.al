@@ -58,8 +58,6 @@ page 62086 "EMADV Calculation Detail FB"
                 {
                     Visible = false;
                 }
-
-
             }
             group(Accommodation)
             {

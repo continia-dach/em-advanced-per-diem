@@ -43,31 +43,31 @@ pageextension 62081 "EMADV Per Diem Details" extends "CEM Per Diem Details"
             end;
         }
     }
-    actions
-    {
+    // actions
+    // {
 
-        addfirst(Processing)
-        {
-            group(Setup)
-            {
-                Caption = 'EM ADV';
-                action(Update)
-                {
-                    ApplicationArea = All;
-                    Caption = 'Update details';
-                    Image = Refresh;
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    ToolTip = 'Update current line';
+    //     addfirst(Processing)
+    //     {
+    //         group(Setup)
+    //         {
+    //             Caption = 'EM ADV';
+    //             action(Update)
+    //             {
+    //                 ApplicationArea = All;
+    //                 Caption = 'Update details';
+    //                 Image = Refresh;
+    //                 Promoted = true;
+    //                 PromotedCategory = Process;
+    //                 ToolTip = 'Update current line';
 
-                    trigger OnAction()
-                    begin
-                        UpdateDetails();
-                    end;
-                }
-            }
-        }
-    }
+    //                 trigger OnAction()
+    //                 begin
+    //                     UpdateDetails();
+    //                 end;
+    //             }
+    //         }
+    //     }
+    // }
 
     local procedure UpdateDetails()
     var

@@ -66,30 +66,37 @@ table 62082 "EMADV Per Diem Calculation"
         field(30; "AT Per Diem Twelfth"; Integer)
         {
             DataClassification = CustomerContent;
+            BlankZero = true;
         }
         field(31; "AT Per Diem Reimbursed Twelfth"; Integer)
         {
             DataClassification = CustomerContent;
+            BlankZero = true;
         }
         field(40; "Daily Meal Allowance"; Decimal)
         {
             DataClassification = CustomerContent;
+            BlankZero = true;
         }
         field(41; "Meal Allowance Deductions"; Decimal)
         {
             DataClassification = CustomerContent;
+            BlankZero = true;
         }
         field(42; "Meal Reimb. Amount"; Decimal)
         {
             DataClassification = CustomerContent;
+            BlankZero = true;
         }
         field(45; "Daily Accommodation Allowance"; Decimal)
         {
             DataClassification = CustomerContent;
+            BlankZero = true;
         }
         field(46; "Accommodation Reimb. Amount"; Decimal)
         {
             DataClassification = CustomerContent;
+            BlankZero = true;
         }
 
     }

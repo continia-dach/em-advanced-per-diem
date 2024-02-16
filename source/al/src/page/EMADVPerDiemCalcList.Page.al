@@ -45,7 +45,7 @@ page 62089 "EMADV Per Diem Calc. List"
                 }
                 field("Domestic Entry"; Rec."Domestic Entry")
                 {
-                    ToolTip = 'Sepecifies if the country is marked as domestic country';
+                    ToolTip = 'Specifies if the country is marked as domestic country';
                     //TODO consider to hide the field
                 }
                 field("Duration Integer"; Rec."Day Duration")
@@ -53,7 +53,7 @@ page 62089 "EMADV Per Diem Calc. List"
                     ToolTip = 'Specifies the value of the Duration field.';
                 }
 
-                field("Meal Allowance"; rec."Daily Meal Allowance")
+                field("Meal Allowance"; Rec."Daily Meal Allowance")
                 {
                     ToolTip = 'Specifies the value of the meal allowance';
                 }
@@ -66,6 +66,7 @@ page 62089 "EMADV Per Diem Calc. List"
                 field("Meal Reimb. Amount"; Rec."Meal Reimb. Amount")
                 {
                     ToolTip = 'Specifies the reimbursed meal amount';
+                    Visible = false;
                 }
                 field("Accommodation Reimb. Amount"; Rec."Accommodation Reimb. Amount")
                 {
@@ -140,7 +141,7 @@ page 62089 "EMADV Per Diem Calc. List"
                 var
                     PerDiemValidate: Codeunit "CEM Per Diem-Validate";
                 begin
-                    DrillDownDetails(PerDiem);
+                    ShowPerDiemDetails(PerDiem);
                     PerDiemValidate.RUN(PerDiem);
                     CurrPage.UPDATE(FALSE);
                 end;
@@ -185,9 +186,13 @@ page 62089 "EMADV Per Diem Calc. List"
     }
 
     trigger OnOpenPage()
+
     begin
         if not PerDiem.Get(Rec.GetFilter("Per Diem Entry No.")) then
             Error('Cannot find Per Diem Entry with Id: %1', Rec.GetFilter("Per Diem Entry No."));
+
+        SetFields();
+
         UpdatePerDiemCalculation();
     end;
 
@@ -203,7 +208,7 @@ page 62089 "EMADV Per Diem Calc. List"
         CurrPage.Update(false);
     end;
 
-    internal procedure DrillDownDetails(PerDiem: Record "CEM Per Diem")
+    internal procedure ShowPerDiemDetails(PerDiem: Record "CEM Per Diem")
     var
         PerDiemDetail: Record "CEM Per Diem Detail";
         CustPerDiemCalcMgt: codeunit "EMADV Cust. Per Diem Calc.Mgt.";
@@ -216,15 +221,15 @@ page 62089 "EMADV Per Diem Calc. List"
         end;
     end;
 
-    // trigger OnAfterGetRecord()
-    // var
-    //     PerDiem: Record "CEM Per Diem";
-    //     PerDiemGroup: Record "CEM Per Diem Group";
-    // begin
-    //     if PerDiem.Get(Rec."Per Diem Entry No.") then
-    //         if PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
-    //             CalculateAustrianPerDiem := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay])
-    // end;
+    local procedure SetFields()
+    var
+        PerDiemGroup: Record "CEM Per Diem Group";
+    begin
+        // Set Austrian rules field visibility
+        if PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+            CalculateAustrianPerDiem := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay]);
+
+    end;
 
     var
         PerDiem: Record "CEM Per Diem";
