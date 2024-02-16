@@ -27,22 +27,27 @@ page 62082 "EMADV Per Diem Rate List"
                 field("Daily Accommodation Allowance"; Rec."Daily Accommodation Allowance")
                 {
                     ToolTip = 'Specifies the value of the Tax-Free Accommodation Allowance field.';
+                    BlankZero = true;
                 }
                 field("Daily Drinks Allowance"; Rec."Daily Drinks Allowance")
                 {
                     ToolTip = 'Specifies the value of the Daily Drinks Allowance field.';
+                    BlankZero = true;
                 }
                 field("Daily Entertainment Allowance"; Rec."Daily Entertainment Allowance")
                 {
                     ToolTip = 'Specifies the value of the Daily Entertainment Allowance field.';
+                    BlankZero = true;
                 }
                 field("Daily Meal Allowance"; Rec."Daily Meal Allowance")
                 {
                     ToolTip = 'Specifies the value of the Tax-Free Meal Allowance field.';
+                    BlankZero = true;
                 }
                 field("Daily Transport Allowance"; Rec."Daily Transport Allowance")
                 {
                     ToolTip = 'Specifies the value of the Daily Transport Allowance field.';
+                    BlankZero = true;
                 }
                 field("Currency Code"; Rec."Currency Code")
                 {

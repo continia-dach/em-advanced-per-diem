@@ -241,12 +241,26 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
     local procedure CalculateAllowances(var PerDiem: Record "CEM Per Diem")
     var
+        PerDiemGroup: Record "CEM Per Diem Group";
         PerDiemDetail: Record "CEM Per Diem Detail";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemRate: Record "CEM Per Diem Rate v.2";
         PerDiemSubRate: Record "CEM Per Diem Rate Details v.2";
         LastDate: Date;
     begin
+        // Check minimum stay
+        if PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
+            if PerDiemGroup."Minimum Stay (hours)" > 0 then begin
+                if PerDiemCalcMgt.GetTripDurationInHours(PerDiem, 1, '<') < PerDiemGroup."Minimum Stay (hours)" then begin
+                    //TODO Add comments, unfortunately protected
+                    //ExpCmtMgt.AddComment(DATABASE::"CEM Per Diem", 0, '', PerDiem."Entry No.",
+                    //EMComment.Importance::Error, 'NO EMPLOYEE', STRSUBSTNO(FieldMissing, PerDiem.FIELDCAPTION("Continia User ID")), TRUE);
+                    exit;
+                end;
+
+            end;
+
+
         // Iterate through each day/detail 
         PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
         if PerDiemDetail.FindSet() then
@@ -648,4 +662,5 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
     var
         PerDiemCalcRuleSet: enum "EMADV Per Diem Calc. Rule Set";
         PerDiemCalcMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
+
 }
