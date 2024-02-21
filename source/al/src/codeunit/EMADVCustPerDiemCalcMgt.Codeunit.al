@@ -1,9 +1,17 @@
 codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 {
+    [EventSubscriber(ObjectType::Table, Database::"CEM Per Diem", 'OnAfterModifyEvent', '', true, true)]
+    local procedure PerDiem_OnAfterModifyEvent(var Rec: Record "CEM Per Diem"; var xRec: Record "CEM Per Diem"; RunTrigger: Boolean)
+    begin
+        //UpdatePerDiem(Rec);
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"CEM Per Diem-Validate", 'OnBeforePerDiemValidate', '', true, true)]
     local procedure PerDiemValidate_OnBeforePerDiemValidate(var Rec: Record "CEM Per Diem")
     begin
         CheckDestinationOverlap(Rec);
+
+        UpdatePerDiem(Rec);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"CEM Per Diem Calc. Engine", OnBeforeFindRateAndUpdateAmtOnDetail, '', false, false)]
@@ -12,22 +20,27 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         IsHandled := CalcCustPerDiemRate(PerDiemDetails);
     end;
 
-    internal procedure CalcCustPerDiemRate(var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
+    internal procedure UpdatePerDiem(PerDiem: Record "CEM Per Diem")
+    var
+        PerDiemDetail: Record "CEM Per Diem Detail";
+    begin
+        PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        if PerDiemDetail.FindFirst() then
+            CalcCustPerDiemRate(PerDiem, PerDiemDetail);
+    end;
+
+    internal procedure CalcCustPerDiemRate(PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
-        PerDiem: Record "CEM Per Diem";
         PerDiemGroup: Record "CEM Per Diem Group";
         Currency: Record Currency;
-        PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         PerDiemDetailUpdate: Record "CEM Per Diem Detail";
+        PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
     begin
         if not EMSetup.Get() then
             exit;
         if not EMSetup."Use Custom Per Diem Engine" then
-            exit;
-
-        if not PerDiem.Get(PerDiemDetail."Per Diem Entry No.") then
             exit;
 
         if (PerDiem."Departure Date/Time" = 0DT) or (PerDiem."Return Date/Time" = 0DT) then
@@ -56,8 +69,17 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         IF Localization.Localization = 'NO' THEN
             Currency."Amount Rounding Precision" := 1;
         */
-
         exit(true);
+    end;
+
+    internal procedure CalcCustPerDiemRate(var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
+    var
+        PerDiem: Record "CEM Per Diem";
+    begin
+        if not PerDiem.Get(PerDiemDetail."Per Diem Entry No.") then
+            exit;
+
+        exit(CalcCustPerDiemRate(PerDiem, PerDiemDetail));
     end;
 
     internal procedure UpdatePerDiemDetail(var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean

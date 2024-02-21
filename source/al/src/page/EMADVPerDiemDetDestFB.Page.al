@@ -1,7 +1,7 @@
 page 62083 "EMADV Per Diem Det. Dest FB"
 {
     ApplicationArea = All;
-    Caption = 'EMADV Per Diem Det. Dest FB';
+    Caption = 'Per Diem Det. Dest FB';
     PageType = ListPart;
     SourceTable = "CEM Per Diem Detail Dest.";
 
@@ -32,7 +32,5 @@ page 62083 "EMADV Per Diem Det. Dest FB"
     end;
 
     var
-        //[InDataSet]
         DestinationNameCode: Text[200];
-
 }

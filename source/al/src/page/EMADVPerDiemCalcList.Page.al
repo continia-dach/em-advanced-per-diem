@@ -4,7 +4,7 @@ page 62089 "EMADV Per Diem Calc. List"
     Caption = 'Per Diem calculation details';
     PageType = List;
     SourceTable = "EMADV Per Diem Calculation";
-
+    Editable = false;
     layout
     {
         area(content)
