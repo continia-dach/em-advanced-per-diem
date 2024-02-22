@@ -99,7 +99,6 @@ page 62089 "EMADV Per Diem Calc. List"
             part(PerDiemDetailsInfo; "EMADV Calculation Detail FB")
             {
                 ApplicationArea = All;
-                UpdatePropagation = SubPart;
                 SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."), "Entry No." = field("Per Diem Det. Entry No.");
             }
         }
