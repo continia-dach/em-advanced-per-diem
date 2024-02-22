@@ -146,9 +146,8 @@ pageextension 62082 "EMADV Per Diem Group Card Ext." extends "CEM Per Diem Group
                 Image = Travel;
 
                 RunObject = page "EMADV Per Diem Rate List";
-                //key(Key1; "Per Diem Group Code", "Destination Country/Region", "Accommodation Allowance Code", "Start Date")
-
                 RunPageLink = "Per Diem Group Code" = field(Code);
+                RunPageMode = View;
             }
         }
     }

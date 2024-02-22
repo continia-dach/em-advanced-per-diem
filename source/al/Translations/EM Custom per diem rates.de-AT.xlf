@@ -609,6 +609,12 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Rate List - Control Start Date - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="Page 2449583843 - Action 1741797722 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Rate Card</source>
+          <target>Pauschalsatz</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Rate List - Action RateCard - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 405480838 - Action 1961629020 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 281240623">
           <source>Show Calculation</source>
           <target>Berechnungsübersicht</target>
@@ -641,7 +647,7 @@
         </trans-unit>
         <trans-unit id="PageExtension 476837479 - Control 2791337188 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2210149926">
           <source>Austrian rule setup</source>
-          <target>Einrichtung Österreichische Berechnung</target>
+          <target>Berechnungsregeln Österreich</target>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Group Card Ext. - Control ATRulesetFields - Property Caption</note>
         </trans-unit>
