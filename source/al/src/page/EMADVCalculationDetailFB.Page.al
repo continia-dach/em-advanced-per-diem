@@ -3,7 +3,7 @@ page 62086 "EMADV Calculation Detail FB"
     ApplicationArea = All;
     Caption = 'Day Details';
     PageType = CardPart;
-    SourceTable = "CEM Per Diem Detail";
+    SourceTable = "EMADV Per Diem Calculation";
 
     layout
     {
@@ -13,7 +13,7 @@ page 62086 "EMADV Calculation Detail FB"
             {
 
                 ShowCaption = false;
-                field(Date; Rec.Date)
+                field(Date; PerDiemDetail.Date)
                 {
                 }
             }
@@ -21,40 +21,39 @@ page 62086 "EMADV Calculation Detail FB"
             {
                 Caption = 'Meal';
 
-                field(Breakfast; Rec.Breakfast)
+                field(Breakfast; PerDiemDetail.Breakfast)
                 {
                     DrillDown = true;
                     trigger OnDrillDown()
                     begin
-                        Rec.Breakfast := not Rec.Breakfast;
-                        Rec.Modify();
+                        PerDiemDetail.Breakfast := not PerDiemDetail.Breakfast;
                         CurrPage.Update();
                     end;
                 }
-                field(Lunch; Rec.Lunch)
+                field(Lunch; PerDiemDetail.Lunch)
                 {
                     DrillDown = true;
                     trigger OnDrillDown()
                     begin
-                        Rec.Lunch := not Rec.Lunch;
-                        Rec.Modify();
-                        CurrPage.Update();
+                        PerDiemDetail.Lunch := not PerDiemDetail.Lunch;
+                        RecalculatePerDiem();
+                        //CurrPage.Update();
                     end;
                 }
-                field(Dinner; Rec.Dinner)
+                field(Dinner; PerDiemDetail.Dinner)
                 {
                     DrillDown = true;
                     trigger OnDrillDown()
                     begin
-                        Rec.Dinner := not Rec.Dinner;
-                        Rec.Modify();
-                        CurrPage.Update();
+                        PerDiemDetail.Dinner := not PerDiemDetail.Dinner;
+                        RecalculatePerDiem();
+                        //CurrPage.Update();
                     end;
                 }
-                field("Meal Allowance Amount"; Rec."Meal Allowance Amount")
+                field("Meal Allowance Amount"; PerDiemDetail."Meal Allowance Amount")
                 {
                 }
-                field("No. of Destinations"; Rec."No. of Destinations")
+                field("No. of Destinations"; PerDiemDetail."No. of Destinations")
                 {
                     Visible = false;
                 }
@@ -63,20 +62,52 @@ page 62086 "EMADV Calculation Detail FB"
             {
                 Caption = 'Accommodation';
 
-                field("Accommodation Allowance"; Rec."Accommodation Allowance")
+                field("Accommodation Allowance"; PerDiemDetail."Accommodation Allowance")
                 {
                     DrillDown = true;
                     trigger OnDrillDown()
                     begin
-                        Rec."Accommodation Allowance" := not Rec."Accommodation Allowance";
-                        Rec.Modify();
-                        CurrPage.Update();
+                        PerDiemDetail."Accommodation Allowance" := not PerDiemDetail."Accommodation Allowance";
+                        RecalculatePerDiem();
+
                     end;
                 }
-                field("Accommodation Allowance Amount"; Rec."Accommodation Allowance Amount")
+                field("Accommodation Allowance Amount"; PerDiemDetail."Accommodation Allowance Amount")
                 {
                 }
             }
         }
     }
+
+    trigger OnAfterGetCurrRecord()
+    begin
+        if Rec."Per Diem Entry No." = 0 then
+            exit;
+        if (Rec."Per Diem Entry No." <> PerDiemDetail."Per Diem Entry No.") or
+           (Rec."Per Diem Det. Entry No." <> PerDiemDetail."Entry No.") then begin
+            PerDiemDetail.SetRange("Per Diem Entry No.", Rec."Per Diem Entry No.");
+            PerDiemDetail.SetRange("Entry No.", Rec."Per Diem Det. Entry No.");
+            if PerDiemDetail.IsEmpty() then
+                PerDiemDetail.Init()
+            else
+                PerDiemDetail.FindFirst();
+        end;
+    end;
+
+
+    local procedure RecalculatePerDiem()
+    var
+        PerDiem: Record "CEM Per Diem";
+        CustPerDiemCalcMgt: Codeunit "EMADV Cust. Per Diem Calc.Mgt.";
+    begin
+        PerDiemDetail.Modify();
+
+        if PerDiem.Get(Rec."Per Diem Entry No.") then begin
+            CustPerDiemCalcMgt.UpdatePerDiem(PerDiem);
+            CurrPage.Update(true);
+        end;
+    end;
+
+    var
+        PerDiemDetail: Record "CEM Per Diem Detail";
 }

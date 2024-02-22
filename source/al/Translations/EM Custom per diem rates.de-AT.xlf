@@ -323,7 +323,7 @@
         </trans-unit>
         <trans-unit id="Page 2890518212 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Per Diem calculation details</source>
-          <target>Berechnungsdetails</target>
+          <target>Berechnungsübersicht</target>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Calc. List - Property Caption</note>
         </trans-unit>

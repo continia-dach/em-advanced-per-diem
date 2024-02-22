@@ -1,7 +1,7 @@
 page 62089 "EMADV Per Diem Calc. List"
 {
     ApplicationArea = All;
-    Caption = 'Per Diem calculation details';
+    Caption = 'Per Diem calculation overview';
     PageType = List;
     SourceTable = "EMADV Per Diem Calculation";
     Editable = false;
@@ -99,9 +99,8 @@ page 62089 "EMADV Per Diem Calc. List"
             part(PerDiemDetailsInfo; "EMADV Calculation Detail FB")
             {
                 ApplicationArea = All;
-                UpdatePropagation = Both;
+                UpdatePropagation = SubPart;
                 SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."), "Entry No." = field("Per Diem Det. Entry No.");
-
             }
         }
     }
