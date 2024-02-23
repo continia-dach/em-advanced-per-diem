@@ -43,7 +43,7 @@ page 62081 "EMADV Meal Deduction List"
                 }
                 field("Deduction Method"; Rec."Deduction Method")
                 {
-                    ToolTip = 'Specifies if the defined value will be deducted as amount or calculated percentage';
+                    ToolTip = 'Specifies if the defined value will be deducted as amount or calculated percentage.';
                 }
                 field("Breakfast Deduction"; Rec."Breakfast Deduction")
                 {

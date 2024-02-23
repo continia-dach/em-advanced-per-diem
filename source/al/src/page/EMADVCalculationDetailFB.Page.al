@@ -23,39 +23,23 @@ page 62086 "EMADV Calculation Detail FB"
 
                 field(Breakfast; Rec.Breakfast)
                 {
-                    DrillDown = true;
-                    trigger OnDrillDown()
-                    begin
-                        Rec.Breakfast := not Rec.Breakfast;
-                        Rec.Modify();
-                        CurrPage.Update();
-                    end;
+                    ToolTip = 'Shows if breakfast has been selected for this day.';
                 }
                 field(Lunch; Rec.Lunch)
                 {
-                    DrillDown = true;
-                    trigger OnDrillDown()
-                    begin
-                        Rec.Lunch := not Rec.Lunch;
-                        Rec.Modify();
-                        CurrPage.Update();
-                    end;
+                    ToolTip = 'Shows if lunch has been selected for this day.';
                 }
                 field(Dinner; Rec.Dinner)
                 {
-                    DrillDown = true;
-                    trigger OnDrillDown()
-                    begin
-                        Rec.Dinner := not Rec.Dinner;
-                        Rec.Modify();
-                        CurrPage.Update();
-                    end;
+                    ToolTip = 'Shows if dinner has been selected for this day.';
                 }
                 field("Meal Allowance Amount"; Rec."Meal Allowance Amount")
                 {
+                    ToolTip = 'Specifies the meal allowance amount of the day.';
                 }
                 field("No. of Destinations"; Rec."No. of Destinations")
                 {
+                    ToolTip = 'Specifies the number of destination of this day.';
                     Visible = false;
                 }
             }
@@ -65,16 +49,11 @@ page 62086 "EMADV Calculation Detail FB"
 
                 field("Accommodation Allowance"; Rec."Accommodation Allowance")
                 {
-                    DrillDown = true;
-                    trigger OnDrillDown()
-                    begin
-                        Rec."Accommodation Allowance" := not Rec."Accommodation Allowance";
-                        Rec.Modify();
-                        CurrPage.Update();
-                    end;
+                    ToolTip = 'Specifies if accommodation has been selected for this day.';
                 }
                 field("Accommodation Allowance Amount"; Rec."Accommodation Allowance Amount")
                 {
+                    ToolTip = 'Specifies the accommodation allowance amount of this day.';
                 }
             }
         }

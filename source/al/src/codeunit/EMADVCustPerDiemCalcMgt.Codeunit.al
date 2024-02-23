@@ -49,12 +49,15 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         if not PerDiemGroup.Get(PerDiem."Per Diem Group Code") then
             exit;
 
+        if PerDiemGroup."Calculation rule set" = PerDiemGroup."Calculation rule set"::Default then
+            exit;
+
         // Recalculation and update of reimbursement amounts only on first record until we are sure, that we do it only once
         if PerDiemDetail."Entry No." <> 1 then
             exit(true);
 
         PerDiemRuleSetProvider := PerDiemGroup."Calculation rule set";
-        PerDiemRuleSetProvider.CalcPerDiemRate(PerDiem, PerDiemDetail);
+        CalculationResult := PerDiemRuleSetProvider.CalcPerDiemRate(PerDiem, PerDiemDetail);
 
         // Copied from Standard >>>
         /* TODO add field Currency Code to cust per diem rates
@@ -69,7 +72,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         IF Localization.Localization = 'NO' THEN
             Currency."Amount Rounding Precision" := 1;
         */
-        exit(true);
+        //exit(true);
     end;
 
     internal procedure CalcCustPerDiemRate(var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
@@ -131,6 +134,14 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         end;
     end;
 
+    internal procedure ResetPerDiemCalculation(var PerDiem: Record "CEM Per Diem")
+    var
+        PerDiemCalculation: Record "EMADV Per Diem Calculation";
+    begin
+        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        if not PerDiemCalculation.IsEmpty then
+            PerDiemCalculation.DeleteAll(true);
+    end;
 
     internal procedure GetTripDurationInHours(PerDiem: Record "CEM Per Diem"; Precision: Decimal; Direction: Text[1]): Decimal
     begin

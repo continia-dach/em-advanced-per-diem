@@ -1,6 +1,6 @@
 codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 {
-    internal procedure CalcPerDiemRate(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail")
+    internal procedure CalcPerDiemRate(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
         PerDiemGroup: Record "CEM Per Diem Group";
@@ -31,6 +31,8 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
         // Iterate and update new per diem details 
         UpdatePerDiemDetails(PerDiem);
+
+        exit(true);
     end;
 
     internal procedure UpdatePerDiemDetails(PerDiem: Record "CEM Per Diem")
@@ -117,7 +119,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             exit;
 
         // Delete existing calculations
-        ResetPerDiemCalculation(PerDiem);
+        PerDiemCalcMgt.ResetPerDiemCalculation(PerDiem);
 
         //Create 1st day >>>
         if not PerDiemDetail.Get(CurrPerDiemDetail."Per Diem Entry No.", CurrPerDiemDetail."Entry No.", CurrPerDiemDetail.Date) then
@@ -528,14 +530,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         PerDiemCalc.Insert(true);
     end;
 
-    local procedure ResetPerDiemCalculation(var PerDiem: Record "CEM Per Diem")
-    var
-        PerDiemCalculation: Record "EMADV Per Diem Calculation";
-    begin
-        PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
-        if not PerDiemCalculation.IsEmpty then
-            PerDiemCalculation.DeleteAll(true);
-    end;
+
 
     local procedure GetNextDayTime(BaseDateTime: DateTime): DateTime
     begin

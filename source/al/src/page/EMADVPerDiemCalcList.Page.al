@@ -1,7 +1,7 @@
 page 62089 "EMADV Per Diem Calc. List"
 {
     ApplicationArea = All;
-    Caption = 'Per Diem calculation details';
+    Caption = 'Per Diem calculation overview';
     PageType = List;
     SourceTable = "EMADV Per Diem Calculation";
     Editable = false;
@@ -99,9 +99,7 @@ page 62089 "EMADV Per Diem Calc. List"
             part(PerDiemDetailsInfo; "EMADV Calculation Detail FB")
             {
                 ApplicationArea = All;
-                UpdatePropagation = Both;
                 SubPageLink = "Per Diem Entry No." = field("Per Diem Entry No."), "Entry No." = field("Per Diem Det. Entry No.");
-
             }
         }
     }
@@ -114,6 +112,8 @@ page 62089 "EMADV Per Diem Calc. List"
             action(Update)
             {
                 ApplicationArea = All;
+                Caption = 'Update';
+
                 Image = Recalculate;
                 Promoted = true;
                 PromotedIsBig = true;
@@ -128,6 +128,7 @@ page 62089 "EMADV Per Diem Calc. List"
             {
                 ApplicationArea = All;
                 Caption = 'Per Diem Details';
+
                 Ellipsis = true;
                 Image = Split;
                 Promoted = true;
@@ -150,13 +151,19 @@ page 62089 "EMADV Per Diem Calc. List"
             {
                 ApplicationArea = All;
                 Caption = 'Per Diem Group';
-                RunObject = Page "CEM Per Diem Group Card";
-                //RunPageLink = Code = field "Per Diem Group Code");
-                RunPageMode = View;
+
                 Image = Card;
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
+
+                trigger OnAction()
+                var
+                    PerDiemGroup: Record "CEM Per Diem Group";
+                begin
+                    PerDiemGroup.Get(PerDiem."Per Diem Group Code");
+                    Page.Run(Page::"CEM Per Diem Group Card", PerDiemGroup);
+                end;
             }
             action(OpenRateCard)
             {

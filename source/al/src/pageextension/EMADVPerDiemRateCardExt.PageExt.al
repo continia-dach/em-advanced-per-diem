@@ -31,7 +31,7 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
                     Visible = TaxableFieldsVisible;
                 }
             }
-            part(PerDiemRateDetailsAdv; "CEM Per Diem Rate Detail v.2")
+            /*part(PerDiemRateDetailsAdv; "CEM Per Diem Rate Detail v.2")
             {
                 ApplicationArea = All;
                 SubPageLink = "Per Diem Group Code" = FIELD("Per Diem Group Code"),
@@ -39,7 +39,7 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
                               "Accommodation Allowance Code" = FIELD("Accommodation Allowance Code"),
                               "Start Date" = FIELD("Start Date");
                 Visible = AustrianPerDiemEnabled;
-            }
+            }*/
         }
     }
     actions
