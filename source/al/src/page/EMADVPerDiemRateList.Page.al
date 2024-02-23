@@ -12,6 +12,11 @@ page 62082 "EMADV Per Diem Rate List"
         {
             repeater(General)
             {
+                field("Per Diem Group Code"; Rec."Per Diem Group Code")
+                {
+                    ToolTip = 'Specifies the value of the Per Diem Group Code field.';
+                    Visible = false;
+                }
                 field("Start Date"; Rec."Start Date")
                 {
                     ToolTip = 'Specifies the value of the Start Date field.';

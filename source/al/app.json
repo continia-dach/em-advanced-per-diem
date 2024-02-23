@@ -1,15 +1,15 @@
 {
   "id": "f4f88889-d059-499b-a249-35038a3df58e",
-  "name": "EM Custom per diem rates",
+  "name": "Advanced Per Diem Rates",
   "publisher": "github.com/continia-dach",
-  "version": "1.0.1.0",
+  "version": "1.0.1.3",
   "brief": "",
-  "description": "Proof of concept app how to handle custom per diem rate requirements. No guarantee and support.",
+  "description": "Proof of concept app how to handle advanced per diem requirements. Use as it is - no guarantee and support.",
   "privacyStatement": "",
   "EULA": "",
   "help": "",
   "url": "",
-  "logo": "",
+  "logo": "./res/logo.png",
   "dependencies": [
     {
       "id": "8d4eab29-8c7f-4b6c-be9a-b7fdfb9da196",

@@ -142,7 +142,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         exit(GetTripDurationInHours(PerDiem, 1, '>'));
     end;
 
-    internal procedure ConvertMsecDurationIntoHours(DurationInMsec: Integer; Precision: Decimal; Direction: Text[1]): Decimal
+    internal procedure ConvertMsecDurationIntoHours(DurationInMsec: BigInteger; Precision: Decimal; Direction: Text[1]): Decimal
     begin
         exit(Round((DurationInMsec) / (1000 * 60 * 60), Precision, Direction));
     end;
