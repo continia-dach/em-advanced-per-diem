@@ -2,13 +2,13 @@
   "id": "f4f88889-d059-499b-a249-35038a3df58e",
   "name": "Advanced Per Diem Rates",
   "publisher": "github.com/continia-dach",
-  "version": "1.0.1.3",
+  "version": "1.0.2.0",
   "brief": "",
   "description": "Proof of concept app how to handle advanced per diem requirements. Use as it is - no guarantee and support.",
   "privacyStatement": "",
   "EULA": "",
-  "help": "",
-  "url": "",
+  "help": "https://github.com/continia-dach/em-advanced-per-diem/",
+  "url": "https://github.com/continia-dach/em-advanced-per-diem/",
   "logo": "./res/logo.png",
   "dependencies": [
     {
