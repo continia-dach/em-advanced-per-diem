@@ -98,6 +98,21 @@ table 62082 "EMADV Per Diem Calculation"
             DataClassification = CustomerContent;
             BlankZero = true;
         }
+        field(140; "Daily Meal Allowance taxable"; Decimal)
+        {
+            DataClassification = CustomerContent;
+            BlankZero = true;
+        }
+        field(141; "Meal Allowance Ded. taxable"; Decimal)
+        {
+            DataClassification = CustomerContent;
+            BlankZero = true;
+        }
+        field(142; "Meal Reimb. Amount taxable"; Decimal)
+        {
+            DataClassification = CustomerContent;
+            BlankZero = true;
+        }
 
     }
     keys

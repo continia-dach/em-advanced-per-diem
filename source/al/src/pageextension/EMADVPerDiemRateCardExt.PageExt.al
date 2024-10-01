@@ -41,6 +41,93 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
                 Visible = AustrianPerDiemEnabled;
             }*/
         }
+        addbefore("Additional allowances")
+        {
+            group(ATMetalMealRateDetails)
+            {
+                Caption = 'KV Metall - Reisekosten';
+                Visible = ATMetalPerDiemEnabled;
+                field("Day trip from 6h"; Rec."Day trip from 6h")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Day trip from 6h field.';
+                }
+                field("Day trip from 6h taxable"; Rec."Day trip from 6h taxable")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Day trip from 6h taxable field.';
+                }
+                field("Day trip from 11h"; rec."Day trip from 11h")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Day trip from 11h field.';
+                }
+                field("Day trip from 11h taxable"; Rec."Day trip from 11h taxable")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Day trip from 11h taxable field.';
+                }
+                field("O/N trip full day"; Rec."O/N trip full day")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip full day field.';
+                }
+                field("O/N trip full day taxable"; Rec."O/N trip full day taxable")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip full day taxable field.';
+                }
+                field("O/N trip dep. pre 12pm"; Rec."O/N trip dep. pre 12pm")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip dep. pre 12pm field.';
+                }
+                field("O/N trip dep. pre 12pm taxable"; Rec."O/N trip dep. pre 12pm taxable")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip dep. pre 12pm taxable field.';
+                }
+                field("O/N trip dep. after 12pm"; Rec."O/N trip dep. after 12pm")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip dep. after 12pm field.';
+                }
+                field("O/N trip dep. after 12pm tax."; Rec."O/N trip dep. after 12pm tax.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip dep. after 12pm tax. field.';
+                }
+                field("O/N trip arr. before 5pm"; Rec."O/N trip arr. before 5pm")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip arr. before 5pm field.';
+                }
+                field("O/N trip arr. before 5pm tax."; Rec."O/N trip arr. before 5pm tax.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip arr. before 5pm tax. field.';
+                }
+                field("O/N trip arr. after 5pm"; Rec."O/N trip arr. after 5pm")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip arr. after 5pm field.';
+                }
+                field("O/N trip arr. after 5pm tax."; Rec."O/N trip arr. after 5pm tax.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the O/N trip arr. after 5pm tax. field.';
+                }
+            }
+            /*part(PerDiemRateDetailsAdv; "CEM Per Diem Rate Detail v.2")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Per Diem Group Code" = FIELD("Per Diem Group Code"),
+                              "Destination Country/Region" = FIELD("Destination Country/Region"),
+                              "Accommodation Allowance Code" = FIELD("Accommodation Allowance Code"),
+                              "Start Date" = FIELD("Start Date");
+                Visible = AustrianPerDiemEnabled;
+            }*/
+        }
     }
     actions
     {
@@ -60,6 +147,7 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
                 RunObject = page "EMADV Meal Deduction List";
                 RunPageLink = "Per Diem Group Code" = field("Per Diem Group Code"), "Destination Country/Region" = field("Destination Country/Region"),
                               "Accommodation Allowance Code" = field("Accommodation Allowance Code"), "Start Date" = field("Start Date");
+                ToolTip = 'Executes the Rate meal deductions action.';
             }
         }
     }
@@ -76,6 +164,7 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
             exit;
         AdvancedPerDiemEnabled := EMSetup."Use Custom Per Diem Engine";
         AustrianPerDiemEnabled := (PerDiemGroup."Calculation rule set" in [PerDiemGroup."Calculation rule set"::Austria24h, PerDiemGroup."Calculation rule set"::AustriaByDay]);
+        ATMetalPerDiemEnabled := PerDiemGroup."Calculation rule set" = PerDiemGroup."Calculation rule set"::KVMetallgewerbe;
         TaxableFieldsVisible := EMSetup."Enable taxable Per Diem";
     end;
 
@@ -122,5 +211,6 @@ pageextension 62085 "EMADV Per Diem Rate Card Ext." extends "CEM Per Diem Rate C
     var
         AdvancedPerDiemEnabled: Boolean;
         AustrianPerDiemEnabled: Boolean;
+        ATMetalPerDiemEnabled: Boolean;
         TaxableFieldsVisible: Boolean;
 }

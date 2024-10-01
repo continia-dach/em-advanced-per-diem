@@ -129,7 +129,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         if PerDiem."Return Date/Time" < NextDayDateTime then
             NextDayDateTime := PerDiem."Return Date/Time";
 
-        InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiem."Departure Date/Time", NextDayDateTime, CurrentCountry, false);
+        PerDiemCalcMgt.InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiem."Departure Date/Time", NextDayDateTime, CurrentCountry, false);
         //Create 1st day <<<
 
         PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
@@ -143,14 +143,14 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                         // Return on the same date and return date is smaller than next day date
                         if (PerDiemDetail.Date = DT2Date(PerDiem."Return Date/Time")) then begin
                             if PerDiemCalculation."To DateTime" > PerDiem."Return Date/Time" then
-                                UpdateCalcWithToDT(PerDiemCalculation, PerDiem."Return Date/Time")
+                                PerDiemCalcMgt.UpdateCalcWithToDT(PerDiemCalculation, PerDiem."Return Date/Time")
                             else begin
                                 NextDayDateTime := PerDiem."Return Date/Time";
-                                InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", PerDiem."Return Date/Time", CurrentCountry, true);
+                                PerDiemCalcMgt.InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", PerDiem."Return Date/Time", CurrentCountry, true);
                             end;
                         end else begin
                             NextDayDateTime := GetNextDayTime(NextDayDateTime);
-                            InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrentCountry, true);
+                            PerDiemCalcMgt.InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrentCountry, true);
                         end;
                     end;
                 end;
@@ -481,7 +481,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
             // Check if we have to log a new day till destination arrival
             if NextDayDateTime < CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time") then begin
                 NextDayDateTime := GetNextDayTime(NextDayDateTime);
-                InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrentCountry, true);
+                PerDiemCalcMgt.InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, PerDiemCalculation."To DateTime", NextDayDateTime, CurrentCountry, true);
             end;
 
             // track begin of foreign country
@@ -500,39 +500,13 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
 
             CurrentCountry.Get(PerDiemDetailDest."Destination Country/Region");
 
-            InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time"), NextDayDateTime, CurrentCountry, true);
+            PerDiemCalcMgt.InsertCalc(PerDiem, PerDiemDetail, PerDiemCalculation, CreateDateTime(PerDiemDetail.Date, PerDiemDetailDest."Arrival Time"), NextDayDateTime, CurrentCountry, true);
         until PerDiemDetailDest.Next() = 0;
         exit(true);
     end;
 
 
-    local procedure UpdateCalcWithToDT(var PerDiemCalculation: Record "EMADV Per Diem Calculation"; ToDateTime: DateTime)
-    begin
-        PerDiemCalculation.Validate("To DateTime", ToDateTime);
-        PerDiemCalculation.Modify(true);
-    end;
-
-    local procedure InsertCalc(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalc: Record "EMADV Per Diem Calculation"; FromDateTime: DateTime; ToDateTime: DateTime; CurrCountry: Record "CEM Country/Region"; UpdateCurrCalcToDTWithNewFromDT: Boolean)
-    begin
-        //Update last calulation ToDate with new FromDate
-        if UpdateCurrCalcToDTWithNewFromDT then
-            UpdateCalcWithToDT(PerDiemCalc, FromDateTime);
-
-        // Create new calculation record
-        Clear(PerDiemCalc);
-        PerDiemCalc.Validate("Per Diem Entry No.", PerDiem."Entry No.");
-        PerDiemCalc."Per Diem Det. Entry No." := PerDiemDetail."Entry No.";
-        PerDiemCalc."Entry No." := 0;
-        PerDiemCalc.Validate("From DateTime", FromDateTime);
-        PerDiemCalc.Validate("To DateTime", ToDateTime);
-        PerDiemCalc.Validate("Domestic Entry", CurrCountry."Domestic Country");
-        PerDiemCalc.Validate("Country/Region", CurrCountry.Code);
-        PerDiemCalc.Insert(true);
-    end;
-
-
-
-    local procedure GetNextDayTime(BaseDateTime: DateTime): DateTime
+    internal procedure GetNextDayTime(BaseDateTime: DateTime): DateTime
     begin
         case PerDiemCalcRuleSet of
             "EMADV Per Diem Calc. Rule Set"::Austria24h:
@@ -544,6 +518,12 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
                 exit(BaseDateTime);
         end;
     end;
+
+
+
+
+
+
 
     local procedure IsDomesticOnlyPerDiemDetail(PerDiemDetail: Record "CEM Per Diem Detail"): Boolean
     var

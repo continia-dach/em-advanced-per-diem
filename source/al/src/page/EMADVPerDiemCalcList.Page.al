@@ -57,6 +57,10 @@ page 62089 "EMADV Per Diem Calc. List"
                 {
                     ToolTip = 'Specifies the value of the meal allowance';
                 }
+                field("Meal Allowance taxable"; Rec."Daily Meal Allowance taxable")
+                {
+                    ToolTip = 'Specifies the value of the Daily Meal Allowance taxable field.';
+                }
                 field("Meal Allowance Deductions"; Rec."Meal Allowance Deductions")
                 {
                     ToolTip = 'Specifies the amount that will be deducted from the meal allowance';
@@ -64,6 +68,11 @@ page 62089 "EMADV Per Diem Calc. List"
                     ObsoleteState = Pending;
                 }
                 field("Meal Reimb. Amount"; Rec."Meal Reimb. Amount")
+                {
+                    ToolTip = 'Specifies the reimbursed meal amount';
+                    Visible = false;
+                }
+                field("Meal Reimb. Amount taxable"; Rec."Meal Reimb. Amount taxable")
                 {
                     ToolTip = 'Specifies the reimbursed meal amount';
                     Visible = false;
@@ -118,6 +127,7 @@ page 62089 "EMADV Per Diem Calc. List"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Update action.';
                 trigger OnAction()
                 begin
                     UpdatePerDiemCalculation();
@@ -156,7 +166,7 @@ page 62089 "EMADV Per Diem Calc. List"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
-
+                ToolTip = 'Executes the Per Diem Group action.';
                 trigger OnAction()
                 var
                     PerDiemGroup: Record "CEM Per Diem Group";
@@ -173,6 +183,7 @@ page 62089 "EMADV Per Diem Calc. List"
                 Promoted = true;
                 PromotedIsBig = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Per Diem Rate action.';
                 trigger OnAction()
                 var
                     PerDiem: Record "CEM Per Diem";

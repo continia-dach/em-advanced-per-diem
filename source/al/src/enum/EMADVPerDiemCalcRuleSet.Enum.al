@@ -24,4 +24,9 @@ enum 62082 "EMADV Per Diem Calc. Rule Set" implements "EMADV IPerDiemRuleSetProv
         Caption = 'Austria per calendar day';
         Implementation = "EMADV IPerDiemRuleSetProvider" = "EMADV PD Rule Set AT";
     }
+    value(100; KVMetallgewerbe)
+    {
+        Caption = 'KV Metallgewerbe';
+        Implementation = "EMADV IPerDiemRuleSetProvider" = "EMADV PD Rule Set KVMetal";
+    }
 }

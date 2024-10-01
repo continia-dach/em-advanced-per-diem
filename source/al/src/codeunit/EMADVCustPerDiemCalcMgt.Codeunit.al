@@ -198,6 +198,32 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         exit(PerDiemDetail.Date = DT2Date(PerDiem."Return Date/Time"));
     end;
 
+    internal procedure InsertCalc(var PerDiem: Record "CEM Per Diem"; var PerDiemDetail: Record "CEM Per Diem Detail"; var PerDiemCalc: Record "EMADV Per Diem Calculation"; FromDateTime: DateTime; ToDateTime: DateTime; CurrCountry: Record "CEM Country/Region"; UpdateCurrCalcToDTWithNewFromDT: Boolean)
+    begin
+        //Update last calulation ToDate with new FromDate
+        if UpdateCurrCalcToDTWithNewFromDT then
+            UpdateCalcWithToDT(PerDiemCalc, FromDateTime);
+
+        // Create new calculation record
+        Clear(PerDiemCalc);
+        PerDiemCalc.Validate("Per Diem Entry No.", PerDiem."Entry No.");
+        PerDiemCalc."Per Diem Det. Entry No." := PerDiemDetail."Entry No.";
+        PerDiemCalc."Entry No." := 0;
+        PerDiemCalc.Validate("From DateTime", FromDateTime);
+        PerDiemCalc.Validate("To DateTime", ToDateTime);
+        PerDiemCalc.Validate("Domestic Entry", CurrCountry."Domestic Country");
+        PerDiemCalc.Validate("Country/Region", CurrCountry.Code);
+        PerDiemCalc.Insert(true);
+    end;
+
+    internal procedure UpdateCalcWithToDT(var PerDiemCalculation: Record "EMADV Per Diem Calculation"; ToDateTime: DateTime)
+    begin
+        PerDiemCalculation.Validate("To DateTime", ToDateTime);
+        PerDiemCalculation.Modify(true);
+    end;
+
+
+
     local procedure CheckDestinationOverlap(var PerDiem: Record "CEM Per Diem")
     var
         PerDiemDetail: Record "CEM Per Diem Detail";
