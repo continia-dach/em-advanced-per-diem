@@ -25,6 +25,9 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
         // Add the daily accommocation value
         CalculateAllowances(PerDiem, PerDiemGroup);
 
+        // Calculate the reimbursement values  
+        CalculateReimbursementAmounts(PerDiem, PerDiemGroup);
+
         // Iterate and update new per diem details 
         UpdatePerDiemDetails(PerDiem);
 
@@ -41,6 +44,68 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
                 UpdatePerDiemDetail(PerDiem, PerDiemDetail);
             until PerDiemDetail.Next() = 0;
     end;
+
+    /// <summary>
+    /// Calculates the reimbursement amounts of the current per diem record and writes them back to the Per Diem Calculation table
+    /// </summary>
+    local procedure CalculateReimbursementAmounts(PerDiem: Record "CEM Per Diem"; PerDiemGroup: Record "CEM Per Diem Group")
+    var
+        PerDiemCalculation: Record "EMADV Per Diem Calculation";
+        PerDiemDetail: Record "CEM Per Diem Detail";
+    begin
+        PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        if PerDiemDetail.FindSet() then begin
+            PerDiemCalculation.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+            case PerDiemGroup."Preferred rate" of
+                "EMADV Per Diem Preferred Rates"::Highest:
+                    begin
+                        PerDiemCalculation.SetCurrentKey("Daily Meal Allowance");
+                        PerDiemCalculation.Ascending(false);
+                    end;
+                "EMADV Per Diem Preferred Rates"::First:
+                    begin
+                        PerDiemCalculation.Ascending(true);
+                    end;
+                "EMADV Per Diem Preferred Rates"::Last:
+                    begin
+                        PerDiemCalculation.Ascending(false);
+                    end;
+            end;
+
+            // Handling foreign part of per diem
+            // if PerDiemWithMultipleDestinations(PerDiem) then
+            //     PerDiemCalculation.SetRange("Domestic Entry", false);
+
+            repeat
+                PerDiemCalculation.SetRange("Per Diem Det. Entry No.", PerDiemDetail."Entry No.");
+                if PerDiemCalculation.FindFirst() then begin
+                    PerDiemCalculation."Meal Reimb. Amount" := PerDiemCalculation."Daily Meal Allowance";
+                    PerDiemCalculation."Meal Reimb. Amount taxable" := PerDiemCalculation."Daily Meal Allowance taxable";
+                    PerDiemCalculation.Modify();
+                end;
+            until PerDiemDetail.Next() = 0;
+
+            // Handling domestic part of per diem
+            if PerDiemWithMultipleDestinations(PerDiem) then begin
+                PerDiemCalculation.SetRange("AT Per Diem Twelfth");
+                PerDiemCalculation.SetRange("Per Diem Det. Entry No.");
+                PerDiemCalculation.SetRange("Domestic Entry", true);
+
+            end;
+        end;
+    end;
+
+    local procedure PerDiemWithMultipleDestinations(var PerDiem: Record "CEM Per Diem"): Boolean
+    var
+        PerDiemDestinations: Record "CEM Per Diem Detail Dest.";
+    begin
+        PerDiemDestinations.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+        PerDiemDestinations.SetFilter("Destination Country/Region", '<>%1', PerDiem."Departure Country/Region");
+
+        // return true if destination table is not empy 
+        exit(not PerDiemDestinations.IsEmpty);
+    end;
+
 
     local procedure CalculateAllowances(PerDiem: Record "CEM Per Diem"; PerDiemGroup: Record "CEM Per Diem Group")
     var
@@ -102,7 +167,7 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
         if PerDiemRate.IsEmpty then
             exit;
 
-        if PerDiemRate.FindFirst() then begin
+        if PerDiemRate.FindLast() then begin
             // Set the daily allowance
             //PerDiemCalc."Daily Meal Allowance" := PerDiemRate."Daily Meal Allowance";
 
@@ -153,8 +218,8 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
             end;
 
 
-            PerDiemCalc."Meal Reimb. Amount" := PerDiemCalc."Daily Meal Allowance";
-            PerDiemCalc."Meal Reimb. Amount taxable" := PerDiemCalc."Daily Meal Allowance taxable";
+            //PerDiemCalc."Meal Reimb. Amount" := PerDiemCalc."Daily Meal Allowance";
+            //PerDiemCalc."Meal Reimb. Amount taxable" := PerDiemCalc."Daily Meal Allowance taxable";
             PerDiemCalc.Modify();
         end;
     end;
