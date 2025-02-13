@@ -370,6 +370,9 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         MealAllowanceDeductionAmt: Decimal;
     begin
+        if PerDiem.Status <> PerDiem.Status::Open then
+            exit;
+
         // Clear old values >>>
         Clear(MealAllowanceDeductionAmt);
         Clear(PerDiemDetail."Accommodation Allowance Amount");
@@ -386,7 +389,8 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
         if PerDiemCalculation.FindSet() then
             repeat
                 // Transfer calculation meal allowance amount
-                PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount";
+                //PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount";
+                PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount" + PerDiemCalculation."Meal Reimb. Amount taxable";
                 PerDiemDetail."Taxable Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount taxable";
 
             /*
@@ -402,7 +406,7 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
 
 
         // Final calculation of total reimbursement amounts
-        PerDiemDetail."Taxable Amount" := PerDiemDetail."Taxable Meal Allowance Amount";
+        PerDiemDetail."Taxable Amount" := PerDiemDetail."Taxable Meal Allowance Amount" + PerDiemDetail."Taxable Acc. Allowance Amount";
 
         PerDiemDetail.Amount := ROUND(PerDiemDetail."Accommodation Allowance Amount" + PerDiemDetail."Meal Allowance Amount" + PerDiemDetail."Transport Allowance Amount" +
               PerDiemDetail."Entertainment Allowance Amount" + PerDiemDetail."Drinks Allowance Amount", Currency."Amount Rounding Precision");

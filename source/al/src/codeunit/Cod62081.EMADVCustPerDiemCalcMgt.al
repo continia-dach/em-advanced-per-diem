@@ -38,8 +38,10 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         PerDiemDetailUpdate: Record "CEM Per Diem Detail";
         PerDiemRuleSetProvider: Interface "EMADV IPerDiemRuleSetProvider";
     begin
+
         if not EMSetup.Get() then
             exit;
+
         if not EMSetup."Use Custom Per Diem Engine" then
             exit;
 
@@ -51,6 +53,9 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 
         if PerDiemGroup."Calculation rule set" = PerDiemGroup."Calculation rule set"::Default then
             exit;
+
+        if PerDiem.Status <> PerDiem.Status::Open then
+            exit(true);
 
         // Recalculation and update of reimbursement amounts only on first record until we are sure, that we do it only once
         if PerDiemDetail."Entry No." <> 1 then

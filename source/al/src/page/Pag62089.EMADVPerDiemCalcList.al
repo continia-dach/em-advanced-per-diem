@@ -130,6 +130,7 @@ page 62089 "EMADV Per Diem Calc. List"
                 ToolTip = 'Executes the Update action.';
                 trigger OnAction()
                 begin
+                    PerDiem.TestField(Status, PerDiem.Status::Open);
                     UpdatePerDiemCalculation();
                     CurrPage.Update(false);
                 end;
