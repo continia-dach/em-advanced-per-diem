@@ -370,7 +370,7 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
         MealAllowanceDeductionAmt: Decimal;
     begin
-        if PerDiem.Status <> PerDiem.Status::Open then
+        if (not (PerDiem.Status in [PerDiem.Status::Open, PerDiem.Status::Released])) or (PerDiem.Posted = true) then
             exit;
 
         // Clear old values >>>

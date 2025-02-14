@@ -54,7 +54,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         if PerDiemGroup."Calculation rule set" = PerDiemGroup."Calculation rule set"::Default then
             exit;
 
-        if PerDiem.Status <> PerDiem.Status::Open then
+        if not (PerDiem.Status in [PerDiem.Status::Open, PerDiem.Status::Released]) or (PerDiem.Posted = true) then
             exit(true);
 
         // Recalculation and update of reimbursement amounts only on first record until we are sure, that we do it only once
