@@ -2,7 +2,7 @@
   "id": "f4f88889-d059-499b-a249-35038a3df58e",
   "name": "Advanced Per Diem Rates",
   "publisher": "github.com/continia-dach",
-  "version": "26.0.34.0",
+  "version": "27.0.37.0",
   "brief": "",
   "description": "Proof of concept app how to handle advanced per diem requirements. Use as it is - no guarantee and support.",
   "privacyStatement": "",
@@ -15,18 +15,24 @@
       "id": "8d4eab29-8c7f-4b6c-be9a-b7fdfb9da196",
       "name": "Continia Expense Management",
       "publisher": "Continia Software",
-      "version": "12.0.0.0"
+      "version": "27.0.0.0"
     },
     {
-      "id": "3D686C04-E1B1-435E-BEA4-862C2C203CA7",
-      "name": "Yavrio Open Banking",
-      "publisher": "Yavrio",
-      "version": "4.4.0.0"
+      "id": "bbb72c8a-3abf-478f-9239-a34dbc252d07",
+      "name": "Continia Business Foundation",
+      "publisher": "Continia Software",
+      "version": "27.0.0.0"
+    },
+    {
+      "id": "e4b442d0-e8e3-4210-bfca-f1e66686caa0",
+      "name": "Continia System Application",
+      "publisher": "Continia Software",
+      "version": "27.0.0.0"
     }
   ],
   "screenshots": [],
-  "platform": "26.0.0.0",
-  "application": "26.0.30643.32100",
+  "platform": "27.0.0.0",
+  "application": "27.0.0.0",
   "idRanges": [
     {
       "from": 62080,
@@ -38,7 +44,7 @@
     "allowDownloadingSource": true,
     "includeSourceInSymbolFile": true
   },
-  "runtime": "15.0",
+  "runtime": "17.0",
   "features": [
     "NoImplicitWith",
     "TranslationFile"
