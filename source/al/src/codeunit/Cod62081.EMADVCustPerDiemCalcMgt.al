@@ -63,6 +63,21 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
 
         PerDiemRuleSetProvider := PerDiemGroup."Calculation rule set";
         CalculationResult := PerDiemRuleSetProvider.CalcPerDiemRate(PerDiem, PerDiemDetail);
+
+        // Copied from Standard >>>
+        /* TODO add field Currency Code to cust per diem rates
+        "Currency Code" := PerDiemRate."Currency Code";
+        IF "Currency Code" <> '' THEN BEGIN
+            CurrencyFactor := CurrExchRate.ExchangeRate(PostingDate, "Currency Code");
+            Currency.GET("Currency Code");
+            Currency.CheckAmountRoundingPrecision;
+        END ELSE
+            Currency.InitRoundingPrecision;
+
+        IF Localization.Localization = 'NO' THEN
+            Currency."Amount Rounding Precision" := 1;
+        */
+        //exit(true);
     end;
 
     internal procedure CalcCustPerDiemRate(var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
@@ -75,7 +90,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         exit(CalcCustPerDiemRate(PerDiem, PerDiemDetail));
     end;
 
-    internal procedure UpdatePerDiemDetail(PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
+    internal procedure UpdatePerDiemDetail(var PerDiemDetail: Record "CEM Per Diem Detail") CalculationResult: Boolean
     var
         EMSetup: Record "CEM Expense Management Setup";
         PerDiem: Record "CEM Per Diem";
@@ -124,7 +139,7 @@ codeunit 62081 "EMADV Cust. Per Diem Calc.Mgt."
         end;
     end;
 
-    internal procedure ResetPerDiemCalculation(PerDiem: Record "CEM Per Diem")
+    internal procedure ResetPerDiemCalculation(var PerDiem: Record "CEM Per Diem")
     var
         PerDiemCalculation: Record "EMADV Per Diem Calculation";
     begin

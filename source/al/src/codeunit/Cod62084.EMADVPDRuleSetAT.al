@@ -35,7 +35,7 @@ codeunit 62084 "EMADV PD Rule Set AT" implements "EMADV IPerDiemRuleSetProvider"
         exit(true);
     end;
 
-    internal procedure UpdatePerDiemDetails(var PerDiem: Record "CEM Per Diem")
+    internal procedure UpdatePerDiemDetails(PerDiem: Record "CEM Per Diem")
     var
         PerDiemDetail: record "CEM Per Diem Detail";
     begin
