@@ -4,11 +4,15 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
     var
         EMSetup: Record "CEM Expense Management Setup";
         PerDiemGroup: Record "CEM Per Diem Group";
+        PerDiemExistsCheck: Record "CEM Per Diem";
     begin
         PerDiemCalcMgt.ResetPerDiemCalculation(PerDiem);
 
         // we only calculate on first entry
         if (PerDiemDetail."Entry No." <> 1) then
+            exit;
+
+        if not PerDiemExistsCheck.Get(PerDiem."Entry No.") then
             exit;
 
         if not EMSetup.Get() then
