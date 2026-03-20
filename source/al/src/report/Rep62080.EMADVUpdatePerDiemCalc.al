@@ -1,0 +1,102 @@
+report 62080 "EMADV Update Per Diem Calc."
+{
+    ApplicationArea = All;
+    Caption = 'EM Update Per Diem Calculations';
+    ProcessingOnly = true;
+    UsageCategory = Tasks;
+
+    dataset
+    {
+        dataitem(PerDiem; "CEM Per Diem")
+        {
+            RequestFilterFields = "Entry No.", "Departure Date/Time", Posted;
+
+            trigger OnPreDataItem()
+            begin
+                UpdateProcessCount := 0;
+                ProcessedCount := 0;
+                Message('Processing Per Diems...');
+            end;
+
+            trigger OnAfterGetRecord()
+            var
+                PerDiemDetail: Record "CEM Per Diem Detail";
+                PerDiemValidate: Codeunit "CEM Per Diem-Validate";
+            begin
+                ProcessedCount += 1;
+
+                PerDiemDetail.Reset();
+                PerDiemDetail.SetRange("Per Diem Entry No.", PerDiem."Entry No.");
+                PerDiemDetail.SetRange("Accom. Allowance Amount (LCY)", 0);
+                PerDiemDetail.SetRange("Daily Meal Allow. Amount (LCY)", 0);
+                PerDiemDetail.SetRange("Breakfast Deduction Amt. (LCY)", 0);
+                PerDiemDetail.SetRange("Lunch Deduction Amount (LCY)", 0);
+                PerDiemDetail.SetRange("Dinner Deduction Amount (LCY)", 0);
+                PerDiemDetail.SetRange("Omitted Deduct. Amount (LCY)", 0);
+                PerDiemDetail.SetRange("Drinks Allowance Amount (LCY)", 0);
+                PerDiemDetail.SetRange("Ent. Allowance Amt. (LCY)", 0);
+                PerDiemDetail.SetRange("Transp. Allowance Amount (LCY)", 0);
+                PerDiemDetail.SetFilter("Amount (LCY)", '>%1', 0);
+
+                if not PerDiemDetail.IsEmpty() then begin
+                    PerDiemValidate.Run(PerDiem);
+                    UpdateProcessCount += 1;
+                end;
+            end;
+
+            trigger OnPostDataItem()
+            begin
+                Message('Completed.' + '\' + 'Per Diems processed: ' + Format(ProcessedCount) + '\' + 'Per Diems updated: ' + Format(UpdateProcessCount));
+            end;
+        }
+    }
+
+    requestpage
+    {
+        layout
+        {
+            area(content)
+            {
+                group(Options)
+                {
+                    Caption = 'Options';
+                    field(PostedFilter; PostedFilter)
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Posted Status';
+                        OptionCaption = 'Non-Posted Only,Posted Only,All';
+                        ToolTip = 'Specifies which Per Diems to process: Non-Posted Only, Posted Only, or All.';
+
+                        trigger OnValidate()
+                        begin
+                            UpdatePerDiemFilter();
+                        end;
+                    }
+                }
+            }
+        }
+
+        trigger OnOpenPage()
+        begin
+            PostedFilter := PostedFilter::"Non-Posted Only";
+            UpdatePerDiemFilter();
+        end;
+    }
+
+    var
+        PostedFilter: Option "Non-Posted Only","Posted Only","All";
+        UpdateProcessCount: Integer;
+        ProcessedCount: Integer;
+
+    local procedure UpdatePerDiemFilter()
+    begin
+        case PostedFilter of
+            PostedFilter::"Non-Posted Only":
+                PerDiem.SetRange(Posted, false);
+            PostedFilter::"Posted Only":
+                PerDiem.SetRange(Posted, true);
+            PostedFilter::"All":
+                PerDiem.SetRange(Posted);
+        end;
+    end;
+}

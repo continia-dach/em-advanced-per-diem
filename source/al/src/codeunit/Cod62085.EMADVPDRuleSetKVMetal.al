@@ -212,18 +212,8 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
                         PerDiemCalc."Daily Meal Allowance taxable" := PerDiemRate."O/N trip full day taxable";
                     end;
                 end;
-                /*
-                                if (not PerDiemCalcMgt.IsFirstDay(PerDiem, PerDiemDetail)) and
-                                   (NewDay)
-                                then begin
-                                    PerDiemCalc."Daily Accommodation Allowance" := PerDiemRate."Daily Accommodation Allowance";
-                                end;
-                                */
             end;
 
-
-            //PerDiemCalc."Meal Reimb. Amount" := PerDiemCalc."Daily Meal Allowance";
-            //PerDiemCalc."Meal Reimb. Amount taxable" := PerDiemCalc."Daily Meal Allowance taxable";
             PerDiemCalc.Modify();
         end;
     end;
@@ -393,19 +383,8 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
         if PerDiemCalculation.FindSet() then
             repeat
                 // Transfer calculation meal allowance amount
-                //PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount";
                 PerDiemDetail."Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount" + PerDiemCalculation."Meal Reimb. Amount taxable";
                 PerDiemDetail."Taxable Meal Allowance Amount" += PerDiemCalculation."Meal Reimb. Amount taxable";
-
-            /*
-            // Transfer the accommodation allowance amount
-            if PerDiemDetail."Accommodation Allowance" and (PerDiemCalculation."Daily Accommodation Allowance" <> 0) then begin
-                PerDiemDetail.Validate("Accommodation Allowance Amount", PerDiemCalculation."Daily Accommodation Allowance");
-                PerDiemCalculation.Validate("Accommodation Reimb. Amount", PerDiemDetail."Accommodation Allowance Amount");
-            end else
-                PerDiemCalculation.Validate("Accommodation Reimb. Amount", 0);
-            PerDiemCalculation.Modify(false);
-            */
             until PerDiemCalculation.Next() = 0;
 
 
@@ -418,6 +397,11 @@ codeunit 62085 "EMADV PD Rule Set KVMetal" implements "EMADV IPerDiemRuleSetProv
         PerDiemDetail."Amount (LCY)" := PerDiemDetail.Amount; // TODO: Set up LCY calculation
         PerDiemDetail."Taxable Amount (LCY)" := PerDiemDetail."Taxable Amount";
 
+        // New field structure >>>
+        PerDiemDetail."Daily Meal Allowance Amount" := PerDiemDetail."Meal Allowance Amount";
+        PerDiemDetail."Tax. Daily Meal Allow. Amount" := PerDiemDetail."Taxable Meal Allowance Amount";
+        PerDiemDetail."Daily Meal Allow. Amount (LCY)" := PerDiemDetail."Meal Allowance Amount";
+        PerDiemDetail."Tax. Dly. M. Allow. Amt. (LCY)" := PerDiemDetail."Taxable Meal Allowance Amount";
         PerDiemDetail.Modified := true;
 
         // Save updated detail record

@@ -1,0 +1,23 @@
+pageextension 62090 "EMADV Per Diems Update Ext" extends "CEM Per Diems"
+{
+    actions
+    {
+        addafter("F&unctions")
+        {
+            action("Update Per Diem Calculations")
+            {
+                ApplicationArea = All;
+                Caption = 'Update Per Diem Calculations';
+                Image = Refresh;
+                ToolTip = 'Update incomplete Per Diem calculations where allowance and deduction amounts are zero but have positive amounts to calculate.';
+
+                trigger OnAction()
+                var
+                    PerDiemUpdateReport: Report "EMADV Update Per Diem Calc.";
+                begin
+                    PerDiemUpdateReport.RunModal();
+                end;
+            }
+        }
+    }
+}

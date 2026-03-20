@@ -16,6 +16,7 @@ permissionset 62080 "Advanced Per Diem"
          page "EMADV Per Diem Det. Dest FB" = X,
          page "EMADV Per Diem FB" = X,
          page "EMADV Per Diem Rate List" = X,
+         report "EMADV Update Per Diem Calc." = X,
          table "EMADV Meal Deduction" = X,
          table "EMADV Per Diem Calculation" = X,
          tabledata "EMADV Meal Deduction" = RIMD,
