@@ -9,7 +9,7 @@ report 62080 "EMADV Update Per Diem Calc."
     {
         dataitem(PerDiem; "CEM Per Diem")
         {
-            RequestFilterFields = "Entry No.", "Departure Date/Time", Posted;
+            RequestFilterFields = "Entry No.", "Departure Date/Time", Posted, "Posting Date";
 
             trigger OnPreDataItem()
             begin
@@ -51,52 +51,8 @@ report 62080 "EMADV Update Per Diem Calc."
         }
     }
 
-    requestpage
-    {
-        layout
-        {
-            area(content)
-            {
-                group(Options)
-                {
-                    Caption = 'Options';
-                    field(PostedFilter; PostedFilter)
-                    {
-                        ApplicationArea = All;
-                        Caption = 'Posted Status';
-                        OptionCaption = 'Non-Posted Only,Posted Only,All';
-                        ToolTip = 'Specifies which Per Diems to process: Non-Posted Only, Posted Only, or All.';
-
-                        trigger OnValidate()
-                        begin
-                            UpdatePerDiemFilter();
-                        end;
-                    }
-                }
-            }
-        }
-
-        trigger OnOpenPage()
-        begin
-            PostedFilter := PostedFilter::"Non-Posted Only";
-            UpdatePerDiemFilter();
-        end;
-    }
 
     var
-        PostedFilter: Option "Non-Posted Only","Posted Only","All";
         UpdateProcessCount: Integer;
         ProcessedCount: Integer;
-
-    local procedure UpdatePerDiemFilter()
-    begin
-        case PostedFilter of
-            PostedFilter::"Non-Posted Only":
-                PerDiem.SetRange(Posted, false);
-            PostedFilter::"Posted Only":
-                PerDiem.SetRange(Posted, true);
-            PostedFilter::"All":
-                PerDiem.SetRange(Posted);
-        end;
-    end;
 }
