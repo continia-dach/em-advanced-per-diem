@@ -723,6 +723,30 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page EMADV Per Diem Rate List - Action RateCard - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Report 3836348125 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EM Update Per Diem Calculations</source>
+          <target>EM Pauschalen aktualisieren</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report EMADV Update Per Diem Calc. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 101392093 - Action 1961629020 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3120242720">
+          <source>Show Calculation</source>
+          <target>Berechnungsübersicht</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV  Sttl. Post.PD.Subp Ext - Action ShowCalculationList - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 101392093 - Control 3528688045 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3120242720">
+          <source>Country/Region where the employee is departing from.</source>
+          <target>Gibt Abreiseland/-region an.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV  Sttl. Post.PD.Subp Ext - Control Departure Country/Region - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 101392093 - Control 3528688045 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3120242720">
+          <source>Departure Country/Region</source>
+          <target>Abreiseland/-region</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV  Sttl. Post.PD.Subp Ext - Control Departure Country/Region - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 405480838 - Action 1961629020 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 281240623">
           <source>Show Calculation</source>
           <target>Berechnungsübersicht</target>
@@ -939,11 +963,35 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diem Rate Card Ext. - Control O/N trip full day taxable - Property ToolTip</note>
         </trans-unit>
+        <trans-unit id="PageExtension 525665159 - Action 427045783 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3847023814">
+          <source>Reset the Per Diem details for the selected entry.</source>
+          <target>Die Pauschaldetails für die ausgewählte Pauschale zurücksetzen.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diems Ext. - Action Reset Per Diem Details - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 525665159 - Action 427045783 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3847023814">
+          <source>Reset Per Diem Details</source>
+          <target>Pauschaldetails zurücksetzen</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diems Ext. - Action Reset Per Diem Details - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 525665159 - Action 1961629020 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3847023814">
           <source>Show Calculation</source>
           <target>Berechnungsübersicht</target>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diems Ext. - Action ShowCalculationList - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 525665159 - Action 2069681403 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3847023814">
+          <source>Update incomplete Per Diem calculations where allowance and deduction amounts are zero but have positive amounts to calculate.</source>
+          <target>Aktualisiert unvollständige Berechnungen der Pauschalen, bei denen die Pauschalbeträge und Abzüge zwar null betragen, aber positive Beträge zu berechnen sind.</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diems Ext. - Action Update Per Diem Details - Property ToolTip</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 525665159 - Action 2069681403 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 3847023814">
+          <source>Update Per Diem Details</source>
+          <target>Pauschaldetails aktualisieren</target>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension EMADV Per Diems Ext. - Action Update Per Diem Details - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 841201007 - Control 1904674751 - Property 1295455071" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 1404365552">
           <source>Shows the taxable amount in LCY.</source>
